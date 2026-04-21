@@ -168,7 +168,7 @@ nav{
 /* HERO */
 .hero{
   position:relative;
-  padding:140px 2rem 80px;
+  padding:60px 2rem 80px;
   text-align:center;
   z-index:1;
   max-width:1100px;
@@ -866,23 +866,40 @@ footer{
 /* RELEASE BANNER */
 .release-banner{
   position:relative;z-index:50;
+  margin-top:60px; /* clear the fixed 60px nav */
   background:linear-gradient(90deg,rgba(96,165,250,0.06),rgba(167,139,250,0.06));
   border-bottom:1px solid rgba(255,255,255,0.06);
-  padding:9px 2rem;
+  padding:10px 2rem;
   display:flex;align-items:center;justify-content:center;
-  gap:1rem;flex-wrap:wrap;text-align:center;
+  gap:1rem 1.25rem;flex-wrap:wrap;text-align:center;
 }
-.rb-item{display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--muted)}
+.rb-item{
+  display:inline-flex;align-items:center;
+  gap:0.5rem;
+  font-size:0.8rem;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.rb-item-text{display:inline-flex;align-items:center;gap:0.4rem;white-space:nowrap}
 .rb-tag{
   font-family:var(--font-mono);font-size:0.65rem;
   padding:2px 9px;border-radius:99px;font-weight:500;
+  letter-spacing:var(--tracking-wider);
+  white-space:nowrap;
 }
 .rb-tag.stable{background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);color:var(--green)}
 .rb-tag.beta{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);color:var(--yellow)}
 .rb-tag.hint{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);color:var(--accent2)}
-.rb-link{color:var(--accent)!important;text-decoration:none;font-family:var(--font-mono);font-size:0.75rem;transition:opacity 0.2s}
+.rb-link{color:var(--accent)!important;text-decoration:none;font-family:var(--font-mono);font-size:0.75rem;transition:opacity 0.2s;white-space:nowrap}
 .rb-link:hover{opacity:0.7}
-.rb-sep{color:var(--muted2);font-size:0.7rem}
+.rb-sep{color:var(--muted2);font-size:0.7rem;user-select:none}
+.rb-sep-major{
+  color:var(--border-hover);
+  font-weight:200;
+  font-size:0.95rem;
+  user-select:none;
+  opacity:0.6;
+}
 
 /* NOTICE CARD */
 .notice-wrap{max-width:1100px;margin:2rem auto 0;padding:0 2rem;position:relative;z-index:1}
@@ -919,7 +936,26 @@ footer{
   .nav-cta .btn{padding:0.45rem 0.9rem;font-size:0.8rem}
   .nav-cta .btn span:not(.material-symbols-outlined){display:none}
 
-  .hero{padding:90px 1.25rem 50px}
+  /* Release banner — clean vertical stack */
+  .release-banner{
+    margin-top:60px;
+    flex-direction:column;
+    gap:0.5rem;
+    padding:0.75rem 1rem;
+  }
+  .rb-sep-major{display:none}
+  .rb-item{
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:0.4rem;
+    font-size:0.72rem;
+    line-height:1.4;
+  }
+  .rb-tag{font-size:0.6rem;padding:2px 7px}
+  .rb-link{font-size:0.7rem}
+  .rb-item-text{font-size:0.72rem}
+
+  .hero{padding:30px 1.25rem 50px}
   .hero-eyebrow{font-size:0.65rem;padding:3px 11px;margin-bottom:1.1rem}
   .hero-actions{flex-direction:column;width:100%;gap:0.75rem}
   .hero-actions .btn{width:100%;justify-content:center}
@@ -974,7 +1010,16 @@ footer{
 @media(min-width:481px) and (max-width:640px){
   nav{padding:0 1.25rem}
   .nav-links,.nav-badge{display:none}
-  .hero{padding:100px 1.5rem 60px}
+  .release-banner{
+    margin-top:60px;
+    flex-direction:column;
+    gap:0.5rem;
+    padding:0.85rem 1.25rem;
+  }
+  .rb-sep-major{display:none}
+  .rb-item{flex-wrap:wrap;justify-content:center;gap:0.45rem;font-size:0.75rem}
+  .rb-tag{font-size:0.62rem}
+  .hero{padding:30px 1.5rem 60px}
   .hero-actions{flex-wrap:wrap;justify-content:center}
   .hero-install{font-size:0.78rem;padding:0.65rem 0.9rem}
   .container{padding:0 1.5rem}
@@ -998,7 +1043,12 @@ footer{
   nav{padding:0 1.5rem}
   .nav-links{gap:1.5rem;font-size:0.85rem}
   .nav-badge{display:none}
-  .hero{padding:110px 2rem 70px}
+  .release-banner{padding:0.65rem 1.5rem;gap:0.75rem 1rem}
+  .rb-item{font-size:0.75rem;gap:0.4rem}
+  .rb-tag{font-size:0.6rem;padding:1px 8px}
+  .rb-link{font-size:0.7rem}
+  .rb-sep-major{font-size:0.65rem}
+  .hero{padding:40px 2rem 70px}
   .container{padding:0 2rem}
   .stats-grid{grid-template-columns:repeat(4,1fr);gap:1.25rem}
   .features-grid{grid-template-columns:repeat(2,1fr)}
@@ -1017,7 +1067,7 @@ footer{
   nav{padding:0 2rem}
   .nav-links{gap:1.75rem;font-size:0.88rem}
   .nav-badge{font-size:0.65rem;padding:3px 9px}
-  .hero{padding:130px 2rem 70px;max-width:900px}
+  .hero{padding:50px 2rem 70px;max-width:900px}
   .container{padding:0 2rem;max-width:960px}
   .stats-grid{grid-template-columns:repeat(4,1fr)}
   .features-grid{grid-template-columns:repeat(2,1fr)}
@@ -1081,13 +1131,17 @@ footer{
 <div class="release-banner">
   <div class="rb-item">
     <span class="rb-tag stable">Stable</span>
-    v6.15.13 · <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/main" class="rb-link" target="_blank">main branch</a>
+    <span class="rb-item-text">v6.15.13</span>
+    <span class="rb-sep">·</span>
+    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/main" class="rb-link" target="_blank">main</a>
   </div>
-  <span class="rb-sep">·</span>
+  <span class="rb-sep rb-sep-major">|</span>
   <div class="rb-item">
     <span class="rb-tag beta">Beta</span>
-    v6.16.1.11 · <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/beta-v12.6.16.1.11" class="rb-link" target="_blank">beta-v12.6.16.1.11</a>
-    <span class="rb-tag hint">esp. laptop users</span>
+    <span class="rb-item-text">v6.16.1.11</span>
+    <span class="rb-sep">·</span>
+    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/beta-v12.6.16.1.11" class="rb-link" target="_blank">beta-v12.6.16.1.11</a>
+    <span class="rb-tag hint">esp. laptop</span>
   </div>
 </div>
 

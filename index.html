@@ -672,6 +672,43 @@ footer{
   margin:0;
 }
 
+/* RELEASE BANNER */
+.release-banner{
+  position:relative;z-index:50;
+  background:linear-gradient(90deg,rgba(96,165,250,0.06),rgba(167,139,250,0.06));
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  padding:9px 2rem;
+  display:flex;align-items:center;justify-content:center;
+  gap:1rem;flex-wrap:wrap;text-align:center;
+}
+.rb-item{display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--muted)}
+.rb-tag{
+  font-family:var(--font-mono);font-size:0.65rem;
+  padding:2px 9px;border-radius:99px;font-weight:500;
+}
+.rb-tag.stable{background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);color:var(--green)}
+.rb-tag.beta{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);color:var(--yellow)}
+.rb-tag.hint{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);color:var(--accent2)}
+.rb-link{color:var(--accent)!important;text-decoration:none;font-family:var(--font-mono);font-size:0.75rem;transition:opacity 0.2s}
+.rb-link:hover{opacity:0.7}
+.rb-sep{color:var(--muted2);font-size:0.7rem}
+
+/* NOTICE CARD */
+.notice-wrap{max-width:1100px;margin:2rem auto 0;padding:0 2rem;position:relative;z-index:1}
+.notice-card{
+  background:rgba(251,191,36,0.04);
+  border:1px solid rgba(251,191,36,0.15);
+  border-radius:12px;
+  padding:1.2rem 1.5rem;
+  display:flex;align-items:flex-start;gap:1rem;
+}
+.notice-card .material-symbols-outlined{color:var(--yellow);flex-shrink:0;margin-top:2px;font-size:22px}
+.notice-card h4{font-family:var(--font-display);font-size:0.9rem;font-weight:600;color:#fff;margin-bottom:0.3rem}
+.notice-card p{font-size:0.82rem;color:var(--muted);line-height:1.65}
+.notice-card a{color:var(--accent);text-decoration:none}
+.notice-card a:hover{text-decoration:underline}
+.notice-card code{font-family:var(--font-mono);font-size:0.78rem;color:var(--accent2);background:rgba(167,139,250,0.1);padding:1px 6px;border-radius:4px}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   nav{padding:0 1rem}
@@ -696,7 +733,7 @@ footer{
     <span class="material-symbols-outlined">blur_on</span>
     <span>Zen</span> Shell
   </a>
-  <span class="nav-badge">v6.16.1</span>
+  <span class="nav-badge">v6.15.13 stable</span>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="#whats-new">What's New</a></li>
@@ -711,6 +748,20 @@ footer{
     <a href="#install" class="btn btn-primary">Install</a>
   </div>
 </nav>
+
+<!-- RELEASE BANNER -->
+<div class="release-banner">
+  <div class="rb-item">
+    <span class="rb-tag stable">Stable</span>
+    v6.15.13 · <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/main" class="rb-link" target="_blank">main branch</a>
+  </div>
+  <span class="rb-sep">·</span>
+  <div class="rb-item">
+    <span class="rb-tag beta">Beta</span>
+    v6.16.1.11 · <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/beta-v12.6.16.1.11" class="rb-link" target="_blank">beta-v12.6.16.1.11</a>
+    <span class="rb-tag hint">esp. laptop users</span>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero container">
@@ -742,7 +793,8 @@ footer{
   </div>
 
   <div class="hero-badges">
-    <span class="badge blue">v6.16.1</span>
+    <span class="badge green">v6.15.13 stable</span>
+    <span class="badge" style="color:var(--yellow);border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.08)">v6.16.1.11 beta</span>
     <span class="badge">Arch Linux</span>
     <span class="badge">Hyprland 0.54+</span>
     <span class="badge">Quickshell 0.2.1+</span>
@@ -1033,48 +1085,55 @@ footer{
 
     <div class="fade-up">
       <div class="install-tabs">
-        <button class="tab-btn active" onclick="showTab(this,'fresh')">Fresh install</button>
-        <button class="tab-btn" onclick="showTab(this,'existing')">Hyprland installed</button>
+        <button class="tab-btn active" onclick="showTab(this,'stable')">Stable · v6.15.13</button>
+        <button class="tab-btn" onclick="showTab(this,'beta')">Beta · v6.16.1.11</button>
         <button class="tab-btn" onclick="showTab(this,'backup')">Backup first</button>
       </div>
 
-      <div id="tab-fresh" class="code-block">
+      <div id="tab-stable" class="code-block">
         <div class="code-header">
           <div class="code-dots">
             <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
           </div>
-          <span class="code-lang">bash</span>
+          <span class="code-lang">bash · main branch · official release</span>
         </div>
         <div class="code-body">
 <pre><span class="c-comment"># Clone the repo</span>
 <span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
 <span class="c-cmd">cd</span> zen_barebone_alpha_development
 
-<span class="c-comment"># Pin to latest stable release</span>
-<span class="c-cmd">git fetch</span> <span class="c-flag">--tags</span>
-<span class="c-cmd">git checkout</span> v6.16.1
-
-<span class="c-comment"># --bootstrap: installs Hyprland + all deps without touching your current DE</span>
+<span class="c-comment"># Already on main (stable v6.15.13) by default</span>
+<span class="c-comment"># --bootstrap: installs Hyprland + all deps, safe for KDE/GNOME/COSMIC</span>
 <span class="c-cmd">chmod +x</span> install.sh
-<span class="c-cmd">./install.sh</span> <span class="c-flag">--bootstrap</span></pre>
+<span class="c-cmd">./install.sh</span> <span class="c-flag">--bootstrap</span>
+
+<span class="c-comment"># Already on Hyprland? Skip --bootstrap:</span>
+<span class="c-cmd">./install.sh</span></pre>
         </div>
       </div>
 
-      <div id="tab-existing" class="code-block" style="display:none">
+      <div id="tab-beta" class="code-block" style="display:none">
         <div class="code-header">
           <div class="code-dots">
             <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
           </div>
-          <span class="code-lang">bash</span>
+          <span class="code-lang">bash · beta-v12.6.16.1.11 · recommended for laptop users</span>
         </div>
         <div class="code-body">
-<pre><span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
+<pre><span class="c-comment"># Clone the repo</span>
+<span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
 <span class="c-cmd">cd</span> zen_barebone_alpha_development
 
-<span class="c-cmd">git fetch</span> <span class="c-flag">--tags</span>
-<span class="c-cmd">git checkout</span> v6.16.1
+<span class="c-comment"># Switch to the beta branch (v6.16.1.11)</span>
+<span class="c-comment"># Includes: Battery, Power Profiles, GPU Switcher, Gaming Boost,</span>
+<span class="c-comment">#           Multi-GPU tabs, Cascade Control Panel, HMSwitch, OSD</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">beta-v12.6.16.1.11</span>
 
+<span class="c-comment"># --bootstrap for fresh installs (safe alongside KDE/GNOME/COSMIC)</span>
 <span class="c-cmd">chmod +x</span> install.sh
+<span class="c-cmd">./install.sh</span> <span class="c-flag">--bootstrap</span>
+
+<span class="c-comment"># Already on Hyprland? Skip --bootstrap:</span>
 <span class="c-cmd">./install.sh</span></pre>
         </div>
       </div>
@@ -1084,10 +1143,10 @@ footer{
           <div class="code-dots">
             <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
           </div>
-          <span class="code-lang">bash</span>
+          <span class="code-lang">bash · recommended before any install</span>
         </div>
         <div class="code-body">
-<pre><span class="c-comment"># Backup your existing configs before installing</span>
+<pre><span class="c-comment"># Backup existing configs before installing</span>
 <span class="c-cmd">mv</span> ~/.config/hypr       ~/.config/hypr.backup      <span class="c-flag">2>/dev/null</span> || true
 <span class="c-cmd">mv</span> ~/.config/quickshell ~/.config/quickshell.backup <span class="c-flag">2>/dev/null</span> || true</pre>
         </div>
@@ -1193,7 +1252,7 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 function showTab(btn, id) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  ['fresh','existing','backup'].forEach(t => {
+  ['stable','beta','backup'].forEach(t => {
     const el = document.getElementById('tab-' + t);
     if(el) el.style.display = t === id ? 'block' : 'none';
   });

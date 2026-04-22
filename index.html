@@ -33,6 +33,7 @@
   --green:#34d399;
   --red:#f87171;
   --yellow:#fbbf24;
+  --orange:#fb923c;
   --font-display:'Afacad Flux',sans-serif;
   --font-body:'Afacad Flux',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
@@ -277,6 +278,7 @@ nav{
 .badge.blue{color:var(--accent);border-color:rgba(96,165,250,0.25);background:var(--accent-dim)}
 .badge.purple{color:var(--accent2);border-color:rgba(167,139,250,0.25);background:var(--accent2-dim)}
 .badge.green{color:var(--green);border-color:rgba(52,211,153,0.2);background:rgba(52,211,153,0.08)}
+.badge.orange{color:var(--orange);border-color:rgba(251,146,60,0.25);background:rgba(251,146,60,0.1)}
 
 /* HERO IMAGE */
 .hero-media{
@@ -592,7 +594,10 @@ section{position:relative;z-index:1}
 }
 .roadmap-phase:hover{background:var(--bg1)}
 .roadmap-phase.is-current{
-  background:linear-gradient(180deg,rgba(167,139,250,0.06) 0%,var(--bg2) 100%);
+  background:linear-gradient(180deg,rgba(52,211,153,0.06) 0%,var(--bg2) 100%);
+}
+.roadmap-phase.is-alpha{
+  background:linear-gradient(180deg,rgba(251,146,60,0.05) 0%,var(--bg2) 100%);
 }
 .phase-version{
   font-family:var(--font-mono);
@@ -613,8 +618,11 @@ section{position:relative;z-index:1}
   vertical-align:middle;
 }
 .phase-status.shipped{color:var(--green);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2)}
+.phase-status.stable{color:var(--green);background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.3)}
 .phase-status.beta{color:var(--yellow);background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25)}
+.phase-status.alpha{color:var(--orange);background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.25)}
 .phase-status.next{color:var(--accent2);background:var(--accent2-dim);border:1px solid rgba(167,139,250,0.25)}
+.phase-status.progress{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(96,165,250,0.25)}
 .phase-title{
   font-family:var(--font-display);
   font-size:1rem;
@@ -640,7 +648,8 @@ section{position:relative;z-index:1}
   border-radius:50%;
   background:var(--muted2);
 }
-.roadmap-phase.is-current .phase-list li::before{background:var(--accent2)}
+.roadmap-phase.is-current .phase-list li::before{background:var(--green)}
+.roadmap-phase.is-alpha .phase-list li::before{background:var(--orange)}
 .roadmap-note{
   margin-top:1.75rem;
   padding-top:1.5rem;
@@ -678,6 +687,7 @@ section{position:relative;z-index:1}
 .arch-block .comment{color:var(--muted2)}
 .arch-block .highlight{color:var(--accent)}
 .arch-block .new{color:var(--accent2)}
+.arch-block .newer{color:var(--orange)}
 
 /* INSTALL */
 .install-section{padding:6rem 0}
@@ -867,7 +877,7 @@ footer{
 .release-banner{
   position:relative;z-index:50;
   margin-top:60px; /* clear the fixed 60px nav */
-  background:linear-gradient(90deg,rgba(96,165,250,0.06),rgba(167,139,250,0.06));
+  background:linear-gradient(90deg,rgba(52,211,153,0.06),rgba(251,146,60,0.06));
   border-bottom:1px solid rgba(255,255,255,0.06);
   padding:10px 2rem;
   display:flex;align-items:center;justify-content:center;
@@ -889,6 +899,7 @@ footer{
 }
 .rb-tag.stable{background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);color:var(--green)}
 .rb-tag.beta{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);color:var(--yellow)}
+.rb-tag.alpha{background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.25);color:var(--orange)}
 .rb-tag.hint{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);color:var(--accent2)}
 .rb-link{color:var(--accent)!important;text-decoration:none;font-family:var(--font-mono);font-size:0.75rem;transition:opacity 0.2s;white-space:nowrap}
 .rb-link:hover{opacity:0.7}
@@ -1206,7 +1217,7 @@ footer{
     <span class="material-symbols-outlined">blur_on</span>
     <span>Zen</span> Shell
   </a>
-  <span class="nav-badge">v6.15.13 stable</span>
+  <span class="nav-badge">v6.16.3.4.2 stable</span>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="#whats-new">What's New</a></li>
@@ -1228,17 +1239,17 @@ footer{
 <div class="release-banner">
   <div class="rb-item">
     <span class="rb-tag stable">Stable</span>
-    <span class="rb-item-text">v6.15.13</span>
+    <span class="rb-item-text">v6.16.3.4.2</span>
     <span class="rb-sep">·</span>
-    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/main" class="rb-link" target="_blank">main</a>
+    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/v6.16.3.4.2" class="rb-link" target="_blank">main</a>
+    <span class="rb-tag hint">official release</span>
   </div>
   <span class="rb-sep rb-sep-major">|</span>
   <div class="rb-item">
-    <span class="rb-tag beta">Beta</span>
-    <span class="rb-item-text">v6.16.2.3.6</span>
+    <span class="rb-tag alpha">Alpha</span>
+    <span class="rb-item-text">v6.16.3.5 → v6.16.3.7</span>
     <span class="rb-sep">·</span>
-    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/beta-v12.6.16.2.3.6" class="rb-link" target="_blank">beta-v12.6.16.2.3.6</a>
-    <span class="rb-tag hint">esp. laptop</span>
+    <span class="rb-link" style="color:var(--orange)!important">ongoing</span>
   </div>
 </div>
 
@@ -1272,8 +1283,8 @@ footer{
   </div>
 
   <div class="hero-badges">
-    <span class="badge green">v6.15.13 stable</span>
-    <span class="badge" style="color:var(--yellow);border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.08)">v6.16.2.3.6 beta</span>
+    <span class="badge green">v6.16.3.4.2 stable</span>
+    <span class="badge orange">v6.16.3.5+ alpha ongoing</span>
     <span class="badge">Arch Linux</span>
     <span class="badge">Hyprland 0.54+</span>
     <span class="badge">Quickshell 0.2.1+</span>
@@ -1282,7 +1293,7 @@ footer{
   </div>
 
   <div class="hero-media">
-    <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell v6.16.2.3.6 desktop preview" loading="lazy"/>
+    <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell v6.16.3.4.2 desktop preview" loading="lazy"/>
     <div class="hero-media-glow"></div>
   </div>
 </section>
@@ -1292,7 +1303,7 @@ footer{
   <div class="container">
     <div class="stats-grid">
       <div>
-        <div class="stat-val">73+</div>
+        <div class="stat-val">74+</div>
         <div class="stat-label">QML source files</div>
       </div>
       <div>
@@ -1334,6 +1345,24 @@ footer{
         <div class="feature-icon"><span class="material-symbols-outlined">tune</span></div>
         <h3>GUI-driven config</h3>
         <p>14 settings pages with live preview. No config files. No restarts. Change and see immediately.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-symbols-outlined">developer_board</span></div>
+        <h3>PowerBadge widget</h3>
+        <p>Tiny bar pill showing current power profile + GPU mode. 300ms hover popup. Right-click cycles profile, middle-click toggles Gaming Boost. Self-hides when useless.</p>
+        <div class="feature-version">→ v6.16.3.4</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-symbols-outlined">power_settings_new</span></div>
+        <h3>Material Power Icons</h3>
+        <p>Start Menu shutdown / restart / suspend / log-out confirm icons rebuilt with Material Symbols Outlined + theme-synced accent. Smooth fade-ins, cached properly.</p>
+        <div class="feature-version">→ v6.16.3.1</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-symbols-outlined">laptop_mac</span></div>
+        <h3>Lid-Close Patch</h3>
+        <p>Separate <code style="font-size:0.8em">hypr-config/</code> overlay handles every lid scenario — docked, close+external, close→open. Session persists, swaync stays alive across every wake path.</p>
+        <div class="feature-version">→ v6.16.3.2</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon"><span class="material-symbols-outlined">battery_charging_full</span></div>
@@ -1434,11 +1463,36 @@ footer{
 <section class="new-section" id="whats-new">
   <div class="container">
     <div class="section-header fade-up">
-      <div class="section-tag">What's New · v6.16.2.3.x</div>
-      <h2>Click-through transparency<br/>and a <strong>bulletproof installer.</strong></h2>
-      <p>Closeout of the v6.16.2.3 hotfix series — every fix from .3.1 → .3.6 rolled in.</p>
+      <div class="section-tag">What's New · v6.16.3.x</div>
+      <h2>PowerBadge landed.<br/>Material icons. <strong>Lid-close fixed for good.</strong></h2>
+      <p>v6.16.3.4.2 is the first official stable of the v6.16.3 phase — rolling up .3.1 through .3.4 plus two follow-on hotfixes, and carrying every v6.16.2.3.6 fix below it.</p>
     </div>
     <div class="new-grid fade-up">
+      <div class="new-card">
+        <div class="new-card-tag">v6.16.3.4 · Bar</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">developer_board</span>PowerBadge module</h3>
+        <p>New tiny pill in the bar showing your current power profile (green/blue/orange) and GPU mode. 300ms hover popup with full state + click-shortcut reference. Left-click opens Control Panel, right-click cycles profile, middle-click toggles Gaming Boost. Self-hides on single-GPU desktops without power-profiles-daemon.</p>
+      </div>
+      <div class="new-card">
+        <div class="new-card-tag">v6.16.3.4 · Layout</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">library_add</span>Additive registration</h3>
+        <p>PowerBadge registered additively in Bar.qml + Theme.qml default layout — fresh installs see it immediately. Existing users with saved bar-layout.json get an opt-in helper script: <code style="font-size:0.85em">~/.local/bin/zen-bar-add-powerbadge.sh</code> (idempotent, --dry-run, --remove flags).</p>
+      </div>
+      <div class="new-card">
+        <div class="new-card-tag">v6.16.3.1 · UI</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">power_settings_new</span>Material Power Icons</h3>
+        <p>Start Menu shutdown / restart / suspend / log-out confirm icons rebuilt with Material Symbols Outlined. Theme-synced accent color pulled from the active palette. Smooth fade-in transitions, properly cached so the popover stays snappy.</p>
+      </div>
+      <div class="new-card">
+        <div class="new-card-tag">v6.16.3.2 · Hypridle</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">laptop_mac</span>Lid-Close Patch</h3>
+        <p>The lid-close fix that survives every wake scenario lives at the hypridle/hyprlock layer — not in QML. Ships as a hypr-config/ overlay patch alongside the QML release. Handles open+external, docked, close+external, and close→open cases. Session persists, swaync stays alive.</p>
+      </div>
+      <div class="new-card">
+        <div class="new-card-tag">v6.16.3.3 · Displays</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">monitor</span>Resolution dropdown fix</h3>
+        <p>DisplaysPage resolution dropdown now enumerates all valid modes via hyprctl monitors all -j with an EDID fallback for edge-case monitors. No more missing refresh rates or hidden 4K modes. (Ongoing hotfix series — continues into .3.5.)</p>
+      </div>
       <div class="new-card">
         <div class="new-card-tag">v6.16.2.3.6 · Installer</div>
         <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">terminal</span>Single-Instance Launch</h3>
@@ -1470,11 +1524,6 @@ footer{
         <p>panelStateLoaded() signal gates nuclear restart against the startup-load transient. Initial-load mode transitions no longer trigger a restart cascade — Island mode actually persists now.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.2.3.2 · Wallpaper</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">cloud_download</span>Default + Repo Browser</h3>
-        <p>Fresh installs auto-fetch the default wallpaper from Gekinzen/images-demo via swww. New WallpaperRepoService.qml singleton renders an "Online" tab in the picker — one-click download + apply, with offline-capable cache.</p>
-      </div>
-      <div class="new-card">
         <div class="new-card-tag">v6.16.2.3.2 · Input</div>
         <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">mouse</span>Mouse Sensitivity Controls</h3>
         <p>New MouseSettingsService singleton — sensitivity, scroll factor, two natural-scroll toggles. Live via hyprctl keyword, persisted to ~/.config/hypr/zen-mouse.conf. Settings page + Control Panel tab both bound to the same singleton.</p>
@@ -1491,74 +1540,71 @@ footer{
     <div class="roadmap-card fade-up">
       <span class="roadmap-eyebrow">
         <span class="pulse-dot"></span>
-        Roadmap · v6.16.x → v6.16.3
+        Roadmap · v6.16.3 shipped · v6.16.3.5+ ongoing
       </span>
-      <h3>Phases shipped. <strong>Next stop, v6.16.3.</strong></h3>
+      <h3>v6.16.3.4.2 is <strong>official main.</strong><br/>Alpha work <strong>continues.</strong></h3>
       <p class="roadmap-lead">
-        v6.16.0 → v6.16.2 are all shipped. The current beta is <em>beta-v12.6.16.2.3.6</em> — the closeout of the v6.16.2.3 hotfix series. Once it stabilizes the prefix is dropped and the branch promotes to <em>v6.x.x.x</em> on <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px;border:1px solid rgba(96,165,250,0.18)">main</code>. <strong>v6.16.3</strong> is the next feature phase.
+        v6.16.0 → v6.16.2 are all shipped, and <em>v6.16.3.4.2</em> is now the first official stable of the v6.16.3 phase on <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px;border:1px solid rgba(96,165,250,0.18)">main</code>. Three more features — Start logo picker, clock hover popup parity, and universal widget auto-resize — are in active alpha development as v6.16.3.5 → v6.16.3.7.
       </p>
 
       <div class="roadmap-grid">
         <!-- v6.16.0 + v6.16.1 + v6.16.2 — combined "Shipped" phase -->
         <div class="roadmap-phase">
           <div class="phase-version">
-            v6.16.0 → v6.16.2
+            v6.16.0 → v6.16.2.3.6
             <span class="phase-status shipped">Shipped</span>
           </div>
-          <div class="phase-title">Power · Multi-GPU · Polish</div>
+          <div class="phase-title">Power · Multi-GPU · Hotfix closeout</div>
           <ul class="phase-list">
             <li>Battery module + 30%/10% swaync warnings</li>
             <li>Power profiles (Saver / Balanced / Performance)</li>
-            <li>Gaming Boost — performance + compositor effects off</li>
-            <li>Multi-GPU widget tabs + GPU Switcher service</li>
+            <li>Gaming Boost + Multi-GPU tabs + GPU Switcher</li>
             <li>Volume + Brightness OSD via XF86 keys</li>
             <li>Cascade Control Panel + Unified HMSwitch (×27)</li>
-            <li>Smooth widget drag + per-widget background picker</li>
-            <li>Lid-close fix (Hyprland monitor config)</li>
-          </ul>
-        </div>
-
-        <!-- v6.16.2.3.6 beta — current -->
-        <div class="roadmap-phase is-current">
-          <div class="phase-version">
-            v6.16.2.3.6
-            <span class="phase-status beta">Current beta</span>
-          </div>
-          <div class="phase-title">Hotfix series closeout</div>
-          <ul class="phase-list">
-            <li>Click-through Settings / Control Panel / music rope</li>
-            <li>Native QML hover calendar + scroll-wheel month cycle</li>
-            <li>Island mode survives reboot (panelStateLoaded gate)</li>
-            <li>OpacityMask avatar (replaces broken GLSL shader)</li>
-            <li>Default wallpaper auto-fetch + repo browser</li>
-            <li>Mouse sensitivity (Settings + Control Panel)</li>
-            <li>Hyprland version tooltip + DMI device info</li>
+            <li>Click-through Settings / CP / music rope</li>
+            <li>OpacityMask avatar + Island mode persistence</li>
+            <li>Mouse sensitivity + Wallpaper repo browser</li>
             <li>Bulletproof installer — no more duplicate bars</li>
           </ul>
         </div>
 
-        <!-- v6.16.3 future -->
-        <div class="roadmap-phase">
+        <!-- v6.16.3.4.2 stable — CURRENT OFFICIAL -->
+        <div class="roadmap-phase is-current">
           <div class="phase-version">
-            v6.16.3
-            <span class="phase-status next">Future</span>
+            v6.16.3.4.2
+            <span class="phase-status stable">Current stable</span>
           </div>
-          <div class="phase-title">Widget scaling · Polish · Hypridle</div>
+          <div class="phase-title">v6.16.3 phase · official main</div>
           <ul class="phase-list">
-            <li>Bar profile badge widget</li>
-            <li>Universal widget auto-resize — every laptop &amp; desktop, scaled by monitor DPI</li>
-            <li>Fuzzel auto-sizing per screen DPI</li>
+            <li><strong>PowerBadge bar module</strong> — profile + GPU badge</li>
+            <li>Material-synced power confirm icons (StartMenu)</li>
+            <li>Lid-close hypridle/hyprlock overlay patch</li>
             <li>Display resolution dropdown enumeration fix</li>
-            <li>Power confirm icons → Material Design + theme-synced</li>
-            <li>Lid-close hypridle/hyprlock config patch</li>
-            <li>Clock hover popup parity with CPU/Memory hover (calendar with today circled, clickable month select)</li>
-            <li>Start logo image picker — Arch / CachyOS / Pop!_OS / custom</li>
+            <li>Additive bar layout registration + opt-in script</li>
+            <li>All v6.16.2.3.6 fixes rolled in</li>
+            <li>Two follow-on hotfixes on top of v6.16.3.4</li>
+          </ul>
+        </div>
+
+        <!-- Alpha ongoing — v6.16.3.5 → v6.16.3.7 -->
+        <div class="roadmap-phase is-alpha">
+          <div class="phase-version">
+            v6.16.3.5 → v6.16.3.7
+            <span class="phase-status alpha">Alpha ongoing</span>
+          </div>
+          <div class="phase-title">Start logo · Calendar · Widget scaling</div>
+          <ul class="phase-list">
+            <li><strong>v6.16.3.5</strong> — Start logo image picker (Arch / CachyOS / Pop!_OS / custom)</li>
+            <li><strong>v6.16.3.6</strong> — Clock hover popup parity with CPU/Memory hover (today circled, clickable month select, smooth transitions)</li>
+            <li><strong>v6.16.3.7</strong> — Universal widget auto-resize — every laptop &amp; desktop, scaled by monitor DPI + scale factor</li>
+            <li>Fuzzel auto-sizing per screen DPI</li>
+            <li>Per-monitor sizing with manual override slider</li>
           </ul>
         </div>
       </div>
 
       <p class="roadmap-note">
-        Naming convention: beta branches always carry the <code>beta-v12.</code> prefix. When a phase reaches stable, the prefix is stripped and the branch promotes to <code>main</code> as <code>v6.x.x.x</code>.
+        Naming convention: alpha / beta branches carry the <code>alpha-v6.16.3.X</code> or <code>beta-v12.6.16.3.X</code> prefix. When a phase reaches stable, it promotes to <code>main</code> and gets a tag like <code>v6.16.3.4.2</code>. Wala tayong binawasan — every previous release stays reachable via its tag.
       </p>
     </div>
   </div>
@@ -1604,13 +1650,14 @@ footer{
     <div class="section-header fade-up">
       <div class="section-tag">Architecture</div>
       <h2>Modular QML structure</h2>
-      <p>73+ files. Clean separation of services, UI, and state.</p>
+      <p>74+ files. Clean separation of services, UI, and state.</p>
     </div>
     <div class="arch-block fade-up">
 <pre>~/.config/quickshell/zen-shell/
 <span class="path">├── shell.qml</span>                    <span class="comment">── entry point · bar · overlays · widgets</span>
 <span class="path">├── Bar.qml</span>                      <span class="comment">── bottom bar with module loader</span>
 <span class="new">├── Battery.qml</span>                  <span class="comment">── battery bar module              ← v6.16</span>
+<span class="newer">├── PowerBadge.qml</span>               <span class="comment">── profile + GPU badge widget       ← v6.16.3.4</span>
 <span class="highlight">├── ZenStrings.qml</span>               <span class="comment">── audio-reactive visualizer        ← v6.15</span>
 <span class="highlight">├── ZenScreenshotOverlay.qml</span>     <span class="comment">── region screenshot + ropes        ← v6.15</span>
 <span class="new">├── PowerProfileService.qml</span>     <span class="comment">── powerprofilesctl + gaming boost  ← v6.16</span>
@@ -1627,7 +1674,7 @@ footer{
 <span class="path">├── ZenSettings.qml</span>              <span class="comment">── settings window · 14 pages</span>
 <span class="new">├── BatterySettingsPage.qml</span>     <span class="comment">── battery · power · GPU page       ← v6.16</span>
 <span class="new">├── InputPage.qml</span>               <span class="comment">── mouse + scroll page              ← v6.16.2.3</span>
-<span class="path">└── ...</span>                          <span class="comment">── ~73 QML files total
+<span class="path">└── ...</span>                          <span class="comment">── ~74 QML files total
 
 ~/.local/bin/
 ├── zen-screenshot.sh            ── screenshot pipeline
@@ -1636,8 +1683,12 @@ footer{
 <span class="new">├── zen-game-watcher.sh</span>         <span class="comment">── auto-gaming process detection    ← v6.16</span>
 <span class="new">├── zen-power-profile-restore.sh</span><span class="comment">── profile persistence              ← v6.16</span>
 <span class="new">├── zen-lid-handler.sh</span>          <span class="comment">── lid-close behavior switch        ← v6.16</span>
+<span class="newer">├── zen-bar-add-powerbadge.sh</span>   <span class="comment">── opt-in PowerBadge layout helper  ← v6.16.3.4</span>
 <span class="new">├── prime-run</span>                   <span class="comment">── one-shot dGPU launcher           ← v6.16</span>
-└── zs-restart.sh                ── selective shell respawn helper</span></pre>
+└── zs-restart.sh                ── selective shell respawn helper
+
+~/.config/hypr/
+<span class="newer">└── modules/hypr-config/</span>         <span class="comment">── lid-close hypridle overlay patch ← v6.16.3.2</span></span></pre>
     </div>
   </div>
 </section>
@@ -1655,8 +1706,8 @@ footer{
 
     <div class="fade-up">
       <div class="install-tabs">
-        <button class="tab-btn active" onclick="showTab(this,'stable')">Stable · v6.15.13</button>
-        <button class="tab-btn" onclick="showTab(this,'beta')">Beta · v6.16.2.3.6</button>
+        <button class="tab-btn active" onclick="showTab(this,'stable')">Stable · v6.16.3.4.2</button>
+        <button class="tab-btn" onclick="showTab(this,'alpha')">Alpha · ongoing</button>
         <button class="tab-btn" onclick="showTab(this,'backup')">Backup first</button>
       </div>
 
@@ -1665,49 +1716,67 @@ footer{
           <div class="code-dots">
             <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
           </div>
-          <span class="code-lang">bash · main branch · official release</span>
+          <span class="code-lang">bash · main branch · official release · v6.16.3.4.2</span>
         </div>
         <div class="code-body">
 <pre><span class="c-comment"># Clone the repo</span>
 <span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
 <span class="c-cmd">cd</span> zen_barebone_alpha_development
 
-<span class="c-comment"># Already on main (stable v6.15.13) by default</span>
+<span class="c-comment"># Pin to the exact v6.16.3.4.2 tag — or just stay on main</span>
+<span class="c-cmd">git fetch</span> <span class="c-flag">--tags</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">v6.16.3.4.2</span>     <span class="c-comment"># pinned</span>
+<span class="c-comment"># — or —</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>             <span class="c-comment"># always the latest stable</span>
+
 <span class="c-comment"># --bootstrap: installs Hyprland + all deps, safe for KDE/GNOME/COSMIC</span>
-<span class="c-cmd">chmod +x</span> install.sh
-<span class="c-cmd">./install.sh</span> <span class="c-flag">--bootstrap</span>
-
-<span class="c-comment"># Already on Hyprland? Skip --bootstrap:</span>
-<span class="c-cmd">./install.sh</span></pre>
-        </div>
-      </div>
-
-      <div id="tab-beta" class="code-block" style="display:none">
-        <div class="code-header">
-          <div class="code-dots">
-            <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
-          </div>
-          <span class="code-lang">bash · beta-v12.6.16.2.3.6 · recommended for laptop users</span>
-        </div>
-        <div class="code-body">
-<pre><span class="c-comment"># Clone the repo</span>
-<span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
-<span class="c-cmd">cd</span> zen_barebone_alpha_development
-
-<span class="c-comment"># Switch to the latest beta — v6.16.2.3.6</span>
-<span class="c-comment"># Includes click-through Settings/CP, OpacityMask avatar,</span>
-<span class="c-comment">#           default wallpaper, mouse sensitivity, single-instance install</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">beta-v12.6.16.2.3.6</span>
-
-<span class="c-comment"># --bootstrap for fresh installs (safe alongside KDE/GNOME/COSMIC)</span>
 <span class="c-cmd">chmod +x</span> install.sh
 <span class="c-cmd">./install.sh</span> <span class="c-flag">--bootstrap</span>
 
 <span class="c-comment"># Already on Hyprland? Skip --bootstrap:</span>
 <span class="c-cmd">./install.sh</span>
 
-<span class="c-comment"># Verify single instance after install</span>
+<span class="c-comment"># Opt-in: add PowerBadge to your saved bar layout</span>
+<span class="c-cmd">~/.local/bin/zen-bar-add-powerbadge.sh</span>
+
+<span class="c-comment"># Verify single instance</span>
 <span class="c-cmd">pgrep</span> <span class="c-flag">-fa</span> <span class="c-str">'quickshell.*zen-shell'</span> | <span class="c-cmd">wc -l</span>   <span class="c-comment"># should print 1</span></pre>
+        </div>
+      </div>
+
+      <div id="tab-alpha" class="code-block" style="display:none">
+        <div class="code-header">
+          <div class="code-dots">
+            <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
+          </div>
+          <span class="code-lang">bash · alpha branches · v6.16.3.5 → v6.16.3.7 in development</span>
+        </div>
+        <div class="code-body">
+<pre><span class="c-comment"># Alpha work is ongoing — expect breakage and daily rebuilds.</span>
+<span class="c-comment"># Unless you actively want to test the next features,</span>
+<span class="c-comment"># stay on main (v6.16.3.4.2) — that's the recommended channel.</span>
+
+<span class="c-comment"># Active alpha phases:</span>
+<span class="c-comment">#   v6.16.3.5  — Start logo image picker</span>
+<span class="c-comment">#   v6.16.3.6  — Clock hover popup parity with CPU/Memory hover</span>
+<span class="c-comment">#   v6.16.3.7  — Universal widget auto-resize (DPI / scale aware)</span>
+
+<span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
+<span class="c-cmd">cd</span> zen_barebone_alpha_development
+
+<span class="c-comment"># List all published alpha / beta branches</span>
+<span class="c-cmd">git fetch</span> <span class="c-flag">--all</span>
+<span class="c-cmd">git branch</span> <span class="c-flag">-r</span> | <span class="c-cmd">grep</span> <span class="c-flag">-E</span> <span class="c-str">'alpha-v6\.16\.3|beta-v12\.6\.16\.3'</span>
+
+<span class="c-comment"># Checkout a specific alpha branch (example — branch name may vary)</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">alpha-v6.16.3.5</span>
+
+<span class="c-cmd">chmod +x</span> install.sh
+<span class="c-cmd">./install.sh</span>
+
+<span class="c-comment"># If anything breaks, go back to stable:</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>
+<span class="c-cmd">./install.sh</span></pre>
         </div>
       </div>
 
@@ -1773,6 +1842,18 @@ footer{
       <div class="kb-row new-feature">
         <div class="kb-keys"><span class="kb-key">Hover clock</span></div>
         <div class="kb-action">Peek + scroll wheel cycles months ← v6.16.2.3.1</div>
+      </div>
+      <div class="kb-row new-feature">
+        <div class="kb-keys"><span class="kb-key">Hover PowerBadge</span></div>
+        <div class="kb-action">Profile + GPU popup ← v6.16.3.4</div>
+      </div>
+      <div class="kb-row new-feature">
+        <div class="kb-keys"><span class="kb-key">Right-click PowerBadge</span></div>
+        <div class="kb-action">Cycle power profile ← v6.16.3.4</div>
+      </div>
+      <div class="kb-row new-feature">
+        <div class="kb-keys"><span class="kb-key">Middle-click PowerBadge</span></div>
+        <div class="kb-action">Toggle Gaming Boost ← v6.16.3.4</div>
       </div>
       <div class="kb-row">
         <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">T</span></div>
@@ -1890,11 +1971,11 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-// Tab switcher
+// Tab switcher — stable / alpha / backup
 function showTab(btn, id) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  ['stable','beta','backup'].forEach(t => {
+  ['stable','alpha','backup'].forEach(t => {
     const el = document.getElementById('tab-' + t);
     if(el) el.style.display = t === id ? 'block' : 'none';
   });

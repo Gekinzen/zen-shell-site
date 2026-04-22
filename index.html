@@ -917,6 +917,93 @@ footer{
 .notice-card a:hover{text-decoration:underline}
 .notice-card code{font-family:var(--font-mono);font-size:0.78rem;color:var(--accent2);background:rgba(167,139,250,0.1);padding:1px 6px;border-radius:4px}
 
+/* LEGACY ARCHIVE — alpha 2025 */
+.archive-section{
+  padding:6rem 0;
+  background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,0.015) 50%,transparent 100%);
+  position:relative;
+}
+.archive-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 80px,rgba(255,255,255,0.008) 80px,rgba(255,255,255,0.008) 81px);
+  pointer-events:none;
+}
+.archive-section .container{position:relative;z-index:1}
+.archive-tag{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:0.75rem;
+}
+.archive-section .section-header h2{color:rgba(255,255,255,0.85)}
+.archive-note{
+  max-width:680px;
+  margin:0 auto 3rem;
+  padding:1.2rem 1.5rem;
+  background:var(--bg1);
+  border:1px dashed var(--border);
+  border-radius:12px;
+  font-size:0.85rem;
+  color:var(--muted);
+  line-height:1.7;
+  text-align:left;
+}
+.archive-note strong{color:var(--text);font-weight:500}
+.archive-note a{color:var(--accent);text-decoration:none}
+.archive-note a:hover{text-decoration:underline}
+.archive-note code{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  color:var(--muted);
+  background:var(--bg2);
+  padding:1px 7px;
+  border-radius:5px;
+  border:1px solid var(--border);
+}
+.archive-hero{
+  margin:0 auto 2rem;
+  max-width:880px;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  filter:grayscale(15%);
+  transition:filter 0.3s;
+}
+.archive-hero:hover{filter:grayscale(0%)}
+.archive-hero img{width:100%;display:block}
+.archive-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1.25rem;
+}
+.archive-item{
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--bg1);
+  filter:grayscale(20%);
+  transition:filter 0.3s,border-color 0.3s,transform 0.3s;
+}
+.archive-item:hover{
+  filter:grayscale(0%);
+  border-color:var(--border-hover);
+  transform:translateY(-2px);
+}
+.archive-item img{width:100%;display:block}
+.archive-caption{
+  padding:0.7rem 1rem;
+  font-size:0.78rem;
+  color:var(--muted);
+  font-family:var(--font-mono);
+  border-top:1px solid var(--border);
+  background:var(--bg2);
+}
+
 /* RESPONSIVE */
 /* ============================================================
    RESPONSIVE — mobile-first breakpoint system
@@ -979,7 +1066,8 @@ footer{
   .feature-card{padding:1.5rem}
 
   .demo-section,.gallery-section,.new-section,
-  .install-section,.deps-section,.keybinds-section{padding:3.5rem 0}
+  .install-section,.deps-section,.keybinds-section,
+  .archive-section{padding:3.5rem 0}
 
   .gallery-grid{grid-template-columns:1fr;gap:0.75rem}
   .gallery-item.full{grid-column:1}
@@ -990,6 +1078,9 @@ footer{
   .kb-grid{grid-template-columns:1fr;gap:0.5rem}
   .kb-row{padding:0.75rem 1rem;flex-wrap:wrap}
   .deps-grid{grid-template-columns:1fr;gap:0.5rem}
+
+  .archive-grid{grid-template-columns:1fr;gap:0.75rem}
+  .archive-note{padding:1rem 1.25rem;font-size:0.78rem}
 
   .install-tabs{flex-wrap:wrap;gap:0.35rem}
   .tab-btn{flex:1 1 calc(50% - 0.35rem);font-size:0.8rem;padding:0.6rem 0.5rem;text-align:center}
@@ -1030,8 +1121,10 @@ footer{
   .new-grid{grid-template-columns:1fr}
   .kb-grid{grid-template-columns:1fr}
   .deps-grid{grid-template-columns:repeat(2,1fr)}
+  .archive-grid{grid-template-columns:1fr}
   .features-section,.demo-section,.gallery-section,
-  .new-section,.install-section,.deps-section,.keybinds-section{padding:4rem 0}
+  .new-section,.install-section,.deps-section,.keybinds-section,
+  .archive-section{padding:4rem 0}
   .install-tabs{flex-wrap:wrap}
   .tab-btn{flex:1 1 auto}
   .cta-section{padding:6rem 1.5rem}
@@ -1058,8 +1151,10 @@ footer{
   .roadmap-grid{grid-template-columns:1fr}
   .kb-grid{grid-template-columns:repeat(2,1fr)}
   .deps-grid{grid-template-columns:repeat(2,1fr)}
+  .archive-grid{grid-template-columns:repeat(2,1fr)}
   .features-section,.demo-section,.gallery-section,
-  .new-section,.install-section,.deps-section,.keybinds-section{padding:5rem 0}
+  .new-section,.install-section,.deps-section,.keybinds-section,
+  .archive-section{padding:5rem 0}
 }
 
 /* ───── 769–1024px (tablet landscape / small laptop) ───── */
@@ -1077,6 +1172,7 @@ footer{
   .roadmap-grid{grid-template-columns:1fr}
   .kb-grid{grid-template-columns:repeat(2,1fr)}
   .deps-grid{grid-template-columns:repeat(3,1fr)}
+  .archive-grid{grid-template-columns:repeat(2,1fr)}
 }
 
 /* ───── 1025px+ (desktop default already handles this) ───── */
@@ -1117,6 +1213,7 @@ footer{
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#install">Install</a></li>
     <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#archive">Archive</a></li>
   </ul>
   <div class="nav-cta">
     <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" class="btn btn-ghost" target="_blank">
@@ -1138,9 +1235,9 @@ footer{
   <span class="rb-sep rb-sep-major">|</span>
   <div class="rb-item">
     <span class="rb-tag beta">Beta</span>
-    <span class="rb-item-text">v6.16.1.11</span>
+    <span class="rb-item-text">v6.16.2.3.6</span>
     <span class="rb-sep">·</span>
-    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/beta-v12.6.16.1.11" class="rb-link" target="_blank">beta-v12.6.16.1.11</a>
+    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/beta-v12.6.16.2.3.6" class="rb-link" target="_blank">beta-v12.6.16.2.3.6</a>
     <span class="rb-tag hint">esp. laptop</span>
   </div>
 </div>
@@ -1176,7 +1273,7 @@ footer{
 
   <div class="hero-badges">
     <span class="badge green">v6.15.13 stable</span>
-    <span class="badge" style="color:var(--yellow);border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.08)">v6.16.1.11 beta</span>
+    <span class="badge" style="color:var(--yellow);border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.08)">v6.16.2.3.6 beta</span>
     <span class="badge">Arch Linux</span>
     <span class="badge">Hyprland 0.54+</span>
     <span class="badge">Quickshell 0.2.1+</span>
@@ -1185,7 +1282,7 @@ footer{
   </div>
 
   <div class="hero-media">
-    <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell v6.16.1 desktop preview" loading="lazy"/>
+    <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell v6.16.2.3.6 desktop preview" loading="lazy"/>
     <div class="hero-media-glow"></div>
   </div>
 </section>
@@ -1251,9 +1348,15 @@ footer{
         <div class="feature-version">→ v6.16</div>
       </div>
       <div class="feature-card">
+        <div class="feature-icon"><span class="material-symbols-outlined">mouse</span></div>
+        <h3>Mouse Tuning</h3>
+        <p>Live sensitivity / scroll factor / natural-scroll via hyprctl. Same singleton drives Settings + Control Panel.</p>
+        <div class="feature-version">→ v6.16.2.3</div>
+      </div>
+      <div class="feature-card">
         <div class="feature-icon"><span class="material-symbols-outlined">graphic_eq</span></div>
         <h3>Music Strings</h3>
-        <p>Audio-reactive bezier curve visualizer driven by cava. Floats above and below the bar freely.</p>
+        <p>Audio-reactive bezier curve visualizer driven by cava. Floats above and below the bar — now click-through.</p>
         <div class="feature-version">→ v6.15</div>
       </div>
       <div class="feature-card">
@@ -1263,16 +1366,10 @@ footer{
         <div class="feature-version">→ v6.15</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">sports_esports</span></div>
-        <h3>Gaming Boost</h3>
-        <p>One-tap toggle: force performance profile + disable blur, dim, and animations via hyprctl batch.</p>
-        <div class="feature-version">→ v6.16</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">view_sidebar</span></div>
-        <h3>Cascade Control Panel</h3>
-        <p>Auto-splits into two columns when content overflows — no truncation, Windows Start Menu-style.</p>
-        <div class="feature-version">→ v6.16.1</div>
+        <div class="feature-icon"><span class="material-symbols-outlined">wallpaper</span></div>
+        <h3>Wallpaper Repo</h3>
+        <p>Online tab in the picker fetches Gekinzen/images-demo via the GitHub API. One-click download + apply.</p>
+        <div class="feature-version">→ v6.16.2.3</div>
       </div>
     </div>
   </div>
@@ -1337,50 +1434,50 @@ footer{
 <section class="new-section" id="whats-new">
   <div class="container">
     <div class="section-header fade-up">
-      <div class="section-tag">What's New · v6.16.x</div>
-      <h2>Laptop-grade power management<br/>and <strong>multi-GPU support.</strong></h2>
-      <p>The biggest feature release since Music Strings in v6.15.</p>
+      <div class="section-tag">What's New · v6.16.2.3.x</div>
+      <h2>Click-through transparency<br/>and a <strong>bulletproof installer.</strong></h2>
+      <p>Closeout of the v6.16.2.3 hotfix series — every fix from .3.1 → .3.6 rolled in.</p>
     </div>
     <div class="new-grid fade-up">
       <div class="new-card">
-        <div class="new-card-tag">v6.16 · Battery module</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">battery_charging_full</span>Battery Module</h3>
-        <p>Bar + SysRow integration. Three display modes — icon, text, progress bar. Auto-hides on desktops. Color shifts at 10/30/50% thresholds.</p>
+        <div class="new-card-tag">v6.16.2.3.6 · Installer</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">terminal</span>Single-Instance Launch</h3>
+        <p>Bulletproof kill loop — SIGTERM ×3 then SIGKILL ×2, plus survivor verification. If anything survives, install.sh refuses to spawn another. No more stacked duplicate bars on re-install.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16 · Power profiles</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">electric_bolt</span>Power Profile Service</h3>
-        <p>Singleton wrapper around powerprofilesctl. Saver / Balanced / Performance switchable from Control Panel. Persists across reboots.</p>
+        <div class="new-card-tag">v6.16.2.3.6 · Avatar</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">account_circle</span>OpacityMask Circle</h3>
+        <p>The original GLSL shader silently failed on some Qt builds. Replaced with OpacityMask from Qt5Compat.GraphicalEffects — same module ZenStrings already uses. Versioned filenames + pruning + diagnostic log to /tmp/zen-avatar-debug.log.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16 · GPU Switcher</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">memory</span>GPU Switcher Service</h3>
-        <p>4 modes: Auto, Force Integrated, Force Dedicated, Auto+Gaming. Auto-detects NVIDIA/AMD/Intel. Writes env vars for systemd.</p>
+        <div class="new-card-tag">v6.16.2.3.2 · UX</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">touch_app</span>Settings + CP Click-Through</h3>
+        <p>Both windows use mask: Region { item: zenSettingsPanel } so the transparent backdrop passes clicks through to apps below. Close via ✕ or Super+C — matches macOS / GNOME behavior.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16 · Gaming</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">sports_esports</span>Gaming Boost</h3>
-        <p>One-tap toggle forces performance profile + disables compositor blur/dim/animations. Auto-gaming daemon watches for Steam, Lutris, Wine, Proton.</p>
+        <div class="new-card-tag">v6.16.2.3.1 · Bar</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">graphic_eq</span>Music Rope Click-Through</h3>
+        <p>mask: Region {} on stringsWindow makes the audio-reactive bar overlay fully input-transparent. Browsers, editors, and file managers below the strings now receive clicks normally.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.1 · UI</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">view_sidebar</span>Cascade Control Panel</h3>
-        <p>Auto-splits into two columns when expanded content exceeds viewport height. Click-outside-to-close. Matches macOS Control Center UX.</p>
+        <div class="new-card-tag">v6.16.2.3.1 · Clock</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">schedule</span>Hover Peek + Scroll Wheel</h3>
+        <p>Peek tooltip after 350ms hover. WheelHandler cycles calendar months. Right-click cycles through clock formats. Same wheel handler attached to the open calendar itself.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.1 · Design</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">toggle_on</span>Unified HMSwitch</h3>
-        <p>New centralized pill toggle component. All 27 toggles across the shell now render identically with 150ms OutCubic animation and theme-reactive colors.</p>
+        <div class="new-card-tag">v6.16.2.3.1 · Persistence</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">save</span>Island Mode Survives Reboot</h3>
+        <p>panelStateLoaded() signal gates nuclear restart against the startup-load transient. Initial-load mode transitions no longer trigger a restart cascade — Island mode actually persists now.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.1 · Widgets</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">drag_pan</span>Smooth Widget Drag</h3>
-        <p>Root cause found after 5 iterations — _applyPositions() was resetting position mid-drag. Fixed with _anyDragActive guard. No more ghost trails.</p>
+        <div class="new-card-tag">v6.16.2.3.2 · Wallpaper</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">cloud_download</span>Default + Repo Browser</h3>
+        <p>Fresh installs auto-fetch the default wallpaper from Gekinzen/images-demo via swww. New WallpaperRepoService.qml singleton renders an "Online" tab in the picker — one-click download + apply, with offline-capable cache.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.1 · Widgets</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">color_lens</span>Widget Background Picker</h3>
-        <p>Per-widget background: Default / Theme-synced / Custom. 10 preset swatches + opacity slider for Weather and System Monitor widgets.</p>
+        <div class="new-card-tag">v6.16.2.3.2 · Input</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">mouse</span>Mouse Sensitivity Controls</h3>
+        <p>New MouseSettingsService singleton — sensitivity, scroll factor, two natural-scroll toggles. Live via hyprctl keyword, persisted to ~/.config/hypr/zen-mouse.conf. Settings page + Control Panel tab both bound to the same singleton.</p>
       </div>
     </div>
   </div>
@@ -1394,62 +1491,68 @@ footer{
     <div class="roadmap-card fade-up">
       <span class="roadmap-eyebrow">
         <span class="pulse-dot"></span>
-        Roadmap · v6.16.x
+        Roadmap · v6.16.x → v6.16.3
       </span>
-      <h3>Three phases. <strong>One destination.</strong></h3>
+      <h3>Phases shipped. <strong>Next stop, v6.16.3.</strong></h3>
       <p class="roadmap-lead">
-        The current beta is <em>beta-v12.6.16.1.11</em> — still beta because <strong>v6.16.2</strong> is the final phase before the official release. Once v6.16.2 ships, the <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px;border:1px solid rgba(96,165,250,0.18)">beta-v12.</code> prefix is dropped and the branch becomes <em>v6.x.x.x</em> on <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px;border:1px solid rgba(96,165,250,0.18)">main</code>.
+        v6.16.0 → v6.16.2 are all shipped. The current beta is <em>beta-v12.6.16.2.3.6</em> — the closeout of the v6.16.2.3 hotfix series. Once it stabilizes the prefix is dropped and the branch promotes to <em>v6.x.x.x</em> on <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px;border:1px solid rgba(96,165,250,0.18)">main</code>. <strong>v6.16.3</strong> is the next feature phase.
       </p>
 
       <div class="roadmap-grid">
-        <!-- v6.16.0 -->
+        <!-- v6.16.0 + v6.16.1 + v6.16.2 — combined "Shipped" phase -->
         <div class="roadmap-phase">
           <div class="phase-version">
-            v6.16.0
+            v6.16.0 → v6.16.2
             <span class="phase-status shipped">Shipped</span>
           </div>
-          <div class="phase-title">Panel · Power · Notifications · Lid Fix</div>
+          <div class="phase-title">Power · Multi-GPU · Polish</div>
           <ul class="phase-list">
-            <li>Battery module in <code style="font-family:var(--font-mono);font-size:0.78rem">Bar.qml</code> — icon / text / bar modes</li>
-            <li>Battery warnings: 30% warning, 10% critical → swaync</li>
-            <li>Volume change → swaync notifications</li>
-            <li>Power profiles: Saver / Balanced / Performance (persisted)</li>
+            <li>Battery module + 30%/10% swaync warnings</li>
+            <li>Power profiles (Saver / Balanced / Performance)</li>
+            <li>Gaming Boost — performance + compositor effects off</li>
+            <li>Multi-GPU widget tabs + GPU Switcher service</li>
+            <li>Volume + Brightness OSD via XF86 keys</li>
+            <li>Cascade Control Panel + Unified HMSwitch (×27)</li>
+            <li>Smooth widget drag + per-widget background picker</li>
             <li>Lid-close fix (Hyprland monitor config)</li>
-            <li>All settings persisted via <code style="font-family:var(--font-mono);font-size:0.78rem">SettingsStateV2</code></li>
           </ul>
         </div>
 
-        <!-- v6.16.1 -->
-        <div class="roadmap-phase">
-          <div class="phase-version">
-            v6.16.1
-            <span class="phase-status beta">Beta</span>
-          </div>
-          <div class="phase-title">Widgets · GPU Smart Switching</div>
-          <ul class="phase-list">
-            <li>DesktopWidgets: multi-GPU auto-detect + tabs / show-all</li>
-            <li>Multi-CPU same treatment</li>
-            <li>btop button on the upper-right</li>
-            <li>GPU switching service — integrated / dedicated</li>
-            <li>Auto / manual gaming detection</li>
-            <li>All swaync notifications wired up</li>
-          </ul>
-        </div>
-
-        <!-- v6.16.2 -->
+        <!-- v6.16.2.3.6 beta — current -->
         <div class="roadmap-phase is-current">
           <div class="phase-version">
-            v6.16.2
-            <span class="phase-status next">Next · Final phase</span>
+            v6.16.2.3.6
+            <span class="phase-status beta">Current beta</span>
           </div>
-          <div class="phase-title">StartMenu · Wallpaper · Calendar</div>
+          <div class="phase-title">Hotfix series closeout</div>
           <ul class="phase-list">
-            <li>Fuzzy finder search in StartMenu</li>
-            <li>Logo image settings + auto-fit</li>
-            <li>Right-click pin / unpin prompts</li>
-            <li>Theme sync + proper rounded corners (taskbar, startmenu, popups)</li>
-            <li>Wallpaper repo integration (<code style="font-family:var(--font-mono);font-size:0.78rem">Gekinzen/images-demo</code>) + default wallpaper</li>
-            <li>Hover calendar + click-to-open — native QML, theme-synced (no hyprclock)</li>
+            <li>Click-through Settings / Control Panel / music rope</li>
+            <li>Native QML hover calendar + scroll-wheel month cycle</li>
+            <li>Island mode survives reboot (panelStateLoaded gate)</li>
+            <li>OpacityMask avatar (replaces broken GLSL shader)</li>
+            <li>Default wallpaper auto-fetch + repo browser</li>
+            <li>Mouse sensitivity (Settings + Control Panel)</li>
+            <li>Hyprland version tooltip + DMI device info</li>
+            <li>Bulletproof installer — no more duplicate bars</li>
+          </ul>
+        </div>
+
+        <!-- v6.16.3 future -->
+        <div class="roadmap-phase">
+          <div class="phase-version">
+            v6.16.3
+            <span class="phase-status next">Future</span>
+          </div>
+          <div class="phase-title">Widget scaling · Polish · Hypridle</div>
+          <ul class="phase-list">
+            <li>Bar profile badge widget</li>
+            <li>Universal widget auto-resize — every laptop &amp; desktop, scaled by monitor DPI</li>
+            <li>Fuzzel auto-sizing per screen DPI</li>
+            <li>Display resolution dropdown enumeration fix</li>
+            <li>Power confirm icons → Material Design + theme-synced</li>
+            <li>Lid-close hypridle/hyprlock config patch</li>
+            <li>Clock hover popup parity with CPU/Memory hover (calendar with today circled, clickable month select)</li>
+            <li>Start logo image picker — Arch / CachyOS / Pop!_OS / custom</li>
           </ul>
         </div>
       </div>
@@ -1505,26 +1608,36 @@ footer{
     </div>
     <div class="arch-block fade-up">
 <pre>~/.config/quickshell/zen-shell/
-<span class="path">├── shell.qml</span>                  <span class="comment">── entry point · bar · overlays · widgets</span>
-<span class="path">├── Bar.qml</span>                    <span class="comment">── bottom bar with module loader</span>
-<span class="new">├── Battery.qml</span>                <span class="comment">── battery bar module            ← v6.16</span>
-<span class="highlight">├── ZenStrings.qml</span>             <span class="comment">── audio-reactive visualizer      ← v6.15</span>
-<span class="highlight">├── ZenScreenshotOverlay.qml</span>  <span class="comment">── region screenshot + ropes      ← v6.15</span>
-<span class="new">├── PowerProfileService.qml</span>   <span class="comment">── powerprofilesctl + gaming boost ← v6.16</span>
-<span class="new">├── GPUSwitcherService.qml</span>    <span class="comment">── GPU selection + env vars       ← v6.16</span>
-<span class="new">├── HMSwitch.qml</span>              <span class="comment">── unified pill toggle (×27)      ← v6.16.1</span>
+<span class="path">├── shell.qml</span>                    <span class="comment">── entry point · bar · overlays · widgets</span>
+<span class="path">├── Bar.qml</span>                      <span class="comment">── bottom bar with module loader</span>
+<span class="new">├── Battery.qml</span>                  <span class="comment">── battery bar module              ← v6.16</span>
+<span class="highlight">├── ZenStrings.qml</span>               <span class="comment">── audio-reactive visualizer        ← v6.15</span>
+<span class="highlight">├── ZenScreenshotOverlay.qml</span>     <span class="comment">── region screenshot + ropes        ← v6.15</span>
+<span class="new">├── PowerProfileService.qml</span>     <span class="comment">── powerprofilesctl + gaming boost  ← v6.16</span>
+<span class="new">├── GPUSwitcherService.qml</span>      <span class="comment">── GPU selection + env vars         ← v6.16</span>
+<span class="new">├── MouseSettingsService.qml</span>    <span class="comment">── sensitivity / scroll / natural   ← v6.16.2.3</span>
+<span class="new">├── WallpaperRepoService.qml</span>    <span class="comment">── GitHub API listing fetcher       ← v6.16.2.3</span>
+<span class="new">├── HMSwitch.qml</span>                <span class="comment">── unified pill toggle (×27)        ← v6.16.1</span>
+<span class="new">├── UserProfileService.qml</span>      <span class="comment">── versioned avatars + DMI info     ← v6.16.2.3.6</span>
+<span class="new">├── PanelState.qml</span>              <span class="comment">── panelStateLoaded() signal        ← v6.16.2.3.1</span>
+<span class="new">├── ZenCalendar.qml</span>             <span class="comment">── hover-aware calendar             ← v6.16.2.3.1</span>
 <span class="path">├── ThemeService.qml</span>
-<span class="path">├── SettingsStateV2.qml</span>        <span class="comment">── full hyprland state persistence</span>
+<span class="path">├── SettingsStateV2.qml</span>          <span class="comment">── full hyprland state persistence</span>
 <span class="path">├── ControlPanel.qml</span>
-<span class="path">├── ZenSettings.qml</span>            <span class="comment">── settings window · 14 pages</span>
-<span class="new">├── BatterySettingsPage.qml</span>   <span class="comment">── battery · power · GPU page     ← v6.16</span>
-<span class="path">└── ...</span>                        <span class="comment">── ~73 QML files total
+<span class="path">├── ZenSettings.qml</span>              <span class="comment">── settings window · 14 pages</span>
+<span class="new">├── BatterySettingsPage.qml</span>     <span class="comment">── battery · power · GPU page       ← v6.16</span>
+<span class="new">├── InputPage.qml</span>               <span class="comment">── mouse + scroll page              ← v6.16.2.3</span>
+<span class="path">└── ...</span>                          <span class="comment">── ~73 QML files total
 
 ~/.local/bin/
-├── zen-screenshot.sh          ── screenshot pipeline
-├── zen-volume-notify.sh       ── volume/brightness OSD
-<span class="new">├── zen-game-watcher.sh</span>       <span class="comment">── auto-gaming process detection  ← v6.16</span>
-<span class="new">└── prime-run</span>                 <span class="comment">── one-shot dGPU launcher         ← v6.16</span></span></pre>
+├── zen-screenshot.sh            ── screenshot pipeline
+├── zen-cava.sh                  ── cava wrapper for ZenStrings
+├── zen-volume-notify.sh         ── volume / brightness OSD
+<span class="new">├── zen-game-watcher.sh</span>         <span class="comment">── auto-gaming process detection    ← v6.16</span>
+<span class="new">├── zen-power-profile-restore.sh</span><span class="comment">── profile persistence              ← v6.16</span>
+<span class="new">├── zen-lid-handler.sh</span>          <span class="comment">── lid-close behavior switch        ← v6.16</span>
+<span class="new">├── prime-run</span>                   <span class="comment">── one-shot dGPU launcher           ← v6.16</span>
+└── zs-restart.sh                ── selective shell respawn helper</span></pre>
     </div>
   </div>
 </section>
@@ -1543,7 +1656,7 @@ footer{
     <div class="fade-up">
       <div class="install-tabs">
         <button class="tab-btn active" onclick="showTab(this,'stable')">Stable · v6.15.13</button>
-        <button class="tab-btn" onclick="showTab(this,'beta')">Beta · v6.16.1.11</button>
+        <button class="tab-btn" onclick="showTab(this,'beta')">Beta · v6.16.2.3.6</button>
         <button class="tab-btn" onclick="showTab(this,'backup')">Backup first</button>
       </div>
 
@@ -1574,24 +1687,27 @@ footer{
           <div class="code-dots">
             <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
           </div>
-          <span class="code-lang">bash · beta-v12.6.16.1.11 · recommended for laptop users</span>
+          <span class="code-lang">bash · beta-v12.6.16.2.3.6 · recommended for laptop users</span>
         </div>
         <div class="code-body">
 <pre><span class="c-comment"># Clone the repo</span>
 <span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
 <span class="c-cmd">cd</span> zen_barebone_alpha_development
 
-<span class="c-comment"># Switch to the beta branch (v6.16.1.11)</span>
-<span class="c-comment"># Includes: Battery, Power Profiles, GPU Switcher, Gaming Boost,</span>
-<span class="c-comment">#           Multi-GPU tabs, Cascade Control Panel, HMSwitch, OSD</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">beta-v12.6.16.1.11</span>
+<span class="c-comment"># Switch to the latest beta — v6.16.2.3.6</span>
+<span class="c-comment"># Includes click-through Settings/CP, OpacityMask avatar,</span>
+<span class="c-comment">#           default wallpaper, mouse sensitivity, single-instance install</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">beta-v12.6.16.2.3.6</span>
 
 <span class="c-comment"># --bootstrap for fresh installs (safe alongside KDE/GNOME/COSMIC)</span>
 <span class="c-cmd">chmod +x</span> install.sh
 <span class="c-cmd">./install.sh</span> <span class="c-flag">--bootstrap</span>
 
 <span class="c-comment"># Already on Hyprland? Skip --bootstrap:</span>
-<span class="c-cmd">./install.sh</span></pre>
+<span class="c-cmd">./install.sh</span>
+
+<span class="c-comment"># Verify single instance after install</span>
+<span class="c-cmd">pgrep</span> <span class="c-flag">-fa</span> <span class="c-str">'quickshell.*zen-shell'</span> | <span class="c-cmd">wc -l</span>   <span class="c-comment"># should print 1</span></pre>
         </div>
       </div>
 
@@ -1654,6 +1770,10 @@ footer{
         <div class="kb-keys"><span class="kb-key">XF86BrightnessUp/Down</span></div>
         <div class="kb-action">Brightness + OSD ← v6.16</div>
       </div>
+      <div class="kb-row new-feature">
+        <div class="kb-keys"><span class="kb-key">Hover clock</span></div>
+        <div class="kb-action">Peek + scroll wheel cycles months ← v6.16.2.3.1</div>
+      </div>
       <div class="kb-row">
         <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">T</span></div>
         <div class="kb-action">Terminal</div>
@@ -1661,6 +1781,70 @@ footer{
       <div class="kb-row">
         <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">B</span></div>
         <div class="kb-action">System monitor (btm)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider"/>
+
+<!-- LEGACY ARCHIVE — 2025 ALPHA -->
+<section class="archive-section" id="archive">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="archive-tag">Historical Reference</div>
+      <h2>Legacy archive · <strong>2025 Alpha</strong></h2>
+      <p>The original Python / GTK4 / Waybar stack — preserved for posterity.</p>
+    </div>
+
+    <div class="archive-note fade-up">
+      These assets were captured on <strong>Hyprland 0.52</strong> and document the pre-Quickshell lineage of the project. Current Zen Shell runs on <strong>Hyprland 0.54+</strong> with a unified QML architecture — see the <a href="#showcase">Showcase</a> above for the latest look. The deprecated source is preserved at <code>zen-alpha-deprecated-0.52/</code> in the <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/zen-alpha-deprecated-0.52" target="_blank">archive branch</a>.
+    </div>
+
+    <div class="archive-hero fade-up">
+      <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" alt="Alpha main demo" loading="lazy"/>
+    </div>
+
+    <div class="archive-grid fade-up">
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" alt="Alpha theme switching" loading="lazy"/>
+        <div class="archive-caption">// Theme switching</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" alt="Alpha wallpaper picker" loading="lazy"/>
+        <div class="archive-caption">// Wallpaper picker</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" alt="Alpha panel modes" loading="lazy"/>
+        <div class="archive-caption">// Panel modes</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" alt="Alpha desktop looks" loading="lazy"/>
+        <div class="archive-caption">// Desktop looks</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" alt="Alpha dock" loading="lazy"/>
+        <div class="archive-caption">// Dock / taskbar</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" alt="Alpha control center" loading="lazy"/>
+        <div class="archive-caption">// Control center</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" alt="Alpha animation editor" loading="lazy"/>
+        <div class="archive-caption">// Animation editor</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter%20power%20profile.png" alt="Alpha power profile" loading="lazy"/>
+        <div class="archive-caption">// Power profile</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" alt="Alpha appearance settings" loading="lazy"/>
+        <div class="archive-caption">// Appearance settings</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.png" alt="Alpha theme engine" loading="lazy"/>
+        <div class="archive-caption">// Theme engine</div>
       </div>
     </div>
   </div>
@@ -1693,6 +1877,7 @@ footer{
       <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" target="_blank">GitHub</a>
       <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/issues" target="_blank">Issues</a>
       <a href="https://github.com/Gekinzen/images-demo/tree/main/wallpapers" target="_blank">Wallpapers</a>
+      <a href="#archive">Alpha Archive</a>
       <a href="https://buymeacoffee.com/zenpy" target="_blank">Support</a>
     </div>
   </div>

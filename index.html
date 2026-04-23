@@ -16,712 +16,180 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#080808;
-  --bg1:#0e0e0e;
-  --bg2:#141414;
-  --surface:rgba(255,255,255,0.04);
-  --surface-hover:rgba(255,255,255,0.07);
-  --border:rgba(255,255,255,0.08);
-  --border-hover:rgba(255,255,255,0.14);
-  --text:#e8e8e8;
-  --muted:#6b7280;
-  --muted2:#4b5563;
-  --accent:#60a5fa;
-  --accent2:#a78bfa;
-  --accent-dim:rgba(96,165,250,0.15);
-  --accent2-dim:rgba(167,139,250,0.12);
-  --green:#34d399;
-  --red:#f87171;
-  --yellow:#fbbf24;
-  --orange:#fb923c;
-  --font-display:'Afacad Flux',sans-serif;
-  --font-body:'Afacad Flux',sans-serif;
-  --font-mono:'JetBrains Mono',monospace;
-
-  /* Luxury typography tokens */
-  --tracking-tightest:-0.045em;
-  --tracking-tighter:-0.03em;
-  --tracking-tight:-0.015em;
-  --tracking-normal:0;
-  --tracking-wide:0.04em;
-  --tracking-wider:0.08em;
-  --tracking-widest:0.16em;
-  --leading-tight:1.05;
-  --leading-snug:1.25;
-  --leading-normal:1.55;
-  --leading-relaxed:1.75;
-
-  /* Fluid type scale (clamped for responsive) */
-  --fs-hero:clamp(2.6rem,8.5vw,6rem);
-  --fs-h2:clamp(1.75rem,4.5vw,2.9rem);
-  --fs-h3:clamp(1.1rem,2vw,1.35rem);
-  --fs-lead:clamp(1rem,1.4vw,1.2rem);
-  --fs-body:clamp(0.95rem,1vw,1rem);
-}
-@supports (font-variation-settings:normal){
-  :root{
-    --font-display:'Afacad Flux',sans-serif;
-    --font-body:'Afacad Flux',sans-serif;
-  }
+  --bg:#080808;--bg1:#0e0e0e;--bg2:#141414;
+  --surface:rgba(255,255,255,0.04);--surface-hover:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.08);--border-hover:rgba(255,255,255,0.14);
+  --text:#e8e8e8;--muted:#6b7280;--muted2:#4b5563;
+  --accent:#60a5fa;--accent2:#a78bfa;
+  --accent-dim:rgba(96,165,250,0.15);--accent2-dim:rgba(167,139,250,0.12);
+  --green:#34d399;--red:#f87171;--yellow:#fbbf24;--orange:#fb923c;
+  --font-display:'Afacad Flux',sans-serif;--font-body:'Afacad Flux',sans-serif;--font-mono:'JetBrains Mono',monospace;
+  --tracking-tightest:-0.045em;--tracking-tighter:-0.03em;--tracking-tight:-0.015em;--tracking-normal:0;
+  --tracking-wide:0.04em;--tracking-wider:0.08em;--tracking-widest:0.16em;
+  --leading-tight:1.05;--leading-snug:1.25;--leading-normal:1.55;--leading-relaxed:1.75;
+  --fs-hero:clamp(2.6rem,8.5vw,6rem);--fs-h2:clamp(1.75rem,4.5vw,2.9rem);
+  --fs-h3:clamp(1.1rem,2vw,1.35rem);--fs-lead:clamp(1rem,1.4vw,1.2rem);--fs-body:clamp(0.95rem,1vw,1rem);
 }
 html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font-body);
-  font-size:var(--fs-body);
-  line-height:var(--leading-relaxed);
-  font-weight:300;
-  letter-spacing:var(--tracking-tight);
-  font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"ss01" 1;
-  font-variant-numeric:lining-nums tabular-nums;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeLegibility;
-  overflow-x:hidden;
-}
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(96,165,250,0.06),transparent),
-             radial-gradient(ellipse 60% 40% at 80% 80%,rgba(167,139,250,0.05),transparent);
-  pointer-events:none;
-  z-index:0;
-}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--leading-relaxed);font-weight:300;letter-spacing:var(--tracking-tight);font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"ss01" 1;font-variant-numeric:lining-nums tabular-nums;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(96,165,250,0.06),transparent),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(167,139,250,0.05),transparent);pointer-events:none;z-index:0}
 
-/* NAV */
-nav{
-  position:fixed;
-  top:0;left:0;right:0;
-  z-index:100;
-  padding:0 2rem;
-  height:60px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(8,8,8,0.7);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-.nav-logo{
-  font-family:var(--font-display);
-  font-size:1.1rem;
-  font-weight:700;
-  letter-spacing:-0.01em;
-  color:var(--text);
-  text-decoration:none;
-  display:flex;align-items:center;gap:0.6rem;
-}
-.nav-logo span{
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.nav-badge{
-  font-family:var(--font-mono);
-  font-size:0.7rem;
-  padding:2px 8px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:99px;
-  color:var(--muted);
-}
-.nav-links{
-  display:flex;align-items:center;gap:1.5rem;
-  list-style:none;
-}
-.nav-links a{
-  color:var(--muted);
-  text-decoration:none;
-  font-size:0.875rem;
-  transition:color 0.2s;
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,8,8,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--font-display);font-size:1.1rem;font-weight:700;letter-spacing:-0.01em;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.6rem}
+.nav-logo span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-badge{font-family:var(--font-mono);font-size:0.7rem;padding:2px 8px;background:var(--surface);border:1px solid var(--border);border-radius:99px;color:var(--muted)}
+.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.875rem;transition:color 0.2s}
 .nav-links a:hover{color:var(--text)}
-.nav-cta{
-  display:flex;align-items:center;gap:0.75rem;
-}
-.btn{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  padding:0.45rem 1.1rem;
-  border-radius:8px;
-  font-family:var(--font-body);
-  font-size:0.875rem;
-  font-weight:500;
-  text-decoration:none;
-  cursor:pointer;
-  transition:all 0.2s;
-  border:none;
-}
-.btn-ghost{
-  background:var(--surface);
-  color:var(--text);
-  border:1px solid var(--border);
-}
+.nav-cta{display:flex;align-items:center;gap:0.75rem}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.45rem 1.1rem;border-radius:8px;font-family:var(--font-body);font-size:0.875rem;font-weight:500;text-decoration:none;cursor:pointer;transition:all 0.2s;border:none}
+.btn-ghost{background:var(--surface);color:var(--text);border:1px solid var(--border)}
 .btn-ghost:hover{background:var(--surface-hover);border-color:var(--border-hover)}
-.btn-primary{
-  background:linear-gradient(135deg,#3b82f6,#8b5cf6);
-  color:#fff;
-}
+.btn-primary{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
 .btn-primary:hover{opacity:0.88;transform:translateY(-1px)}
 .btn svg{width:16px;height:16px;flex-shrink:0}
 
-/* HERO */
-.hero{
-  position:relative;
-  padding:60px 2rem 80px;
-  text-align:center;
-  z-index:1;
-  max-width:1100px;
-  margin:0 auto;
-}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  font-family:var(--font-mono);
-  font-size:0.75rem;
-  color:var(--accent);
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  padding:4px 14px;
-  background:var(--accent-dim);
-  border:1px solid rgba(96,165,250,0.2);
-  border-radius:99px;
-  margin-bottom:1.5rem;
-}
-.hero-eyebrow::before{
-  content:'';
-  width:6px;height:6px;
-  border-radius:50%;
-  background:var(--accent);
-  animation:pulse 2s infinite;
-}
+.hero{position:relative;padding:60px 2rem 80px;text-align:center;z-index:1;max-width:1100px;margin:0 auto}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.75rem;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;padding:4px 14px;background:var(--accent-dim);border:1px solid rgba(96,165,250,0.2);border-radius:99px;margin-bottom:1.5rem}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.hero h1{
-  font-family:var(--font-display);
-  font-size:var(--fs-hero);
-  font-weight:200;
-  line-height:var(--leading-tight);
-  letter-spacing:var(--tracking-tightest);
-  color:#fff;
-  margin-bottom:1.5rem;
-  font-feature-settings:"kern" 1,"liga" 1,"ss01" 1,"cv01" 1;
-}
-.hero h1 strong,.hero h1 b{
-  font-weight:700;
-  letter-spacing:var(--tracking-tighter);
-}
-.hero h1 .gradient-text{
-  background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 60%,#ec4899 100%);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.hero-sub{
-  font-size:var(--fs-lead);
-  color:var(--muted);
-  max-width:580px;
-  margin:0 auto 2.5rem;
-  font-weight:300;
-  line-height:var(--leading-normal);
-  letter-spacing:var(--tracking-tight);
-}
-.hero-sub em{
-  font-style:italic;
-  color:var(--text);
-  font-weight:400;
-}
-.hero-actions{
-  display:flex;align-items:center;justify-content:center;
-  gap:1rem;
-  margin-bottom:1.5rem;
-  flex-wrap:wrap;
-}
-.hero-install{
-  display:flex;align-items:center;gap:0.75rem;
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:0.6rem 1rem 0.6rem 1.25rem;
-  font-family:var(--font-mono);
-  font-size:0.85rem;
-  color:var(--muted);
-}
+.hero h1{font-family:var(--font-display);font-size:var(--fs-hero);font-weight:200;line-height:var(--leading-tight);letter-spacing:var(--tracking-tightest);color:#fff;margin-bottom:1.5rem;font-feature-settings:"kern" 1,"liga" 1,"ss01" 1,"cv01" 1}
+.hero h1 strong{font-weight:700;letter-spacing:var(--tracking-tighter)}
+.hero h1 .gradient-text{background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 60%,#ec4899 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:var(--fs-lead);color:var(--muted);max-width:580px;margin:0 auto 2.5rem;font-weight:300;line-height:var(--leading-normal);letter-spacing:var(--tracking-tight)}
+.hero-sub em{font-style:italic;color:var(--text);font-weight:400}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.hero-install{display:flex;align-items:center;gap:0.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:0.6rem 1rem 0.6rem 1.25rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--muted)}
 .hero-install code{color:var(--text)}
 .hero-install code .cmd{color:var(--accent)}
-.copy-btn{
-  background:var(--surface);
-  border:1px solid var(--border);
-  color:var(--muted);
-  border-radius:6px;
-  padding:4px 10px;
-  font-size:0.75rem;
-  cursor:pointer;
-  font-family:var(--font-body);
-  transition:all 0.2s;
-}
+.copy-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 10px;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all 0.2s}
 .copy-btn:hover{background:var(--surface-hover);color:var(--text)}
-.hero-badges{
-  display:flex;align-items:center;justify-content:center;
-  gap:0.5rem;flex-wrap:wrap;
-  margin-top:1rem;
-}
-.badge{
-  display:inline-flex;align-items:center;gap:0.35rem;
-  font-family:var(--font-mono);
-  font-size:0.7rem;
-  padding:3px 10px;
-  border-radius:99px;
-  border:1px solid var(--border);
-  color:var(--muted);
-  background:var(--surface);
-}
+.hero-badges{display:flex;align-items:center;justify-content:center;gap:0.5rem;flex-wrap:wrap;margin-top:1rem}
+.badge{display:inline-flex;align-items:center;gap:0.35rem;font-family:var(--font-mono);font-size:0.7rem;padding:3px 10px;border-radius:99px;border:1px solid var(--border);color:var(--muted);background:var(--surface)}
 .badge.blue{color:var(--accent);border-color:rgba(96,165,250,0.25);background:var(--accent-dim)}
 .badge.purple{color:var(--accent2);border-color:rgba(167,139,250,0.25);background:var(--accent2-dim)}
 .badge.green{color:var(--green);border-color:rgba(52,211,153,0.2);background:rgba(52,211,153,0.08)}
 .badge.orange{color:var(--orange);border-color:rgba(251,146,60,0.25);background:rgba(251,146,60,0.1)}
+.badge.red{color:var(--red);border-color:rgba(248,113,113,0.25);background:rgba(248,113,113,0.08)}
 
-/* HERO IMAGE */
-.hero-media{
-  position:relative;
-  margin:3.5rem auto 0;
-  max-width:960px;
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid var(--border);
-  box-shadow:0 0 0 1px rgba(255,255,255,0.03),
-             0 40px 100px rgba(0,0,0,0.7),
-             0 0 60px rgba(96,165,250,0.06);
-}
-.hero-media img{
-  width:100%;
-  display:block;
-}
-.hero-media-glow{
-  position:absolute;
-  inset:-1px;
-  border-radius:16px;
-  background:linear-gradient(135deg,rgba(96,165,250,0.08),transparent 40%,rgba(167,139,250,0.08));
-  pointer-events:none;
-}
-.scroll-hint{
-  position:absolute;
-  bottom:-40px;left:50%;
-  transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;
-  gap:6px;
-  opacity:0.35;
-  animation:bounce 2s infinite;
-}
-.scroll-hint span{font-size:0.7rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase}
-@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(5px)}}
+.hero-media{position:relative;margin:3.5rem auto 0;max-width:960px;border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 0 0 1px rgba(255,255,255,0.03),0 40px 100px rgba(0,0,0,0.7),0 0 60px rgba(96,165,250,0.06)}
+.hero-media img{width:100%;display:block}
+.hero-media-glow{position:absolute;inset:-1px;border-radius:16px;background:linear-gradient(135deg,rgba(96,165,250,0.08),transparent 40%,rgba(167,139,250,0.08));pointer-events:none}
 
-/* SECTIONS */
 section{position:relative;z-index:1}
 .container{max-width:1100px;margin:0 auto;padding:0 2rem}
-.section-header{
-  text-align:center;
-  margin-bottom:4rem;
-}
-.section-tag{
-  display:inline-block;
-  font-family:var(--font-mono);
-  font-size:0.7rem;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:0.75rem;
-}
-.section-header h2{
-  font-family:var(--font-display);
-  font-size:var(--fs-h2);
-  font-weight:300;
-  letter-spacing:var(--tracking-tighter);
-  color:#fff;
-  line-height:var(--leading-snug);
-  font-feature-settings:"kern" 1,"liga" 1,"ss01" 1;
-}
-.section-header h2 strong,.section-header h2 b{font-weight:600}
-.section-header p{
-  font-size:1rem;
-  color:var(--muted);
-  max-width:500px;
-  margin:0.75rem auto 0;
-}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-tag{display:inline-block;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem}
+.section-header h2{font-family:var(--font-display);font-size:var(--fs-h2);font-weight:300;letter-spacing:var(--tracking-tighter);color:#fff;line-height:var(--leading-snug);font-feature-settings:"kern" 1,"liga" 1,"ss01" 1}
+.section-header h2 strong{font-weight:600}
+.section-header p{font-size:1rem;color:var(--muted);max-width:500px;margin:0.75rem auto 0}
 
-/* STATS BAR */
-.stats-bar{
-  padding:3rem 0;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  background:var(--bg1);
-  margin:5rem 0;
-}
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:2rem;
-  text-align:center;
-}
-.stat-val{
-  font-family:var(--font-display);
-  font-size:clamp(1.75rem,3.5vw,2.4rem);
-  font-weight:300;
-  letter-spacing:var(--tracking-tighter);
-  background:linear-gradient(135deg,#fff,rgba(255,255,255,0.55));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  font-variant-numeric:lining-nums tabular-nums;
-}
+.stats-bar{padding:3rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg1);margin:5rem 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+.stat-val{font-family:var(--font-display);font-size:clamp(1.75rem,3.5vw,2.4rem);font-weight:300;letter-spacing:var(--tracking-tighter);background:linear-gradient(135deg,#fff,rgba(255,255,255,0.55));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-variant-numeric:lining-nums tabular-nums}
 .stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.25rem}
 
-/* FEATURE GRID */
 .features-section{padding:6rem 0}
-.features-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  border-radius:16px;
-  overflow:hidden;
-}
-.feature-card{
-  background:var(--bg1);
-  padding:2rem;
-  transition:background 0.2s;
-}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.feature-card{background:var(--bg1);padding:2rem;transition:background 0.2s}
 .feature-card:hover{background:var(--bg2)}
-.feature-icon{
-  width:40px;height:40px;
-  border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;
-  margin-bottom:1.25rem;
-  background:var(--surface);
-  border:1px solid var(--border);
-}
-.feature-card h3{
-  font-family:var(--font-display);
-  font-size:var(--fs-h3);
-  font-weight:500;
-  color:#fff;
-  margin-bottom:0.5rem;
-  letter-spacing:var(--tracking-tight);
-}
-.feature-card p{
-  font-size:0.875rem;
-  color:var(--muted);
-  line-height:1.6;
-}
-.feature-version{
-  font-family:var(--font-mono);
-  font-size:0.65rem;
-  color:var(--accent2);
-  margin-top:0.75rem;
-  opacity:0.7;
-}
+.feature-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1.25rem;background:var(--surface);border:1px solid var(--border)}
+.feature-card h3{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:500;color:#fff;margin-bottom:0.5rem;letter-spacing:var(--tracking-tight)}
+.feature-card p{font-size:0.875rem;color:var(--muted);line-height:1.6}
+.feature-version{font-family:var(--font-mono);font-size:0.65rem;color:var(--accent2);margin-top:0.75rem;opacity:0.7}
 
-/* VIDEO DEMO */
 .demo-section{padding:6rem 0}
-.demo-wrapper{
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid var(--border);
-  box-shadow:0 40px 100px rgba(0,0,0,0.5);
-  position:relative;
-}
-.demo-wrapper iframe{
-  width:100%;
-  aspect-ratio:16/9;
-  display:block;
-  border:none;
-}
+.demo-wrapper{border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 40px 100px rgba(0,0,0,0.5);position:relative}
+.demo-wrapper iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
 
-/* SCREENSHOTS */
-.gallery-section{padding:6rem 0}
-.gallery-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1.5rem;
-}
-.gallery-item{
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid var(--border);
-  transition:transform 0.3s,border-color 0.3s;
-}
-.gallery-item:hover{
-  transform:translateY(-3px);
-  border-color:var(--border-hover);
-}
-.gallery-item img{width:100%;display:block}
-.gallery-item.full{grid-column:1/-1}
-.gallery-caption{
-  padding:0.75rem 1rem;
-  background:var(--bg2);
-  font-size:0.8rem;
-  color:var(--muted);
-  font-family:var(--font-mono);
-  border-top:1px solid var(--border);
-}
-
-/* THEMES */
-.themes-section{padding:6rem 0}
-.themes-list{
-  display:flex;
-  flex-wrap:wrap;
-  gap:0.5rem;
-  justify-content:center;
-}
-.theme-chip{
-  padding:6px 14px;
-  border-radius:99px;
-  font-size:0.8rem;
-  border:1px solid var(--border);
-  color:var(--muted);
-  background:var(--surface);
-  font-family:var(--font-mono);
-  transition:all 0.2s;
-}
-.theme-chip:hover{
-  border-color:var(--border-hover);
-  color:var(--text);
-  background:var(--surface-hover);
-}
-
-/* WHATS NEW */
 .new-section{padding:6rem 0}
-.new-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:1rem;
-}
-.new-card{
-  background:var(--bg1);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:1.5rem;
-  transition:border-color 0.2s;
-}
+.new-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.new-card{background:var(--bg1);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color 0.2s}
 .new-card:hover{border-color:var(--border-hover)}
-.new-card-tag{
-  font-family:var(--font-mono);
-  font-size:0.65rem;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:0.6rem;
-}
-.new-card h3{
-  font-family:var(--font-display);
-  font-size:0.975rem;
-  font-weight:600;
-  color:#fff;
-  margin-bottom:0.5rem;
-}
+.new-card-tag{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:0.6rem}
+.new-card h3{font-family:var(--font-display);font-size:0.975rem;font-weight:600;color:#fff;margin-bottom:0.5rem}
 .new-card p{font-size:0.85rem;color:var(--muted);line-height:1.6}
 
-/* ROADMAP — v6.16.x next phase callout */
 .roadmap-section{padding:5rem 0}
-.roadmap-card{
-  position:relative;
-  background:linear-gradient(180deg,rgba(167,139,250,0.04) 0%,transparent 100%),var(--bg1);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:clamp(2rem,4vw,3.5rem);
-  overflow:hidden;
-}
-.roadmap-card::before{
-  content:'';
-  position:absolute;top:-1px;left:50%;transform:translateX(-50%);
-  width:60%;height:1px;
-  background:linear-gradient(90deg,transparent,var(--accent2),transparent);
-  opacity:0.5;
-}
-.roadmap-eyebrow{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  font-family:var(--font-mono);
-  font-size:0.7rem;
-  letter-spacing:var(--tracking-wider);
-  text-transform:uppercase;
-  color:var(--accent2);
-  padding:4px 12px;
-  background:var(--accent2-dim);
-  border:1px solid rgba(167,139,250,0.2);
-  border-radius:99px;
-  margin-bottom:1.25rem;
-}
-.roadmap-eyebrow .pulse-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--accent2);
-  animation:pulse 2s infinite;
-}
-.roadmap-card h3{
-  font-family:var(--font-display);
-  font-size:clamp(1.5rem,3.5vw,2.25rem);
-  font-weight:200;
-  letter-spacing:var(--tracking-tightest);
-  color:#fff;
-  line-height:var(--leading-tight);
-  margin-bottom:0.85rem;
-}
+.roadmap-card{position:relative;background:linear-gradient(180deg,rgba(167,139,250,0.04) 0%,transparent 100%),var(--bg1);border:1px solid var(--border);border-radius:18px;padding:clamp(2rem,4vw,3.5rem);overflow:hidden}
+.roadmap-card::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--accent2),transparent);opacity:0.5}
+.roadmap-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--accent2);padding:4px 12px;background:var(--accent2-dim);border:1px solid rgba(167,139,250,0.2);border-radius:99px;margin-bottom:1.25rem}
+.roadmap-eyebrow .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}
+.roadmap-card h3{font-family:var(--font-display);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:200;letter-spacing:var(--tracking-tightest);color:#fff;line-height:var(--leading-tight);margin-bottom:0.85rem}
 .roadmap-card h3 strong{font-weight:600}
-.roadmap-card .roadmap-lead{
-  font-size:var(--fs-lead);
-  color:var(--muted);
-  font-weight:300;
-  letter-spacing:var(--tracking-tight);
-  max-width:680px;
-  margin-bottom:2.25rem;
-  line-height:var(--leading-normal);
-}
+.roadmap-card .roadmap-lead{font-size:var(--fs-lead);color:var(--muted);font-weight:300;letter-spacing:var(--tracking-tight);max-width:680px;margin-bottom:2.25rem;line-height:var(--leading-normal)}
 .roadmap-card .roadmap-lead em{font-style:italic;color:var(--text);font-weight:400}
-.roadmap-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow:hidden;
-}
-.roadmap-phase{
-  background:var(--bg2);
-  padding:1.5rem;
-  position:relative;
-  transition:background 0.25s ease;
-}
+.roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.roadmap-phase{background:var(--bg2);padding:1.5rem;position:relative;transition:background 0.25s ease}
 .roadmap-phase:hover{background:var(--bg1)}
-.roadmap-phase.is-current{
-  background:linear-gradient(180deg,rgba(52,211,153,0.06) 0%,var(--bg2) 100%);
-}
-.roadmap-phase.is-alpha{
-  background:linear-gradient(180deg,rgba(251,146,60,0.05) 0%,var(--bg2) 100%);
-}
-.phase-version{
-  font-family:var(--font-mono);
-  font-size:0.7rem;
-  letter-spacing:var(--tracking-wider);
-  color:var(--muted);
-  margin-bottom:0.4rem;
-}
-.phase-status{
-  display:inline-block;
-  font-family:var(--font-mono);
-  font-size:0.6rem;
-  letter-spacing:var(--tracking-wider);
-  text-transform:uppercase;
-  padding:2px 7px;
-  border-radius:99px;
-  margin-left:0.4rem;
-  vertical-align:middle;
-}
+.roadmap-phase.is-current{background:linear-gradient(180deg,rgba(52,211,153,0.06) 0%,var(--bg2) 100%)}
+.roadmap-phase.is-next{background:linear-gradient(180deg,rgba(167,139,250,0.05) 0%,var(--bg2) 100%)}
+.phase-version{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:var(--tracking-wider);color:var(--muted);margin-bottom:0.4rem}
+.phase-status{display:inline-block;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:var(--tracking-wider);text-transform:uppercase;padding:2px 7px;border-radius:99px;margin-left:0.4rem;vertical-align:middle}
 .phase-status.shipped{color:var(--green);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2)}
 .phase-status.stable{color:var(--green);background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.3)}
-.phase-status.beta{color:var(--yellow);background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25)}
-.phase-status.alpha{color:var(--orange);background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.25)}
 .phase-status.next{color:var(--accent2);background:var(--accent2-dim);border:1px solid rgba(167,139,250,0.25)}
-.phase-status.progress{color:var(--accent);background:var(--accent-dim);border:1px solid rgba(96,165,250,0.25)}
-.phase-title{
-  font-family:var(--font-display);
-  font-size:1rem;
-  font-weight:500;
-  color:#fff;
-  letter-spacing:var(--tracking-tight);
-  margin-bottom:0.65rem;
-}
+.phase-title{font-family:var(--font-display);font-size:1rem;font-weight:500;color:#fff;letter-spacing:var(--tracking-tight);margin-bottom:0.65rem}
 .phase-list{list-style:none;padding:0;margin:0}
-.phase-list li{
-  font-size:0.8rem;
-  color:var(--muted);
-  line-height:1.55;
-  padding-left:1.1rem;
-  position:relative;
-  margin-bottom:0.35rem;
-}
-.phase-list li::before{
-  content:'';
-  position:absolute;
-  left:0;top:0.55rem;
-  width:5px;height:5px;
-  border-radius:50%;
-  background:var(--muted2);
-}
+.phase-list li{font-size:0.8rem;color:var(--muted);line-height:1.55;padding-left:1.1rem;position:relative;margin-bottom:0.35rem}
+.phase-list li::before{content:'';position:absolute;left:0;top:0.55rem;width:5px;height:5px;border-radius:50%;background:var(--muted2)}
 .roadmap-phase.is-current .phase-list li::before{background:var(--green)}
-.roadmap-phase.is-alpha .phase-list li::before{background:var(--orange)}
-.roadmap-note{
-  margin-top:1.75rem;
-  padding-top:1.5rem;
-  border-top:1px dashed var(--border);
-  font-size:0.85rem;
-  color:var(--muted);
-  font-style:italic;
-  line-height:var(--leading-normal);
-}
-.roadmap-note code{
-  font-family:var(--font-mono);
-  font-size:0.78rem;
-  font-style:normal;
-  color:var(--accent);
-  background:var(--accent-dim);
-  padding:1px 7px;
-  border-radius:5px;
-  border:1px solid rgba(96,165,250,0.18);
-}
+.roadmap-phase.is-next .phase-list li::before{background:var(--accent2)}
+.roadmap-note{margin-top:1.75rem;padding-top:1.5rem;border-top:1px dashed var(--border);font-size:0.85rem;color:var(--muted);font-style:italic;line-height:var(--leading-normal)}
+.roadmap-note code{font-family:var(--font-mono);font-size:0.78rem;font-style:normal;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px;border:1px solid rgba(96,165,250,0.18)}
 
-/* ARCHITECTURE */
-.arch-section{padding:6rem 0}
-.arch-block{
-  background:var(--bg1);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:1.5rem;
-  font-family:var(--font-mono);
-  font-size:0.8rem;
-  line-height:2;
-  color:var(--muted);
-  overflow-x:auto;
-}
-.arch-block .path{color:var(--text)}
-.arch-block .comment{color:var(--muted2)}
-.arch-block .highlight{color:var(--accent)}
-.arch-block .new{color:var(--accent2)}
-.arch-block .newer{color:var(--orange)}
+.keybinds-section{padding:6rem 0}
+.kb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem}
+.kb-row{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border-radius:8px;background:var(--bg1);border:1px solid var(--border);gap:1rem}
+.kb-keys{display:flex;gap:4px;flex-shrink:0}
+.kb-key{font-family:var(--font-mono);font-size:0.7rem;padding:2px 8px;background:var(--bg2);border:1px solid var(--border-hover);border-radius:5px;color:var(--text)}
+.kb-action{font-size:0.82rem;color:var(--muted);text-align:right}
+.kb-row.new-feature .kb-action{color:var(--accent2)}
+.kb-row.panic{border-color:rgba(248,113,113,0.3);background:rgba(248,113,113,0.04)}
+.kb-row.panic .kb-key{border-color:rgba(248,113,113,0.4);color:var(--red)}
+.kb-row.panic .kb-action{color:var(--red)}
 
-/* INSTALL */
+.cta-section{padding:8rem 2rem;text-align:center;position:relative;z-index:1}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(96,165,250,0.07),transparent 70%);pointer-events:none}
+.cta-section h2{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:200;letter-spacing:var(--tracking-tightest);color:#fff;margin-bottom:1rem;line-height:var(--leading-tight)}
+.cta-section h2 strong{font-weight:700}
+.cta-section p{font-size:1rem;color:var(--muted);max-width:480px;margin:0 auto 2.5rem}
+.cta-actions{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
+.btn-large{padding:0.7rem 1.75rem;font-size:1rem}
+
+footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;z-index:1}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+.footer-left{font-size:0.85rem;color:var(--muted)}
+.footer-left a{color:var(--accent);text-decoration:none}
+.footer-right{display:flex;gap:1.25rem}
+.footer-right a{font-size:0.82rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-right a:hover{color:var(--text)}
+
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1;vertical-align:middle;user-select:none}
+.feature-icon .material-symbols-outlined{font-size:22px}
+.btn .material-symbols-outlined{font-size:17px}
+.nav-logo .material-symbols-outlined{font-size:18px;color:var(--accent2)}
+
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+.section-divider{border:none;border-top:1px solid var(--border);margin:0}
+
+.release-banner{position:relative;z-index:50;margin-top:60px;background:linear-gradient(90deg,rgba(52,211,153,0.06),rgba(167,139,250,0.06));border-bottom:1px solid rgba(255,255,255,0.06);padding:10px 2rem;display:flex;align-items:center;justify-content:center;gap:1rem 1.25rem;flex-wrap:wrap;text-align:center}
+.rb-item{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--muted);white-space:nowrap}
+.rb-item-text{display:inline-flex;align-items:center;gap:0.4rem;white-space:nowrap}
+.rb-tag{font-family:var(--font-mono);font-size:0.65rem;padding:2px 9px;border-radius:99px;font-weight:500;letter-spacing:var(--tracking-wider);white-space:nowrap}
+.rb-tag.stable{background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);color:var(--green)}
+.rb-tag.next{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);color:var(--accent2)}
+.rb-tag.hint{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);color:var(--accent2)}
+.rb-link{color:var(--accent)!important;text-decoration:none;font-family:var(--font-mono);font-size:0.75rem;transition:opacity 0.2s;white-space:nowrap}
+.rb-link:hover{opacity:0.7}
+.rb-sep{color:var(--muted2);font-size:0.7rem;user-select:none}
+.rb-sep-major{color:var(--border-hover);font-weight:200;font-size:0.95rem;user-select:none;opacity:0.6}
+
 .install-section{padding:6rem 0}
-.install-tabs{
-  display:flex;gap:0.5rem;
-  margin-bottom:1.5rem;
-}
-.tab-btn{
-  padding:6px 16px;
-  border-radius:99px;
-  font-size:0.85rem;
-  border:1px solid var(--border);
-  background:var(--surface);
-  color:var(--muted);
-  cursor:pointer;
-  font-family:var(--font-body);
-  transition:all 0.2s;
-}
-.tab-btn.active{
-  background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2));
-  border-color:rgba(96,165,250,0.3);
-  color:var(--accent);
-}
-.code-block{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow:hidden;
-}
-.code-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0.75rem 1.25rem;
-  border-bottom:1px solid var(--border);
-}
+.code-block{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.25rem;border-bottom:1px solid var(--border)}
 .code-dots{display:flex;gap:6px}
 .code-dot{width:10px;height:10px;border-radius:50%}
 .code-dot:nth-child(1){background:#ff5f57}
@@ -735,525 +203,71 @@ section{position:relative;z-index:1}
 .code-body pre .c-flag{color:var(--accent2)}
 .code-body pre .c-str{color:var(--green)}
 
-/* KEYBINDS */
-.keybinds-section{padding:6rem 0}
-.kb-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:0.5rem;
-}
-.kb-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0.75rem 1rem;
-  border-radius:8px;
-  background:var(--bg1);
-  border:1px solid var(--border);
-  gap:1rem;
-}
-.kb-keys{display:flex;gap:4px;flex-shrink:0}
-.kb-key{
-  font-family:var(--font-mono);
-  font-size:0.7rem;
-  padding:2px 8px;
-  background:var(--bg2);
-  border:1px solid var(--border-hover);
-  border-radius:5px;
-  color:var(--text);
-}
-.kb-action{font-size:0.82rem;color:var(--muted);text-align:right}
-.kb-row.new-feature .kb-action{color:var(--accent2)}
-
-/* DEPS */
-.deps-section{padding:6rem 0}
-.deps-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:0.75rem;
-}
-.dep-pill{
-  display:flex;align-items:center;gap:0.75rem;
-  padding:0.75rem 1rem;
-  background:var(--bg1);
-  border:1px solid var(--border);
-  border-radius:8px;
-}
-.dep-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dep-dot.req{background:var(--accent)}
-.dep-dot.rec{background:var(--muted2)}
-.dep-name{font-family:var(--font-mono);font-size:0.8rem;color:var(--text)}
-.dep-desc{font-size:0.75rem;color:var(--muted);margin-left:auto}
-
-/* CTA */
-.cta-section{
-  padding:8rem 2rem;
-  text-align:center;
-  position:relative;
-  z-index:1;
-}
-.cta-section::before{
-  content:'';
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:600px;height:300px;
-  background:radial-gradient(ellipse,rgba(96,165,250,0.07),transparent 70%);
-  pointer-events:none;
-}
-.cta-section h2{
-  font-family:var(--font-display);
-  font-size:clamp(2rem,5vw,3.5rem);
-  font-weight:200;
-  letter-spacing:var(--tracking-tightest);
-  color:#fff;
-  margin-bottom:1rem;
-  line-height:var(--leading-tight);
-}
-.cta-section h2 strong{font-weight:700}
-.cta-section p{
-  font-size:1rem;
-  color:var(--muted);
-  max-width:480px;
-  margin:0 auto 2.5rem;
-}
-.cta-actions{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:1rem;
-  flex-wrap:wrap;
-}
-.btn-large{padding:0.7rem 1.75rem;font-size:1rem}
-
-/* FOOTER */
-footer{
-  border-top:1px solid var(--border);
-  padding:2.5rem 2rem;
-  position:relative;z-index:1;
-}
-.footer-inner{
-  max-width:1100px;margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:1.5rem;flex-wrap:wrap;
-}
-.footer-left{font-size:0.85rem;color:var(--muted)}
-.footer-left a{color:var(--accent);text-decoration:none}
-.footer-right{
-  display:flex;gap:1.25rem;
-}
-.footer-right a{
-  font-size:0.82rem;
-  color:var(--muted);
-  text-decoration:none;
-  transition:color 0.2s;
-}
-.footer-right a:hover{color:var(--text)}
-
-.material-symbols-outlined{
-  font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;
-  font-size:20px;
-  line-height:1;
-  vertical-align:middle;
-  user-select:none;
-}
-.feature-icon .material-symbols-outlined{font-size:22px}
-.btn .material-symbols-outlined{font-size:17px}
-.nav-logo .material-symbols-outlined{font-size:18px;color:var(--accent2)}
-
-.fade-up{
-  opacity:0;
-  transform:translateY(24px);
-  transition:opacity 0.6s ease,transform 0.6s ease;
-}
-.fade-up.visible{opacity:1;transform:translateY(0)}
-
-/* DIVIDER */
-.section-divider{
-  border:none;
-  border-top:1px solid var(--border);
-  margin:0;
-}
-
-/* RELEASE BANNER */
-.release-banner{
-  position:relative;z-index:50;
-  margin-top:60px; /* clear the fixed 60px nav */
-  background:linear-gradient(90deg,rgba(52,211,153,0.06),rgba(251,146,60,0.06));
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  padding:10px 2rem;
-  display:flex;align-items:center;justify-content:center;
-  gap:1rem 1.25rem;flex-wrap:wrap;text-align:center;
-}
-.rb-item{
-  display:inline-flex;align-items:center;
-  gap:0.5rem;
-  font-size:0.8rem;
-  color:var(--muted);
-  white-space:nowrap;
-}
-.rb-item-text{display:inline-flex;align-items:center;gap:0.4rem;white-space:nowrap}
-.rb-tag{
-  font-family:var(--font-mono);font-size:0.65rem;
-  padding:2px 9px;border-radius:99px;font-weight:500;
-  letter-spacing:var(--tracking-wider);
-  white-space:nowrap;
-}
-.rb-tag.stable{background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);color:var(--green)}
-.rb-tag.beta{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);color:var(--yellow)}
-.rb-tag.alpha{background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.25);color:var(--orange)}
-.rb-tag.hint{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);color:var(--accent2)}
-.rb-link{color:var(--accent)!important;text-decoration:none;font-family:var(--font-mono);font-size:0.75rem;transition:opacity 0.2s;white-space:nowrap}
-.rb-link:hover{opacity:0.7}
-.rb-sep{color:var(--muted2);font-size:0.7rem;user-select:none}
-.rb-sep-major{
-  color:var(--border-hover);
-  font-weight:200;
-  font-size:0.95rem;
-  user-select:none;
-  opacity:0.6;
-}
-
-/* NOTICE CARD */
-.notice-wrap{max-width:1100px;margin:2rem auto 0;padding:0 2rem;position:relative;z-index:1}
-.notice-card{
-  background:rgba(251,191,36,0.04);
-  border:1px solid rgba(251,191,36,0.15);
-  border-radius:12px;
-  padding:1.2rem 1.5rem;
-  display:flex;align-items:flex-start;gap:1rem;
-}
-.notice-card .material-symbols-outlined{color:var(--yellow);flex-shrink:0;margin-top:2px;font-size:22px}
-.notice-card h4{font-family:var(--font-display);font-size:0.9rem;font-weight:600;color:#fff;margin-bottom:0.3rem}
-.notice-card p{font-size:0.82rem;color:var(--muted);line-height:1.65}
-.notice-card a{color:var(--accent);text-decoration:none}
-.notice-card a:hover{text-decoration:underline}
-.notice-card code{font-family:var(--font-mono);font-size:0.78rem;color:var(--accent2);background:rgba(167,139,250,0.1);padding:1px 6px;border-radius:4px}
-
-/* LEGACY ARCHIVE — alpha 2025 */
-.archive-section{
-  padding:6rem 0;
-  background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,0.015) 50%,transparent 100%);
-  position:relative;
-}
-.archive-section::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:repeating-linear-gradient(45deg,transparent,transparent 80px,rgba(255,255,255,0.008) 80px,rgba(255,255,255,0.008) 81px);
-  pointer-events:none;
-}
-.archive-section .container{position:relative;z-index:1}
-.archive-tag{
-  display:inline-block;
-  font-family:var(--font-mono);
-  font-size:0.7rem;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:0.75rem;
-}
-.archive-section .section-header h2{color:rgba(255,255,255,0.85)}
-.archive-note{
-  max-width:680px;
-  margin:0 auto 3rem;
-  padding:1.2rem 1.5rem;
-  background:var(--bg1);
-  border:1px dashed var(--border);
-  border-radius:12px;
-  font-size:0.85rem;
-  color:var(--muted);
-  line-height:1.7;
-  text-align:left;
-}
-.archive-note strong{color:var(--text);font-weight:500}
-.archive-note a{color:var(--accent);text-decoration:none}
-.archive-note a:hover{text-decoration:underline}
-.archive-note code{
-  font-family:var(--font-mono);
-  font-size:0.78rem;
-  color:var(--muted);
-  background:var(--bg2);
-  padding:1px 7px;
-  border-radius:5px;
-  border:1px solid var(--border);
-}
-.archive-hero{
-  margin:0 auto 2rem;
-  max-width:880px;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid var(--border);
-  filter:grayscale(15%);
-  transition:filter 0.3s;
-}
-.archive-hero:hover{filter:grayscale(0%)}
-.archive-hero img{width:100%;display:block}
-.archive-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:1.25rem;
-}
-.archive-item{
-  border-radius:10px;
-  overflow:hidden;
-  border:1px solid var(--border);
-  background:var(--bg1);
-  filter:grayscale(20%);
-  transition:filter 0.3s,border-color 0.3s,transform 0.3s;
-}
-.archive-item:hover{
-  filter:grayscale(0%);
-  border-color:var(--border-hover);
-  transform:translateY(-2px);
-}
-.archive-item img{width:100%;display:block}
-.archive-caption{
-  padding:0.7rem 1rem;
-  font-size:0.78rem;
-  color:var(--muted);
-  font-family:var(--font-mono);
-  border-top:1px solid var(--border);
-  background:var(--bg2);
-}
-
-/* RESPONSIVE */
-/* ============================================================
-   RESPONSIVE — mobile-first breakpoint system
-   480px  · phone landscape / large phones
-   640px  · small tablet
-   768px  · tablet portrait
-   1024px · tablet landscape / small laptop
-   1280px · desktop (default styles target this)
-   ============================================================ */
-
-/* ───── BASE (≤480px — small phones) ───── */
-@media(max-width:480px){
+@media(max-width:768px){
   nav{padding:0 1rem;height:60px}
   .nav-links,.nav-badge{display:none}
-  .nav-logo{font-size:0.95rem}
-  .nav-logo .material-symbols-outlined{font-size:20px!important}
-  .nav-cta .btn{padding:0.45rem 0.9rem;font-size:0.8rem}
-  .nav-cta .btn span:not(.material-symbols-outlined){display:none}
-
-  /* Release banner — clean vertical stack */
-  .release-banner{
-    margin-top:60px;
-    flex-direction:column;
-    gap:0.5rem;
-    padding:0.75rem 1rem;
-  }
+  .release-banner{margin-top:60px;flex-direction:column;gap:0.5rem;padding:0.75rem 1rem}
   .rb-sep-major{display:none}
-  .rb-item{
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:0.4rem;
-    font-size:0.72rem;
-    line-height:1.4;
-  }
-  .rb-tag{font-size:0.6rem;padding:2px 7px}
-  .rb-link{font-size:0.7rem}
-  .rb-item-text{font-size:0.72rem}
-
+  .rb-item{flex-wrap:wrap;justify-content:center;gap:0.4rem}
   .hero{padding:30px 1.25rem 50px}
-  .hero-eyebrow{font-size:0.65rem;padding:3px 11px;margin-bottom:1.1rem}
   .hero-actions{flex-direction:column;width:100%;gap:0.75rem}
   .hero-actions .btn{width:100%;justify-content:center}
-  .hero-install{
-    flex-direction:column;align-items:stretch;gap:0.5rem;
-    font-size:0.75rem;padding:0.75rem 0.9rem;
-    width:100%;
-  }
-  .hero-install code{word-break:break-all;text-align:center}
-  .copy-btn{align-self:center}
-  .hero-badges{gap:0.35rem}
-  .badge{font-size:0.62rem;padding:2px 8px}
-
-  .container{padding:0 1.25rem}
-  .section-header{margin-bottom:2.5rem}
-  .stats-bar{padding:2.25rem 0;margin:3rem 0}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:1.5rem 1rem}
-
-  .features-section{padding:3.5rem 0}
   .features-grid{grid-template-columns:1fr;border-radius:12px}
-  .feature-card{padding:1.5rem}
-
-  .demo-section,.gallery-section,.new-section,
-  .install-section,.deps-section,.keybinds-section,
-  .archive-section{padding:3.5rem 0}
-
-  .gallery-grid{grid-template-columns:1fr;gap:0.75rem}
-  .gallery-item.full{grid-column:1}
   .new-grid{grid-template-columns:1fr}
-  .roadmap-section{padding:3.5rem 0}
   .roadmap-grid{grid-template-columns:1fr}
   .roadmap-card{padding:1.75rem 1.25rem}
   .kb-grid{grid-template-columns:1fr;gap:0.5rem}
-  .kb-row{padding:0.75rem 1rem;flex-wrap:wrap}
-  .deps-grid{grid-template-columns:1fr;gap:0.5rem}
-
-  .archive-grid{grid-template-columns:1fr;gap:0.75rem}
-  .archive-note{padding:1rem 1.25rem;font-size:0.78rem}
-
-  .install-tabs{flex-wrap:wrap;gap:0.35rem}
-  .tab-btn{flex:1 1 calc(50% - 0.35rem);font-size:0.8rem;padding:0.6rem 0.5rem;text-align:center}
-  .code-body pre{font-size:0.72rem;line-height:1.65;overflow-x:auto;white-space:pre}
-
-  .cta-section{padding:5rem 1.25rem}
   .cta-actions{flex-direction:column;width:100%;gap:0.75rem}
   .cta-actions .btn{width:100%;justify-content:center}
-
-  footer{padding:2rem 1.25rem}
   .footer-inner{flex-direction:column;text-align:center;gap:1rem}
   .footer-right{flex-wrap:wrap;justify-content:center;gap:1rem}
-
-  .notice-wrap{padding:0 1.25rem}
 }
-
-/* ───── 481–640px (large phones / small tablets) ───── */
-@media(min-width:481px) and (max-width:640px){
-  nav{padding:0 1.25rem}
-  .nav-links,.nav-badge{display:none}
-  .release-banner{
-    margin-top:60px;
-    flex-direction:column;
-    gap:0.5rem;
-    padding:0.85rem 1.25rem;
-  }
-  .rb-sep-major{display:none}
-  .rb-item{flex-wrap:wrap;justify-content:center;gap:0.45rem;font-size:0.75rem}
-  .rb-tag{font-size:0.62rem}
-  .hero{padding:30px 1.5rem 60px}
-  .hero-actions{flex-wrap:wrap;justify-content:center}
-  .hero-install{font-size:0.78rem;padding:0.65rem 0.9rem}
-  .container{padding:0 1.5rem}
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:1.5rem}
-  .features-grid{grid-template-columns:1fr}
-  .gallery-grid{grid-template-columns:1fr}
-  .gallery-item.full{grid-column:1}
-  .new-grid{grid-template-columns:1fr}
-  .kb-grid{grid-template-columns:1fr}
-  .deps-grid{grid-template-columns:repeat(2,1fr)}
-  .archive-grid{grid-template-columns:1fr}
-  .features-section,.demo-section,.gallery-section,
-  .new-section,.install-section,.deps-section,.keybinds-section,
-  .archive-section{padding:4rem 0}
-  .install-tabs{flex-wrap:wrap}
-  .tab-btn{flex:1 1 auto}
-  .cta-section{padding:6rem 1.5rem}
-  .footer-inner{flex-direction:column;gap:1rem;text-align:center}
-}
-
-/* ───── 641–768px (tablet portrait) ───── */
-@media(min-width:641px) and (max-width:768px){
-  nav{padding:0 1.5rem}
-  .nav-links{gap:1.5rem;font-size:0.85rem}
-  .nav-badge{display:none}
-  .release-banner{padding:0.65rem 1.5rem;gap:0.75rem 1rem}
-  .rb-item{font-size:0.75rem;gap:0.4rem}
-  .rb-tag{font-size:0.6rem;padding:1px 8px}
-  .rb-link{font-size:0.7rem}
-  .rb-sep-major{font-size:0.65rem}
-  .hero{padding:40px 2rem 70px}
-  .container{padding:0 2rem}
-  .stats-grid{grid-template-columns:repeat(4,1fr);gap:1.25rem}
-  .features-grid{grid-template-columns:repeat(2,1fr)}
-  .gallery-grid{grid-template-columns:repeat(2,1fr)}
-  .gallery-item.full{grid-column:1/-1}
-  .new-grid{grid-template-columns:repeat(2,1fr)}
-  .roadmap-grid{grid-template-columns:1fr}
-  .kb-grid{grid-template-columns:repeat(2,1fr)}
-  .deps-grid{grid-template-columns:repeat(2,1fr)}
-  .archive-grid{grid-template-columns:repeat(2,1fr)}
-  .features-section,.demo-section,.gallery-section,
-  .new-section,.install-section,.deps-section,.keybinds-section,
-  .archive-section{padding:5rem 0}
-}
-
-/* ───── 769–1024px (tablet landscape / small laptop) ───── */
-@media(min-width:769px) and (max-width:1024px){
-  nav{padding:0 2rem}
-  .nav-links{gap:1.75rem;font-size:0.88rem}
-  .nav-badge{font-size:0.65rem;padding:3px 9px}
-  .hero{padding:50px 2rem 70px;max-width:900px}
-  .container{padding:0 2rem;max-width:960px}
-  .stats-grid{grid-template-columns:repeat(4,1fr)}
-  .features-grid{grid-template-columns:repeat(2,1fr)}
-  .gallery-grid{grid-template-columns:repeat(2,1fr)}
-  .gallery-item.full{grid-column:1/-1}
-  .new-grid{grid-template-columns:repeat(2,1fr)}
-  .roadmap-grid{grid-template-columns:1fr}
-  .kb-grid{grid-template-columns:repeat(2,1fr)}
-  .deps-grid{grid-template-columns:repeat(3,1fr)}
-  .archive-grid{grid-template-columns:repeat(2,1fr)}
-}
-
-/* ───── 1025px+ (desktop default already handles this) ───── */
-
-/* ───── Touch-friendly tap targets on coarse pointers ───── */
-@media(pointer:coarse){
-  .btn,.copy-btn,.tab-btn,.nav-links a,.feature-card,.gallery-item,
-  .kb-row,.dep-item,.footer-right a{
-    min-height:44px;
-  }
-  .nav-links a{padding:0.5rem 0}
-  .copy-btn{padding:8px 14px}
-}
-
-/* ───── Reduce motion preference ───── */
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation-duration:0.01ms!important;
-    animation-iteration-count:1!important;
-    transition-duration:0.01ms!important;
-    scroll-behavior:auto!important;
-  }
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
     <span class="material-symbols-outlined">blur_on</span>
     <span>Zen</span> Shell
   </a>
-  <span class="nav-badge">v6.16.3.4.2 stable</span>
+  <span class="nav-badge">v6.16.4.1 stable</span>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="#whats-new">What's New</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#install">Install</a></li>
-    <li><a href="#architecture">Architecture</a></li>
-    <li><a href="#archive">Archive</a></li>
   </ul>
   <div class="nav-cta">
     <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" class="btn btn-ghost" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;flex-shrink:0"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
       GitHub
     </a>
     <a href="#install" class="btn btn-primary">Install</a>
   </div>
 </nav>
 
-<!-- RELEASE BANNER -->
 <div class="release-banner">
   <div class="rb-item">
     <span class="rb-tag stable">Stable</span>
-    <span class="rb-item-text">v6.16.3.4.2</span>
+    <span class="rb-item-text">v6.16.4.1</span>
     <span class="rb-sep">·</span>
-    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/v6.16.3.4.2" class="rb-link" target="_blank">main</a>
+    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/v6.16.4.1" class="rb-link" target="_blank">main</a>
     <span class="rb-tag hint">official release</span>
   </div>
   <span class="rb-sep rb-sep-major">|</span>
   <div class="rb-item">
-    <span class="rb-tag alpha">Alpha</span>
-    <span class="rb-item-text">v6.16.3.5 → v6.16.3.7</span>
+    <span class="rb-tag next">Next</span>
+    <span class="rb-item-text">v6.16.5</span>
     <span class="rb-sep">·</span>
-    <span class="rb-link" style="color:var(--orange)!important">ongoing</span>
+    <span class="rb-link" style="color:var(--accent2)!important">configreloaded IPC listener — planned</span>
   </div>
 </div>
 
-<!-- HERO -->
 <section class="hero container">
   <div class="hero-eyebrow">Quickshell · QML-Native · Hyprland 0.54+</div>
   <h1>
@@ -1275,7 +289,7 @@ footer{
 
   <div class="hero-install">
     <code><span class="cmd">git clone</span> github.com/Gekinzen/zen_barebone_alpha_development</code>
-    <button class="copy-btn" id="copy-install" onclick="
+    <button class="copy-btn" onclick="
       navigator.clipboard.writeText('git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git');
       this.innerHTML='<span class=\'material-symbols-outlined\' style=\'font-size:14px\'>check</span> Copied!';
       setTimeout(()=>this.innerHTML='<span class=\'material-symbols-outlined\' style=\'font-size:14px\'>content_copy</span>',2000)
@@ -1283,46 +297,32 @@ footer{
   </div>
 
   <div class="hero-badges">
-    <span class="badge green">v6.16.3.4.2 stable</span>
-    <span class="badge orange">v6.16.3.5+ alpha ongoing</span>
+    <span class="badge green">v6.16.4.1 stable</span>
+    <span class="badge purple">v6.16.5 planned</span>
+    <span class="badge red">Panic keybind</span>
     <span class="badge">Arch Linux</span>
     <span class="badge">Hyprland 0.54+</span>
     <span class="badge">Quickshell 0.2.1+</span>
-    <span class="badge purple">QML / JavaScript</span>
     <span class="badge green">MIT License</span>
   </div>
 
   <div class="hero-media">
-    <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell v6.16.3.4.2 desktop preview" loading="lazy"/>
+    <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell v6.16.4.1 desktop preview" loading="lazy"/>
     <div class="hero-media-glow"></div>
   </div>
 </section>
 
-<!-- STATS -->
 <div class="stats-bar">
   <div class="container">
     <div class="stats-grid">
-      <div>
-        <div class="stat-val">74+</div>
-        <div class="stat-label">QML source files</div>
-      </div>
-      <div>
-        <div class="stat-val">17</div>
-        <div class="stat-label">Built-in themes</div>
-      </div>
-      <div>
-        <div class="stat-val">14</div>
-        <div class="stat-label">Settings pages</div>
-      </div>
-      <div>
-        <div class="stat-val">27</div>
-        <div class="stat-label">Unified toggle controls</div>
-      </div>
+      <div><div class="stat-val">76+</div><div class="stat-label">QML source files</div></div>
+      <div><div class="stat-val">17</div><div class="stat-label">Built-in themes</div></div>
+      <div><div class="stat-val">14</div><div class="stat-label">Settings pages</div></div>
+      <div><div class="stat-val">9</div><div class="stat-label">Recovery steps on panic</div></div>
     </div>
   </div>
 </div>
 
-<!-- FEATURES -->
 <section class="features-section" id="features">
   <div class="container">
     <div class="section-header fade-up">
@@ -1333,59 +333,61 @@ footer{
     <div class="features-grid fade-up">
       <div class="feature-card">
         <div class="feature-icon"><span class="material-symbols-outlined">bolt</span></div>
-        <h3>Performance-first</h3>
-        <p>Lean QML runtime replacing the old GTK4 + Python + Waybar stack. Less overhead, more responsive.</p>
+        <h3>Panic Recovery</h3>
+        <p>SUPER+SHIFT+CTRL+Esc keybind fires even through frozen hyprlock. 9-step recovery in ~2s. Never force-power-off again.</p>
+        <div class="feature-version">→ v6.16.4+</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">palette</span></div>
-        <h3>Unified theming</h3>
-        <p>One switch syncs your bar, settings, control panel, notifications, terminal, and launcher instantly.</p>
+        <div class="feature-icon"><span class="material-symbols-outlined">bedtime_outline</span></div>
+        <h3>Idle &amp; Sleep</h3>
+        <p>Configurable lock / sleep timeouts (30s → 5h → Never). Lid close action: sleep / lock / nothing. Live sed-rewrite of hypridle.conf.</p>
+        <div class="feature-version">→ v6.16.3.8</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">tune</span></div>
-        <h3>GUI-driven config</h3>
-        <p>14 settings pages with live preview. No config files. No restarts. Change and see immediately.</p>
+        <div class="feature-icon"><span class="material-symbols-outlined">aspect_ratio</span></div>
+        <h3>Widget Scale</h3>
+        <p>Universal 0.5× → 2.0× slider resizes clocks + weather + sysmon widgets in lockstep. 68 scale multipliers baked in.</p>
+        <div class="feature-version">→ v6.16.3.7</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-symbols-outlined">lock_outline</span></div>
+        <h3>Lock Screen overhaul</h3>
+        <p>Clock font matches your widget. Weather mood line. Gender-aware rotating care message (Neutral / Male / Female). No more "Heyah Username".</p>
+        <div class="feature-version">→ v6.16.3.6</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon"><span class="material-symbols-outlined">developer_board</span></div>
-        <h3>PowerBadge widget</h3>
-        <p>Tiny bar pill showing current power profile + GPU mode. 300ms hover popup. Right-click cycles profile, middle-click toggles Gaming Boost. Self-hides when useless.</p>
+        <h3>PowerBadge</h3>
+        <p>Bar pill with power profile + GPU mode. 300ms hover popup. Right-click cycles profile, middle-click Gaming Boost.</p>
         <div class="feature-version">→ v6.16.3.4</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">power_settings_new</span></div>
-        <h3>Material Power Icons</h3>
-        <p>Start Menu shutdown / restart / suspend / log-out confirm icons rebuilt with Material Symbols Outlined + theme-synced accent. Smooth fade-ins, cached properly.</p>
-        <div class="feature-version">→ v6.16.3.1</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon"><span class="material-symbols-outlined">laptop_mac</span></div>
         <h3>Lid-Close Patch</h3>
-        <p>Separate <code style="font-size:0.8em">hypr-config/</code> overlay handles every lid scenario — docked, close+external, close→open. Session persists, swaync stays alive across every wake path.</p>
-        <div class="feature-version">→ v6.16.3.2</div>
+        <p>Separate hypr-config/ overlay handles every lid scenario — docked, close+external, close→open. Now with configurable system action.</p>
+        <div class="feature-version">→ v6.16.3.2 + .3.8</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-symbols-outlined">palette</span></div>
+        <h3>Unified theming</h3>
+        <p>One switch syncs your bar, settings, control panel, notifications, terminal, and launcher. 17 built-in themes + custom editor.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><span class="material-symbols-outlined">tune</span></div>
+        <h3>GUI-driven config</h3>
+        <p>14 settings pages with live preview. No config files. No restarts. Animations page now scrollable + live-reload.</p>
+        <div class="feature-version">→ v6.16.3.4.3</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon"><span class="material-symbols-outlined">battery_charging_full</span></div>
         <h3>Battery &amp; Power</h3>
-        <p>Full laptop-grade power management — profiles, gaming boost, lid close behavior, OSD notifications.</p>
-        <div class="feature-version">→ v6.16</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">memory</span></div>
-        <h3>Multi-GPU support</h3>
-        <p>GPU switcher with 4 modes, auto-gaming detection, PRIME offload, per-GPU monitoring tabs.</p>
-        <div class="feature-version">→ v6.16</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">mouse</span></div>
-        <h3>Mouse Tuning</h3>
-        <p>Live sensitivity / scroll factor / natural-scroll via hyprctl. Same singleton drives Settings + Control Panel.</p>
-        <div class="feature-version">→ v6.16.2.3</div>
+        <p>Full laptop-grade power management — profiles, gaming boost, ROG brightness detection, OSD notifications.</p>
+        <div class="feature-version">→ v6.16 + .3.4.4</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon"><span class="material-symbols-outlined">graphic_eq</span></div>
         <h3>Music Strings</h3>
-        <p>Audio-reactive bezier curve visualizer driven by cava. Floats above and below the bar — now click-through.</p>
+        <p>Audio-reactive bezier curve driven by cava. Floats above and below the bar — now click-through.</p>
         <div class="feature-version">→ v6.15</div>
       </div>
       <div class="feature-card">
@@ -1397,7 +399,7 @@ footer{
       <div class="feature-card">
         <div class="feature-icon"><span class="material-symbols-outlined">wallpaper</span></div>
         <h3>Wallpaper Repo</h3>
-        <p>Online tab in the picker fetches Gekinzen/images-demo via the GitHub API. One-click download + apply.</p>
+        <p>Online tab fetches Gekinzen/images-demo via GitHub API. One-click download + apply. Fit/stretch modes coming in v6.16.6.</p>
         <div class="feature-version">→ v6.16.2.3</div>
       </div>
     </div>
@@ -1406,7 +408,6 @@ footer{
 
 <hr class="section-divider"/>
 
-<!-- VIDEO DEMO -->
 <section class="demo-section">
   <div class="container">
     <div class="section-header fade-up">
@@ -1415,118 +416,70 @@ footer{
       <p>Full tour — Music Strings, screenshot ropes, settings, and the complete desktop experience.</p>
     </div>
     <div class="demo-wrapper fade-up">
-      <iframe
-        src="https://www.youtube.com/embed/dNwGRBhA97g"
-        title="Zen Shell v6.15.13 — Full Tour"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        loading="lazy">
-      </iframe>
+      <iframe src="https://www.youtube.com/embed/dNwGRBhA97g" title="Zen Shell Full Tour" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
     </div>
   </div>
 </section>
 
 <hr class="section-divider"/>
 
-<!-- GALLERY -->
-<section class="gallery-section" id="showcase">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Showcase</div>
-      <h2>Desktop previews</h2>
-      <p>Captured on Hyprland 0.54, Quickshell 0.2.1.</p>
-    </div>
-    <div class="gallery-grid fade-up">
-      <div class="gallery-item full">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" alt="Zen Shell desktop preview 2" loading="lazy"/>
-        <div class="gallery-caption">// Desktop — full-width bar mode · Floating widgets</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_01_adaptive_theming.gif" alt="Adaptive theming" loading="lazy"/>
-        <div class="gallery-caption">// Adaptive theming — one palette, every surface</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_02_settings_tour.gif" alt="Settings tour" loading="lazy"/>
-        <div class="gallery-caption">// Settings — 14 pages · live preview · no restart</div>
-      </div>
-      <div class="gallery-item full">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_03_screenshot_module_ultrawide.gif" alt="Screenshot module" loading="lazy"/>
-        <div class="gallery-caption">// Screenshot rope overlay — ultrawide · physics ropes · clipboard-backed paste</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider"/>
-
-<!-- WHATS NEW -->
 <section class="new-section" id="whats-new">
   <div class="container">
     <div class="section-header fade-up">
-      <div class="section-tag">What's New · v6.16.3.x</div>
-      <h2>PowerBadge landed.<br/>Material icons. <strong>Lid-close fixed for good.</strong></h2>
-      <p>v6.16.3.4.2 is the first official stable of the v6.16.3 phase — rolling up .3.1 through .3.4 plus two follow-on hotfixes, and carrying every v6.16.2.3.6 fix below it.</p>
+      <div class="section-tag">What's New · v6.16.4.1</div>
+      <h2>Panic recovery. <strong>Idle/sleep control.</strong><br/>Lock screen overhaul.</h2>
+      <p>v6.16.4.1 rolls in 8 versions worth of shipping since v6.16.3.4.2 — lock screen + widget scale + idle cascade + the keybind that replaces force-power-off.</p>
     </div>
     <div class="new-grid fade-up">
       <div class="new-card">
-        <div class="new-card-tag">v6.16.3.4 · Bar</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">developer_board</span>PowerBadge module</h3>
-        <p>New tiny pill in the bar showing your current power profile (green/blue/orange) and GPU mode. 300ms hover popup with full state + click-shortcut reference. Left-click opens Control Panel, right-click cycles profile, middle-click toggles Gaming Boost. Self-hides on single-GPU desktops without power-profiles-daemon.</p>
+        <div class="new-card-tag">v6.16.4.1 · Hotfix</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">build</span>Panic script fixes</h3>
+        <p>v6.16.4 panic had 3 bugs — wiped monitor config (hyprctl reload), killed Quickshell (SIGUSR2), looped music marquee (workspace bounce). All fixed. Single press now preserves Quickshell entirely; only double-press-within-10s restarts it.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.3.4 · Layout</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">library_add</span>Additive registration</h3>
-        <p>PowerBadge registered additively in Bar.qml + Theme.qml default layout — fresh installs see it immediately. Existing users with saved bar-layout.json get an opt-in helper script: <code style="font-size:0.85em">~/.local/bin/zen-bar-add-powerbadge.sh</code> (idempotent, --dry-run, --remove flags).</p>
+        <div class="new-card-tag">v6.16.4 · Laptop</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">bolt</span>SUPER+SHIFT+CTRL+Esc</h3>
+        <p>Escape hatch keybind — fires through frozen hyprlock (Hyprland's bindl flag). Runs 9-step recovery: kill zombie hyprlock, DPMS kick, forcerendererreload, swww revive, input kick, clean relock. ~2 seconds.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.3.1 · UI</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">power_settings_new</span>Material Power Icons</h3>
-        <p>Start Menu shutdown / restart / suspend / log-out confirm icons rebuilt with Material Symbols Outlined. Theme-synced accent color pulled from the active palette. Smooth fade-in transitions, properly cached so the popover stays snappy.</p>
+        <div class="new-card-tag">v6.16.3.8 · Power</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">bedtime_outline</span>Idle &amp; Sleep cascade</h3>
+        <p>Lock after idle (30s / 1m / 30m / 1h / 3h / 5h / Never). Sleep after idle (same options). Lid close action (Sleep / Lock only / Do nothing). zen-hypridle-sync.sh rewrites hypridle.conf live.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.3.2 · Hypridle</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">laptop_mac</span>Lid-Close Patch</h3>
-        <p>The lid-close fix that survives every wake scenario lives at the hypridle/hyprlock layer — not in QML. Ships as a hypr-config/ overlay patch alongside the QML release. Handles open+external, docked, close+external, and close→open cases. Session persists, swaync stays alive.</p>
+        <div class="new-card-tag">v6.16.3.7 · Widgets</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">aspect_ratio</span>Widget Scale slider</h3>
+        <p>Settings → Widgets → Widget Scale. Drag from 0.5× to 2.0× and all three desktop widgets (clocks, weather, sysmon) resize in lockstep. 68 scale multipliers baked in via single _scale property.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.3.3 · Displays</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">monitor</span>Resolution dropdown fix</h3>
-        <p>DisplaysPage resolution dropdown now enumerates all valid modes via hyprctl monitors all -j with an EDID fallback for edge-case monitors. No more missing refresh rates or hidden 4K modes. (Ongoing hotfix series — continues into .3.5.)</p>
+        <div class="new-card-tag">v6.16.3.6 · Lock</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">lock_outline</span>Lock screen overhaul</h3>
+        <p>Clock font now matches your bar widget font (Black/Bold weight per family). No "Heyah Username" greeting. Weather mood line + rotating care message, gender-aware (Neutral / Male / Female in Personal Preferences).</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.2.3.6 · Installer</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">terminal</span>Single-Instance Launch</h3>
-        <p>Bulletproof kill loop — SIGTERM ×3 then SIGKILL ×2, plus survivor verification. If anything survives, install.sh refuses to spawn another. No more stacked duplicate bars on re-install.</p>
+        <div class="new-card-tag">v6.16.3.6 · Popups</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">info</span>Hover popup parity</h3>
+        <p>ZenClock + ZenSysMonitor now use proper PopupWindow with 350ms hover-intent. Clock shows live time + ISO week + timezone. SysMonitor shows CPU/GPU/Memory/Network sections. Identical styling across both.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.2.3.6 · Avatar</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">account_circle</span>OpacityMask Circle</h3>
-        <p>The original GLSL shader silently failed on some Qt builds. Replaced with OpacityMask from Qt5Compat.GraphicalEffects — same module ZenStrings already uses. Versioned filenames + pruning + diagnostic log to /tmp/zen-avatar-debug.log.</p>
+        <div class="new-card-tag">v6.16.3.5 · Start</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">image</span>Start Menu logo picker</h3>
+        <p>7 bundled SVG logos (Arch / CachyOS / EndeavourOS / Fedora / Ubuntu / NixOS / generic Linux). Auto-detect from /etc/os-release, or pick manually. Custom image upload supported. 4-column grid picker.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.2.3.2 · UX</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">touch_app</span>Settings + CP Click-Through</h3>
-        <p>Both windows use mask: Region { item: zenSettingsPanel } so the transparent backdrop passes clicks through to apps below. Close via ✕ or Super+C — matches macOS / GNOME behavior.</p>
+        <div class="new-card-tag">v6.16.3.4.4 · Input</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">brightness_6</span>ROG brightness detection</h3>
+        <p>Laptop backlight detection extended — amdgpu_bl0 and asus::kbd_backlight now detected. Themes dropdown made scrollable (was cutting off Paper / Black / Navy). Part of the v6.16.3.4.x hotfix sub-series.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.2.3.1 · Bar</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">graphic_eq</span>Music Rope Click-Through</h3>
-        <p>mask: Region {} on stringsWindow makes the audio-reactive bar overlay fully input-transparent. Browsers, editors, and file managers below the strings now receive clicks normally.</p>
+        <div class="new-card-tag">v6.16.3.4.3 · Settings</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">animation</span>Animations live-reload + scroll</h3>
+        <p>Animations page now reflects current hyprctl state (was showing stale defaults). Scroll-to-bottom fix — last rows no longer cut off by ScrollView. Input toggle design synced with System Tray toggle design.</p>
       </div>
       <div class="new-card">
-        <div class="new-card-tag">v6.16.2.3.1 · Clock</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">schedule</span>Hover Peek + Scroll Wheel</h3>
-        <p>Peek tooltip after 350ms hover. WheelHandler cycles calendar months. Right-click cycles through clock formats. Same wheel handler attached to the open calendar itself.</p>
-      </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.2.3.1 · Persistence</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">save</span>Island Mode Survives Reboot</h3>
-        <p>panelStateLoaded() signal gates nuclear restart against the startup-load transient. Initial-load mode transitions no longer trigger a restart cascade — Island mode actually persists now.</p>
-      </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.2.3.2 · Input</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">mouse</span>Mouse Sensitivity Controls</h3>
-        <p>New MouseSettingsService singleton — sensitivity, scroll factor, two natural-scroll toggles. Live via hyprctl keyword, persisted to ~/.config/hypr/zen-mouse.conf. Settings page + Control Panel tab both bound to the same singleton.</p>
+        <div class="new-card-tag">v6.16.3.4.1 · Widgets</div>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">save</span>Widget color persistence</h3>
+        <p>Weather + sysmon widget background colors (mode, custom color, opacity) now persist across shell restart. Previously reverted to defaults on every restart — frustrating if you'd just picked your preferred theme.</p>
       </div>
     </div>
   </div>
@@ -1534,77 +487,74 @@ footer{
 
 <hr class="section-divider"/>
 
-<!-- ROADMAP — v6.16.x phase callout -->
 <section class="roadmap-section" id="roadmap">
   <div class="container">
     <div class="roadmap-card fade-up">
       <span class="roadmap-eyebrow">
         <span class="pulse-dot"></span>
-        Roadmap · v6.16.3 shipped · v6.16.3.5+ ongoing
+        Roadmap · v6.16.4.1 shipped · Phase 4 + 5 ahead
       </span>
-      <h3>v6.16.3.4.2 is <strong>official main.</strong><br/>Alpha work <strong>continues.</strong></h3>
+      <h3>v6.16.4.1 is <strong>official main.</strong><br/>Phase 4 + 5 <strong>queued up.</strong></h3>
       <p class="roadmap-lead">
-        v6.16.0 → v6.16.2 are all shipped, and <em>v6.16.3.4.2</em> is now the first official stable of the v6.16.3 phase on <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px;border:1px solid rgba(96,165,250,0.18)">main</code>. Three more features — Start logo picker, clock hover popup parity, and universal widget auto-resize — are in active alpha development as v6.16.3.5 → v6.16.3.7.
+        The v6.16.3 sub-series (through .3.8) closed out with <em>lock screen overhaul · widget scale · idle cascade</em>. v6.16.4 shipped the panic recovery keybind; v6.16.4.1 hotfixed the three bugs it introduced. Next up: <em>configreloaded IPC listener</em> (v6.16.5), <em>wallpaper display modes</em> (v6.16.6), then the bigger Phase 4 + 5 arcs.
       </p>
 
       <div class="roadmap-grid">
-        <!-- v6.16.0 + v6.16.1 + v6.16.2 — combined "Shipped" phase -->
         <div class="roadmap-phase">
           <div class="phase-version">
-            v6.16.0 → v6.16.2.3.6
+            v6.16.3.1 → v6.16.3.8
             <span class="phase-status shipped">Shipped</span>
           </div>
-          <div class="phase-title">Power · Multi-GPU · Hotfix closeout</div>
+          <div class="phase-title">Lock · Widgets · Idle</div>
           <ul class="phase-list">
-            <li>Battery module + 30%/10% swaync warnings</li>
-            <li>Power profiles (Saver / Balanced / Performance)</li>
-            <li>Gaming Boost + Multi-GPU tabs + GPU Switcher</li>
-            <li>Volume + Brightness OSD via XF86 keys</li>
-            <li>Cascade Control Panel + Unified HMSwitch (×27)</li>
-            <li>Click-through Settings / CP / music rope</li>
-            <li>OpacityMask avatar + Island mode persistence</li>
-            <li>Mouse sensitivity + Wallpaper repo browser</li>
-            <li>Bulletproof installer — no more duplicate bars</li>
+            <li>Material Power Icons · Lid-close patch</li>
+            <li>Display resolution fix · PowerBadge</li>
+            <li>Widget color persistence (.4.1)</li>
+            <li>Input toggle design sync (.4.2)</li>
+            <li>Animations live-reload + scroll (.4.3)</li>
+            <li>ROG brightness + themes scrollable (.4.4)</li>
+            <li>Start Menu logo picker (.5)</li>
+            <li><strong>Lock screen overhaul</strong> (.6)</li>
+            <li><strong>Universal widget scale</strong> (.7)</li>
+            <li><strong>Idle / Lid / Sleep cascade</strong> (.8)</li>
           </ul>
         </div>
 
-        <!-- v6.16.3.4.2 stable — CURRENT OFFICIAL -->
         <div class="roadmap-phase is-current">
           <div class="phase-version">
-            v6.16.3.4.2
+            v6.16.4 → v6.16.4.1
             <span class="phase-status stable">Current stable</span>
           </div>
-          <div class="phase-title">v6.16.3 phase · official main</div>
+          <div class="phase-title">Laptop reliability · panic keybind</div>
           <ul class="phase-list">
-            <li><strong>PowerBadge bar module</strong> — profile + GPU badge</li>
-            <li>Material-synced power confirm icons (StartMenu)</li>
-            <li>Lid-close hypridle/hyprlock overlay patch</li>
-            <li>Display resolution dropdown enumeration fix</li>
-            <li>Additive bar layout registration + opt-in script</li>
-            <li>All v6.16.2.3.6 fixes rolled in</li>
-            <li>Two follow-on hotfixes on top of v6.16.3.4</li>
+            <li><strong>SUPER+SHIFT+CTRL+Esc</strong> escape hatch</li>
+            <li>9-step recovery, works through frozen hyprlock</li>
+            <li>Hardened zen-resume-handler.sh (5s retry, DRM fallback)</li>
+            <li>Zombie hyprlock detection via layer query</li>
+            <li>Pre-suspend health check</li>
+            <li>.4.1: hyprctl reload → forcerendererreload (preserves config)</li>
+            <li>.4.1: removed SIGUSR2 (was killing Quickshell)</li>
+            <li>.4.1: removed workspace bounce (music widget loop)</li>
           </ul>
         </div>
 
-        <!-- Alpha ongoing — v6.16.3.5 → v6.16.3.7 -->
-        <div class="roadmap-phase is-alpha">
+        <div class="roadmap-phase is-next">
           <div class="phase-version">
-            v6.16.3.5 → v6.16.3.7
-            <span class="phase-status alpha">Alpha ongoing</span>
+            v6.16.5 → Phase 5
+            <span class="phase-status next">Next up</span>
           </div>
-          <div class="phase-title">Start logo · Calendar · Widget scaling</div>
+          <div class="phase-title">configreloaded · wallpaper modes · Phase 4+5</div>
           <ul class="phase-list">
-            <li><strong>v6.16.3.5</strong> — Start logo image picker (Arch / CachyOS / Pop!_OS / custom)</li>
-            <li><strong>v6.16.3.6</strong> — Clock hover popup parity with CPU/Memory hover (today circled, clickable month select, smooth transitions)</li>
-            <li><strong>v6.16.3.7</strong> — Universal widget auto-resize — every laptop &amp; desktop, scaled by monitor DPI + scale factor</li>
-            <li>Fuzzel auto-sizing per screen DPI</li>
-            <li>Per-monitor sizing with manual override slider</li>
+            <li><strong>v6.16.5</strong> — Global configreloaded IPC listener (kills per-page reload boilerplate)</li>
+            <li><strong>v6.16.6</strong> — Wallpaper repo browser + fit / stretch / custom display modes</li>
+            <li><strong>Phase 4</strong> — Hyprland dark mode + GTK3/4 sync · hyprbars + minimize · float/tile assignment GUI · auto-clean memory</li>
+            <li><strong>Phase 5</strong> — Updates manager (Official / Beta / Alpha channels · rollback to stored versions)</li>
           </ul>
         </div>
       </div>
 
       <p class="roadmap-note">
-        Naming convention: alpha / beta branches carry the <code>alpha-v6.16.3.X</code> or <code>beta-v12.6.16.3.X</code> prefix. When a phase reaches stable, it promotes to <code>main</code> and gets a tag like <code>v6.16.3.4.2</code>. Wala tayong binawasan — every previous release stays reachable via its tag.
+        Naming: release branches use <code>beta-v12.6.16.X</code> or <code>alpha-v6.16.X</code>. When a phase reaches stable, it promotes to <code>main</code> and gets a <code>v6.16.X</code> tag. Wala tayong binawasan — every previous release stays reachable via its tag.
       </p>
     </div>
   </div>
@@ -1612,90 +562,6 @@ footer{
 
 <hr class="section-divider"/>
 
-<!-- THEMES -->
-<section class="themes-section">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Themes</div>
-      <h2><strong>17</strong> built-in palettes.</h2>
-      <p>Auto-syncs across bar, settings, control panel, notifications, terminal, and launcher.</p>
-    </div>
-    <div class="themes-list fade-up">
-      <span class="theme-chip">One Dark</span>
-      <span class="theme-chip">Gruvbox</span>
-      <span class="theme-chip">Nord</span>
-      <span class="theme-chip">Tokyo Night</span>
-      <span class="theme-chip">Catppuccin Mocha</span>
-      <span class="theme-chip">Dracula</span>
-      <span class="theme-chip">Solarized Dark</span>
-      <span class="theme-chip">Everforest Dark</span>
-      <span class="theme-chip">Cyberpunk</span>
-      <span class="theme-chip">Lovelace</span>
-      <span class="theme-chip">Yousai</span>
-      <span class="theme-chip">Arc</span>
-      <span class="theme-chip">Adapta</span>
-      <span class="theme-chip">Navy</span>
-      <span class="theme-chip">Black</span>
-      <span class="theme-chip">Paper</span>
-      <span class="theme-chip" style="border-color:rgba(96,165,250,0.3);color:var(--accent)">+ Custom editor</span>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider"/>
-
-<!-- ARCHITECTURE -->
-<section class="arch-section" id="architecture">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Architecture</div>
-      <h2>Modular QML structure</h2>
-      <p>74+ files. Clean separation of services, UI, and state.</p>
-    </div>
-    <div class="arch-block fade-up">
-<pre>~/.config/quickshell/zen-shell/
-<span class="path">├── shell.qml</span>                    <span class="comment">── entry point · bar · overlays · widgets</span>
-<span class="path">├── Bar.qml</span>                      <span class="comment">── bottom bar with module loader</span>
-<span class="new">├── Battery.qml</span>                  <span class="comment">── battery bar module              ← v6.16</span>
-<span class="newer">├── PowerBadge.qml</span>               <span class="comment">── profile + GPU badge widget       ← v6.16.3.4</span>
-<span class="highlight">├── ZenStrings.qml</span>               <span class="comment">── audio-reactive visualizer        ← v6.15</span>
-<span class="highlight">├── ZenScreenshotOverlay.qml</span>     <span class="comment">── region screenshot + ropes        ← v6.15</span>
-<span class="new">├── PowerProfileService.qml</span>     <span class="comment">── powerprofilesctl + gaming boost  ← v6.16</span>
-<span class="new">├── GPUSwitcherService.qml</span>      <span class="comment">── GPU selection + env vars         ← v6.16</span>
-<span class="new">├── MouseSettingsService.qml</span>    <span class="comment">── sensitivity / scroll / natural   ← v6.16.2.3</span>
-<span class="new">├── WallpaperRepoService.qml</span>    <span class="comment">── GitHub API listing fetcher       ← v6.16.2.3</span>
-<span class="new">├── HMSwitch.qml</span>                <span class="comment">── unified pill toggle (×27)        ← v6.16.1</span>
-<span class="new">├── UserProfileService.qml</span>      <span class="comment">── versioned avatars + DMI info     ← v6.16.2.3.6</span>
-<span class="new">├── PanelState.qml</span>              <span class="comment">── panelStateLoaded() signal        ← v6.16.2.3.1</span>
-<span class="new">├── ZenCalendar.qml</span>             <span class="comment">── hover-aware calendar             ← v6.16.2.3.1</span>
-<span class="path">├── ThemeService.qml</span>
-<span class="path">├── SettingsStateV2.qml</span>          <span class="comment">── full hyprland state persistence</span>
-<span class="path">├── ControlPanel.qml</span>
-<span class="path">├── ZenSettings.qml</span>              <span class="comment">── settings window · 14 pages</span>
-<span class="new">├── BatterySettingsPage.qml</span>     <span class="comment">── battery · power · GPU page       ← v6.16</span>
-<span class="new">├── InputPage.qml</span>               <span class="comment">── mouse + scroll page              ← v6.16.2.3</span>
-<span class="path">└── ...</span>                          <span class="comment">── ~74 QML files total
-
-~/.local/bin/
-├── zen-screenshot.sh            ── screenshot pipeline
-├── zen-cava.sh                  ── cava wrapper for ZenStrings
-├── zen-volume-notify.sh         ── volume / brightness OSD
-<span class="new">├── zen-game-watcher.sh</span>         <span class="comment">── auto-gaming process detection    ← v6.16</span>
-<span class="new">├── zen-power-profile-restore.sh</span><span class="comment">── profile persistence              ← v6.16</span>
-<span class="new">├── zen-lid-handler.sh</span>          <span class="comment">── lid-close behavior switch        ← v6.16</span>
-<span class="newer">├── zen-bar-add-powerbadge.sh</span>   <span class="comment">── opt-in PowerBadge layout helper  ← v6.16.3.4</span>
-<span class="new">├── prime-run</span>                   <span class="comment">── one-shot dGPU launcher           ← v6.16</span>
-└── zs-restart.sh                ── selective shell respawn helper
-
-~/.config/hypr/
-<span class="newer">└── modules/hypr-config/</span>         <span class="comment">── lid-close hypridle overlay patch ← v6.16.3.2</span></span></pre>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider"/>
-
-<!-- INSTALL -->
 <section class="install-section" id="install">
   <div class="container">
     <div class="section-header fade-up">
@@ -1705,29 +571,21 @@ footer{
     </div>
 
     <div class="fade-up">
-      <div class="install-tabs">
-        <button class="tab-btn active" onclick="showTab(this,'stable')">Stable · v6.16.3.4.2</button>
-        <button class="tab-btn" onclick="showTab(this,'alpha')">Alpha · ongoing</button>
-        <button class="tab-btn" onclick="showTab(this,'backup')">Backup first</button>
-      </div>
-
-      <div id="tab-stable" class="code-block">
+      <div class="code-block">
         <div class="code-header">
-          <div class="code-dots">
-            <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
-          </div>
-          <span class="code-lang">bash · main branch · official release · v6.16.3.4.2</span>
+          <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+          <span class="code-lang">bash · main branch · v6.16.4.1 stable</span>
         </div>
         <div class="code-body">
 <pre><span class="c-comment"># Clone the repo</span>
 <span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
 <span class="c-cmd">cd</span> zen_barebone_alpha_development
 
-<span class="c-comment"># Pin to the exact v6.16.3.4.2 tag — or just stay on main</span>
+<span class="c-comment"># Pin to the exact v6.16.4.1 tag — or stay on main</span>
 <span class="c-cmd">git fetch</span> <span class="c-flag">--tags</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">v6.16.3.4.2</span>     <span class="c-comment"># pinned</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">v6.16.4.1</span>     <span class="c-comment"># pinned</span>
 <span class="c-comment"># — or —</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>             <span class="c-comment"># always the latest stable</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>          <span class="c-comment"># always latest stable</span>
 
 <span class="c-comment"># --bootstrap: installs Hyprland + all deps, safe for KDE/GNOME/COSMIC</span>
 <span class="c-cmd">chmod +x</span> install.sh
@@ -1736,61 +594,12 @@ footer{
 <span class="c-comment"># Already on Hyprland? Skip --bootstrap:</span>
 <span class="c-cmd">./install.sh</span>
 
-<span class="c-comment"># Opt-in: add PowerBadge to your saved bar layout</span>
-<span class="c-cmd">~/.local/bin/zen-bar-add-powerbadge.sh</span>
+<span class="c-comment"># Verify panic keybind is wired</span>
+<span class="c-cmd">hyprctl</span> binds | <span class="c-cmd">grep</span> <span class="c-flag">-i</span> zen-panic
 
-<span class="c-comment"># Verify single instance</span>
-<span class="c-cmd">pgrep</span> <span class="c-flag">-fa</span> <span class="c-str">'quickshell.*zen-shell'</span> | <span class="c-cmd">wc -l</span>   <span class="c-comment"># should print 1</span></pre>
-        </div>
-      </div>
-
-      <div id="tab-alpha" class="code-block" style="display:none">
-        <div class="code-header">
-          <div class="code-dots">
-            <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
-          </div>
-          <span class="code-lang">bash · alpha branches · v6.16.3.5 → v6.16.3.7 in development</span>
-        </div>
-        <div class="code-body">
-<pre><span class="c-comment"># Alpha work is ongoing — expect breakage and daily rebuilds.</span>
-<span class="c-comment"># Unless you actively want to test the next features,</span>
-<span class="c-comment"># stay on main (v6.16.3.4.2) — that's the recommended channel.</span>
-
-<span class="c-comment"># Active alpha phases:</span>
-<span class="c-comment">#   v6.16.3.5  — Start logo image picker</span>
-<span class="c-comment">#   v6.16.3.6  — Clock hover popup parity with CPU/Memory hover</span>
-<span class="c-comment">#   v6.16.3.7  — Universal widget auto-resize (DPI / scale aware)</span>
-
-<span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
-<span class="c-cmd">cd</span> zen_barebone_alpha_development
-
-<span class="c-comment"># List all published alpha / beta branches</span>
-<span class="c-cmd">git fetch</span> <span class="c-flag">--all</span>
-<span class="c-cmd">git branch</span> <span class="c-flag">-r</span> | <span class="c-cmd">grep</span> <span class="c-flag">-E</span> <span class="c-str">'alpha-v6\.16\.3|beta-v12\.6\.16\.3'</span>
-
-<span class="c-comment"># Checkout a specific alpha branch (example — branch name may vary)</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">alpha-v6.16.3.5</span>
-
-<span class="c-cmd">chmod +x</span> install.sh
-<span class="c-cmd">./install.sh</span>
-
-<span class="c-comment"># If anything breaks, go back to stable:</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>
-<span class="c-cmd">./install.sh</span></pre>
-        </div>
-      </div>
-
-      <div id="tab-backup" class="code-block" style="display:none">
-        <div class="code-header">
-          <div class="code-dots">
-            <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
-          </div>
-          <span class="code-lang">bash · recommended before any install</span>
-        </div>
-        <div class="code-body">
-<pre><span class="c-comment"># Backup existing configs before installing</span>
-<span class="c-cmd">mv</span> ~/.config/hypr       ~/.config/hypr.backup      <span class="c-flag">2>/dev/null</span> || true
-<span class="c-cmd">mv</span> ~/.config/quickshell ~/.config/quickshell.backup <span class="c-flag">2>/dev/null</span> || true</pre>
+<span class="c-comment"># Test it (safe — no damage)</span>
+<span class="c-cmd">~/.local/bin/zen-panic.sh</span>
+<span class="c-cmd">cat</span> <span class="c-flag">~/.cache/zen-shell/panic.log</span> | <span class="c-cmd">tail</span> <span class="c-flag">-30</span></pre>
         </div>
       </div>
     </div>
@@ -1799,7 +608,6 @@ footer{
 
 <hr class="section-divider"/>
 
-<!-- KEYBINDS -->
 <section class="keybinds-section" id="keybinds">
   <div class="container">
     <div class="section-header fade-up">
@@ -1807,6 +615,10 @@ footer{
       <h2>Keyboard shortcuts</h2>
     </div>
     <div class="kb-grid fade-up">
+      <div class="kb-row panic">
+        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">Shift</span><span class="kb-key">Ctrl</span><span class="kb-key">Esc</span></div>
+        <div class="kb-action">Panic recovery (works through frozen lock) ← v6.16.4</div>
+      </div>
       <div class="kb-row">
         <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">C</span></div>
         <div class="kb-action">Control Panel</div>
@@ -1837,15 +649,15 @@ footer{
       </div>
       <div class="kb-row new-feature">
         <div class="kb-keys"><span class="kb-key">XF86BrightnessUp/Down</span></div>
-        <div class="kb-action">Brightness + OSD ← v6.16</div>
+        <div class="kb-action">Brightness + OSD (ROG detected .3.4.4+)</div>
       </div>
       <div class="kb-row new-feature">
         <div class="kb-keys"><span class="kb-key">Hover clock</span></div>
-        <div class="kb-action">Peek + scroll wheel cycles months ← v6.16.2.3.1</div>
+        <div class="kb-action">Live time + ISO week + timezone ← v6.16.3.6</div>
       </div>
       <div class="kb-row new-feature">
-        <div class="kb-keys"><span class="kb-key">Hover PowerBadge</span></div>
-        <div class="kb-action">Profile + GPU popup ← v6.16.3.4</div>
+        <div class="kb-keys"><span class="kb-key">Hover sysmonitor</span></div>
+        <div class="kb-action">CPU / GPU / Memory / Network popup ← v6.16.3.6</div>
       </div>
       <div class="kb-row new-feature">
         <div class="kb-keys"><span class="kb-key">Right-click PowerBadge</span></div>
@@ -1859,87 +671,18 @@ footer{
         <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">T</span></div>
         <div class="kb-action">Terminal</div>
       </div>
-      <div class="kb-row">
-        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">B</span></div>
-        <div class="kb-action">System monitor (btm)</div>
-      </div>
     </div>
   </div>
 </section>
 
 <hr class="section-divider"/>
 
-<!-- LEGACY ARCHIVE — 2025 ALPHA -->
-<section class="archive-section" id="archive">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="archive-tag">Historical Reference</div>
-      <h2>Legacy archive · <strong>2025 Alpha</strong></h2>
-      <p>The original Python / GTK4 / Waybar stack — preserved for posterity.</p>
-    </div>
-
-    <div class="archive-note fade-up">
-      These assets were captured on <strong>Hyprland 0.52</strong> and document the pre-Quickshell lineage of the project. Current Zen Shell runs on <strong>Hyprland 0.54+</strong> with a unified QML architecture — see the <a href="#showcase">Showcase</a> above for the latest look. The deprecated source is preserved at <code>zen-alpha-deprecated-0.52/</code> in the <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/zen-alpha-deprecated-0.52" target="_blank">archive branch</a>.
-    </div>
-
-    <div class="archive-hero fade-up">
-      <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" alt="Alpha main demo" loading="lazy"/>
-    </div>
-
-    <div class="archive-grid fade-up">
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" alt="Alpha theme switching" loading="lazy"/>
-        <div class="archive-caption">// Theme switching</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" alt="Alpha wallpaper picker" loading="lazy"/>
-        <div class="archive-caption">// Wallpaper picker</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" alt="Alpha panel modes" loading="lazy"/>
-        <div class="archive-caption">// Panel modes</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" alt="Alpha desktop looks" loading="lazy"/>
-        <div class="archive-caption">// Desktop looks</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" alt="Alpha dock" loading="lazy"/>
-        <div class="archive-caption">// Dock / taskbar</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" alt="Alpha control center" loading="lazy"/>
-        <div class="archive-caption">// Control center</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" alt="Alpha animation editor" loading="lazy"/>
-        <div class="archive-caption">// Animation editor</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter%20power%20profile.png" alt="Alpha power profile" loading="lazy"/>
-        <div class="archive-caption">// Power profile</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" alt="Alpha appearance settings" loading="lazy"/>
-        <div class="archive-caption">// Appearance settings</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.png" alt="Alpha theme engine" loading="lazy"/>
-        <div class="archive-caption">// Theme engine</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider"/>
-
-<!-- CTA -->
 <section class="cta-section">
   <h2>Built <strong>late nights.</strong><br/>One commit at a time.</h2>
   <p>Zen Shell is an independent project. If it's made your desktop a better place, a coffee keeps the commits flowing.</p>
   <div class="cta-actions">
     <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" class="btn btn-primary btn-large" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;flex-shrink:0"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
       Star on GitHub
     </a>
     <a href="https://buymeacoffee.com/zenpy" class="btn btn-ghost btn-large" target="_blank">
@@ -1948,7 +691,6 @@ footer{
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-left">
@@ -1958,30 +700,16 @@ footer{
       <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" target="_blank">GitHub</a>
       <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/issues" target="_blank">Issues</a>
       <a href="https://github.com/Gekinzen/images-demo/tree/main/wallpapers" target="_blank">Wallpapers</a>
-      <a href="#archive">Alpha Archive</a>
       <a href="https://buymeacoffee.com/zenpy" target="_blank">Support</a>
     </div>
   </div>
 </footer>
 
 <script>
-// Scroll animations
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// Tab switcher — stable / alpha / backup
-function showTab(btn, id) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  ['stable','alpha','backup'].forEach(t => {
-    const el = document.getElementById('tab-' + t);
-    if(el) el.style.display = t === id ? 'block' : 'none';
-  });
-}
-
-// Stagger feature cards
 document.querySelectorAll('.feature-card').forEach((el, i) => {
   el.style.transitionDelay = (i * 40) + 'ms';
 });

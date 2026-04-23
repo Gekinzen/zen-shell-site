@@ -203,6 +203,26 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
 .code-body pre .c-flag{color:var(--accent2)}
 .code-body pre .c-str{color:var(--green)}
 
+/* LEGACY ARCHIVE — alpha 2025 */
+.archive-section{padding:6rem 0;background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,0.015) 50%,transparent 100%);position:relative}
+.archive-section::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 80px,rgba(255,255,255,0.008) 80px,rgba(255,255,255,0.008) 81px);pointer-events:none}
+.archive-section .container{position:relative;z-index:1}
+.archive-tag{display:inline-block;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem}
+.archive-section .section-header h2{color:rgba(255,255,255,0.85)}
+.archive-note{max-width:680px;margin:0 auto 3rem;padding:1.2rem 1.5rem;background:var(--bg1);border:1px dashed var(--border);border-radius:12px;font-size:0.85rem;color:var(--muted);line-height:1.7;text-align:left}
+.archive-note strong{color:var(--text);font-weight:500}
+.archive-note a{color:var(--accent);text-decoration:none}
+.archive-note a:hover{text-decoration:underline}
+.archive-note code{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);background:var(--bg2);padding:1px 7px;border-radius:5px;border:1px solid var(--border)}
+.archive-hero{margin:0 auto 2rem;max-width:880px;border-radius:14px;overflow:hidden;border:1px solid var(--border);filter:grayscale(15%);transition:filter 0.3s}
+.archive-hero:hover{filter:grayscale(0%)}
+.archive-hero img{width:100%;display:block}
+.archive-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
+.archive-item{border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--bg1);filter:grayscale(20%);transition:filter 0.3s,border-color 0.3s,transform 0.3s}
+.archive-item:hover{filter:grayscale(0%);border-color:var(--border-hover);transform:translateY(-2px)}
+.archive-item img{width:100%;display:block}
+.archive-caption{padding:0.7rem 1rem;font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);border-top:1px solid var(--border);background:var(--bg2)}
+
 @media(max-width:768px){
   nav{padding:0 1rem;height:60px}
   .nav-links,.nav-badge{display:none}
@@ -218,6 +238,8 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
   .roadmap-grid{grid-template-columns:1fr}
   .roadmap-card{padding:1.75rem 1.25rem}
   .kb-grid{grid-template-columns:1fr;gap:0.5rem}
+  .archive-grid{grid-template-columns:1fr;gap:0.75rem}
+  .archive-note{padding:1rem 1.25rem;font-size:0.78rem}
   .cta-actions{flex-direction:column;width:100%;gap:0.75rem}
   .cta-actions .btn{width:100%;justify-content:center}
   .footer-inner{flex-direction:column;text-align:center;gap:1rem}
@@ -241,6 +263,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
     <li><a href="#whats-new">What's New</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#install">Install</a></li>
+    <li><a href="#archive">Archive</a></li>
   </ul>
   <div class="nav-cta">
     <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" class="btn btn-ghost" target="_blank">
@@ -338,7 +361,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
         <div class="feature-version">→ v6.16.4+</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">bedtime_outline</span></div>
+        <div class="feature-icon"><span class="material-symbols-outlined">bedtime</span></div>
         <h3>Idle &amp; Sleep</h3>
         <p>Configurable lock / sleep timeouts (30s → 5h → Never). Lid close action: sleep / lock / nothing. Live sed-rewrite of hypridle.conf.</p>
         <div class="feature-version">→ v6.16.3.8</div>
@@ -350,7 +373,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
         <div class="feature-version">→ v6.16.3.7</div>
       </div>
       <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">lock_outline</span></div>
+        <div class="feature-icon"><span class="material-symbols-outlined">lock</span></div>
         <h3>Lock Screen overhaul</h3>
         <p>Clock font matches your widget. Weather mood line. Gender-aware rotating care message (Neutral / Male / Female). No more "Heyah Username".</p>
         <div class="feature-version">→ v6.16.3.6</div>
@@ -443,7 +466,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
       </div>
       <div class="new-card">
         <div class="new-card-tag">v6.16.3.8 · Power</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">bedtime_outline</span>Idle &amp; Sleep cascade</h3>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">bedtime</span>Idle &amp; Sleep cascade</h3>
         <p>Lock after idle (30s / 1m / 30m / 1h / 3h / 5h / Never). Sleep after idle (same options). Lid close action (Sleep / Lock only / Do nothing). zen-hypridle-sync.sh rewrites hypridle.conf live.</p>
       </div>
       <div class="new-card">
@@ -453,7 +476,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
       </div>
       <div class="new-card">
         <div class="new-card-tag">v6.16.3.6 · Lock</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">lock_outline</span>Lock screen overhaul</h3>
+        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">lock</span>Lock screen overhaul</h3>
         <p>Clock font now matches your bar widget font (Black/Bold weight per family). No "Heyah Username" greeting. Weather mood line + rotating care message, gender-aware (Neutral / Male / Female in Personal Preferences).</p>
       </div>
       <div class="new-card">
@@ -677,6 +700,72 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
 
 <hr class="section-divider"/>
 
+<hr class="section-divider"/>
+
+<!-- LEGACY ARCHIVE — 2025 ALPHA -->
+<section class="archive-section" id="archive">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="archive-tag">Historical Reference</div>
+      <h2>Legacy archive · <strong>2025 Alpha</strong></h2>
+      <p>The original Python / GTK4 / Waybar stack — preserved for posterity.</p>
+    </div>
+
+    <div class="archive-note fade-up">
+      These assets were captured on <strong>Hyprland 0.52</strong> and document the pre-Quickshell lineage of the project. Current Zen Shell runs on <strong>Hyprland 0.54+</strong> with a unified QML architecture — see the <a href="#features">Features</a> above for the latest look. The deprecated source is preserved at <code>zen-alpha-deprecated-0.52/</code> in the <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/zen-alpha-deprecated-0.52" target="_blank">archive branch</a>.
+    </div>
+
+    <div class="archive-hero fade-up">
+      <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" alt="Alpha main demo" loading="lazy"/>
+    </div>
+
+    <div class="archive-grid fade-up">
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" alt="Alpha theme switching" loading="lazy"/>
+        <div class="archive-caption">// Theme switching</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" alt="Alpha wallpaper picker" loading="lazy"/>
+        <div class="archive-caption">// Wallpaper picker</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" alt="Alpha panel modes" loading="lazy"/>
+        <div class="archive-caption">// Panel modes</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" alt="Alpha desktop looks" loading="lazy"/>
+        <div class="archive-caption">// Desktop looks</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" alt="Alpha dock" loading="lazy"/>
+        <div class="archive-caption">// Dock / taskbar</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" alt="Alpha control center" loading="lazy"/>
+        <div class="archive-caption">// Control center</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" alt="Alpha animation editor" loading="lazy"/>
+        <div class="archive-caption">// Animation editor</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter%20power%20profile.png" alt="Alpha power profile" loading="lazy"/>
+        <div class="archive-caption">// Power profile</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" alt="Alpha appearance settings" loading="lazy"/>
+        <div class="archive-caption">// Appearance settings</div>
+      </div>
+      <div class="archive-item">
+        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.png" alt="Alpha theme engine" loading="lazy"/>
+        <div class="archive-caption">// Theme engine</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider"/>
+
 <section class="cta-section">
   <h2>Built <strong>late nights.</strong><br/>One commit at a time.</h2>
   <p>Zen Shell is an independent project. If it's made your desktop a better place, a coffee keeps the commits flowing.</p>
@@ -700,6 +789,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
       <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" target="_blank">GitHub</a>
       <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/issues" target="_blank">Issues</a>
       <a href="https://github.com/Gekinzen/images-demo/tree/main/wallpapers" target="_blank">Wallpapers</a>
+      <a href="#archive">Alpha Archive</a>
       <a href="https://buymeacoffee.com/zenpy" target="_blank">Support</a>
     </div>
   </div>

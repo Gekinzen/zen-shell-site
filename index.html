@@ -14,7 +14,7 @@
   <meta property="og:title" content="Zen Shell — Kintsugi · v6.16.4.11.2" />
   <meta property="og:description" content="QML-native desktop environment for Hyprland. Panel, control center, wallpaper, themes. All Quickshell." />
   <meta property="og:url" content="https://gekinzen.github.io/zen-shell-site/" />
-  <meta property="og:image" content="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/hero_desktop.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="canonical" href="https://gekinzen.github.io/zen-shell-site/" />
@@ -745,10 +745,11 @@
     }
     .demos__grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
     }
-    @media (max-width: 780px) { .demos__grid { grid-template-columns: 1fr; } }
+    @media (max-width: 980px) { .demos__grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .demos__grid { grid-template-columns: 1fr; } }
     .demo-card {
       display: block;
       border: 1px solid var(--hairline);
@@ -1356,7 +1357,7 @@
 
     <div class="hero-image">
       <img
-        src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png"
+        src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/hero_desktop.jpg"
         alt="Zen Shell desktop preview — Kintsugi v6.16.4.11.2"
         loading="eager"
       />
@@ -1418,45 +1419,122 @@
           <span class="shot__caption-hint">The website's design tokens shipped back to the shell. Drop <code style="font-family: var(--mono); font-size: 0.85em;">kintsugi-light.json</code> and <code style="font-family: var(--mono); font-size: 0.85em;">kintsugi-dark.json</code> into <code style="font-family: var(--mono); font-size: 0.85em;">themes-builtin/</code> and the desktop pixel-matches the site.</span>
         </div>
       </a>
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" target="_blank" rel="noopener">
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_01_wallpaper_picker.gif" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge">Desktop</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell desktop with panel and widgets" loading="lazy" />
+          <span class="shot__badge">Super+W</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_01_wallpaper_picker.gif" alt="Wallpaper picker with folder scanning and slideshow" loading="lazy" />
         </div>
         <div class="shot__caption">
-          <span class="shot__caption-title">Full desktop</span>
-          <span class="shot__caption-sub">Panel · desktop widgets · wallpaper engine</span>
-          <span class="shot__caption-hint">Status bar, clock hover popup, music strings, desktop widgets (clock / weather / sysmon), wallpaper backdrop.</span>
+          <span class="shot__caption-title">Wallpaper engine</span>
+          <span class="shot__caption-sub">Folder scan · slideshow · online repo browser</span>
+          <span class="shot__caption-hint">Full wallpaper picker with folder scanning, slideshow scheduling, transition effects, and the online Gekinzen/images-demo repo browser.</span>
+        </div>
+      </a>
+
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_02_animations_dropdown.gif" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge shot__badge--new">New · v4.11.2</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_02_animations_dropdown.gif" alt="Material ZenComboBox with 21 animation presets and WCAG auto-contrast" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Animation presets</span>
+          <span class="shot__caption-sub">21 community presets · Material ZenComboBox</span>
+          <span class="shot__caption-hint">Rotating chevron, accent dots, left accent bar on highlight. Text color picked via WCAG 2.0 luminance — readable on every theme.</span>
+        </div>
+      </a>
+
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_03_themes_palette.gif" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge shot__badge--new">New · v4.11.2</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_03_themes_palette.gif" alt="Themes page with PaletteBox and palette preview" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Themes page</span>
+          <span class="shot__caption-sub">PaletteBox · 19 themes · live preview</span>
+          <span class="shot__caption-hint">Theme palette relocated from General. 60×60 PaletteBoxes open the PopupWindow picker with live hex typing. 19 built-in themes including Kintsugi Light + Dark.</span>
+        </div>
+      </a>
+
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_04_panel_drag_drop.gif" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge">Panel</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_04_panel_drag_drop.gif" alt="Panel drag-drop zones with fullwidth to island mode transition" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Panel · Bar modes</span>
+          <span class="shot__caption-sub">Drag-drop zones · fullwidth ↔ island</span>
+          <span class="shot__caption-hint">Drag modules between Left / Center / Right zones — state persists to panel-state.json. Fullwidth ↔ Island mode toggle with gate against revert-on-reboot.</span>
+        </div>
+      </a>
+
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_05_control_panel.gif" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge">Super+C</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_05_control_panel.gif" alt="Control Panel with Dark Mode toggle syncing GTK and libadwaita" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Control Panel + Dark Mode</span>
+          <span class="shot__caption-sub">Quick toggles · Power Profile · Dark Mode sync</span>
+          <span class="shot__caption-hint">Volume, WiFi/BT/Ethernet, Ryzen + Radeon telemetry, Power Profile, Gaming Boost. Dark Mode toggle syncs GTK3/4/libadwaita via gsettings.</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PREVIOUS SHOWCASES — v6.15.3 demo assets preserved
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="showcase" id="showcase-prev" style="background: var(--bone-deep);">
+  <div class="shell">
+    <div class="showcase__head">
+      <span class="section-label">Previous showcases</span>
+      <h2 class="section-title">Earlier captures · v6.15.3 era.</h2>
+      <p class="showcase__intro">
+        Static shots and adaptive-theming / settings-tour / screenshot-ropes clips from the Ensō series (v6.15.x). Preserved here so the evolution stays visible as new releases ship.
+      </p>
+    </div>
+
+    <div class="showcase__grid">
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge">v6.15.3 · Desktop</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell v6.15.3 desktop with panel and widgets" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Desktop (Ensō)</span>
+          <span class="shot__caption-sub">Panel · widgets · wallpaper</span>
+          <span class="shot__caption-hint">The original full-desktop composition from v6.15.3 — status bar, clock hover popup, music strings, desktop widgets.</span>
         </div>
       </a>
 
       <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge">Overview</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" alt="Zen Shell workspace overview" loading="lazy" />
+          <span class="shot__badge">v6.15.3 · Overview</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" alt="Zen Shell v6.15.3 workspace overview" loading="lazy" />
         </div>
         <div class="shot__caption">
           <span class="shot__caption-title">Workspace</span>
           <span class="shot__caption-sub">Island mode · control panel · themes</span>
-          <span class="shot__caption-hint">Island mode bar, Control Panel (Super+C) with quick toggles, active theme palette visible across surfaces.</span>
+          <span class="shot__caption-hint">Island mode bar + Control Panel with quick toggles. Active theme palette visible across surfaces.</span>
         </div>
       </a>
 
       <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample3.png" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge shot__badge--new">New · v4.11.2</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample3.png" alt="Settings page with Themes, PaletteBox, and custom theme management" loading="lazy" />
+          <span class="shot__badge">v6.15.3 · Settings</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample3.png" alt="Settings page from v6.15.3" loading="lazy" />
         </div>
         <div class="shot__caption">
-          <span class="shot__caption-title">Themes page</span>
-          <span class="shot__caption-sub">PaletteBox · Custom Themes · WCAG dropdown</span>
-          <span class="shot__caption-hint">Theme palette relocated from General. 60×60 PaletteBoxes open PopupWindow picker with live hex typing. Material dropdown auto-contrasts via WCAG luminance.</span>
+          <span class="shot__caption-title">Settings page</span>
+          <span class="shot__caption-sub">14 pages · live preview</span>
+          <span class="shot__caption-hint">Pre-relocation settings layout before the v4.11.2 Themes page refactor.</span>
         </div>
       </a>
 
       <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_01_adaptive_theming.gif" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge">Adaptive</span>
+          <span class="shot__badge">v6.15.3 · Adaptive</span>
           <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_01_adaptive_theming.gif" alt="Adaptive theming across all surfaces" loading="lazy" />
         </div>
         <div class="shot__caption">
@@ -1468,19 +1546,19 @@
 
       <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_02_settings_tour.gif" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge">Settings</span>
+          <span class="shot__badge">v6.15.3 · Settings Tour</span>
           <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_02_settings_tour.gif" alt="Settings tour across 14 pages" loading="lazy" />
         </div>
         <div class="shot__caption">
           <span class="shot__caption-title">Settings tour</span>
           <span class="shot__caption-sub">14 pages · live preview · no restart</span>
-          <span class="shot__caption-hint">Fourteen pages of live-preview configuration. No config files. No restart. Every change persists.</span>
+          <span class="shot__caption-hint">Fourteen pages of live-preview configuration. No config files. No restart.</span>
         </div>
       </a>
 
       <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_03_screenshot_module_ultrawide.gif" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge">Super+Shift+S</span>
+          <span class="shot__badge">v6.15.3 · Super+Shift+S</span>
           <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_03_screenshot_module_ultrawide.gif" alt="Screenshot module with physics-draped ropes" loading="lazy" />
         </div>
         <div class="shot__caption">
@@ -1502,32 +1580,44 @@
       <span class="section-label">Video demos</span>
       <h2 class="section-title">The full tour.</h2>
       <p class="demos__intro">
-        Strings music module, screenshot ropes, settings, the complete desktop experience. Click to watch on YouTube.
+        Latest Kintsugi showcase on top, followed by historical tours across the v6.10 → v6.14 cycle. Click any to watch on YouTube.
       </p>
     </div>
 
-    <a class="demo-featured" href="https://www.youtube.com/watch?v=dNwGRBhA97g" target="_blank" rel="noopener">
+    <a class="demo-featured" href="https://www.youtube.com/watch?v=nS2L9dIQbF4" target="_blank" rel="noopener">
       <div class="demo-featured__thumb">
-        <img src="https://img.youtube.com/vi/dNwGRBhA97g/maxresdefault.jpg" alt="Zen Shell — Full Tour" loading="lazy" />
+        <img src="https://img.youtube.com/vi/nS2L9dIQbF4/maxresdefault.jpg" alt="Zen Shell v6.16.4.11.2 Kintsugi — Release Showcase" loading="lazy" />
         <div class="demo-featured__play" aria-hidden="true"></div>
       </div>
       <div class="demo-featured__cap">
-        <div class="demo-featured__cap-label">Full Tour</div>
-        <div class="demo-featured__cap-title">Zen Shell — Full Tour</div>
-        <div class="demo-featured__cap-desc">Strings music module, screenshot ropes, settings, and the complete desktop experience.</div>
+        <div class="demo-featured__cap-label">🟢 Latest · v6.16.4.11.2 · Kintsugi (金継ぎ)</div>
+        <div class="demo-featured__cap-title">Zen Shell Kintsugi — Release Showcase</div>
+        <div class="demo-featured__cap-desc">Panel, wallpaper engine, Material ZenComboBox, Themes with PaletteBox, Control Panel Dark Mode sync, WiFi picker. New Kintsugi Light + Dark themes matching the signature sage / gold / bone / ink palette.</div>
       </div>
     </a>
 
     <div class="demos__grid">
+      <a class="demo-card" href="https://www.youtube.com/watch?v=dNwGRBhA97g" target="_blank" rel="noopener">
+        <div class="demo-card__thumb">
+          <img src="https://img.youtube.com/vi/dNwGRBhA97g/maxresdefault.jpg" alt="Zen Shell — Full Tour" loading="lazy" />
+          <div class="demo-card__play" aria-hidden="true"></div>
+        </div>
+        <div class="demo-card__cap">
+          <div class="demo-card__cap-label">Full tour · v6.15.x (Ensō)</div>
+          <div class="demo-card__cap-title">Zen Shell — Full Tour</div>
+          <div class="demo-card__cap-desc">Strings music module, screenshot ropes, settings, complete desktop experience.</div>
+        </div>
+      </a>
+
       <a class="demo-card" href="https://www.youtube.com/watch?v=YQxrh5_naMQ" target="_blank" rel="noopener">
         <div class="demo-card__thumb">
           <img src="https://img.youtube.com/vi/YQxrh5_naMQ/maxresdefault.jpg" alt="Zen Shell v6.14" loading="lazy" />
           <div class="demo-card__play" aria-hidden="true"></div>
         </div>
         <div class="demo-card__cap">
-          <div class="demo-card__cap-label">Previous series</div>
+          <div class="demo-card__cap-label">v6.14 · Yugen</div>
           <div class="demo-card__cap-title">Zen Shell v6.14</div>
-          <div class="demo-card__cap-desc">Theme switching, panel modes, control center.</div>
+          <div class="demo-card__cap-desc">Theme switching, panel modes, control center in the QML-rewrite era.</div>
         </div>
       </a>
 
@@ -1537,7 +1627,7 @@
           <div class="demo-card__play" aria-hidden="true"></div>
         </div>
         <div class="demo-card__cap">
-          <div class="demo-card__cap-label">QML Foundations</div>
+          <div class="demo-card__cap-label">v6.10 · Yugen foundations</div>
           <div class="demo-card__cap-title">Zen Shell v6.10</div>
           <div class="demo-card__cap-desc">The fresh QML rewrite — where the new stack began.</div>
         </div>

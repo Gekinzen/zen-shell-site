@@ -1,1029 +1,1490 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Zen Shell — A Quickshell-Native Desktop Environment for Hyprland</title>
-<meta name="description" content="Zen Shell is a complete desktop shell built entirely in QML using Quickshell — replacing GTK4, Python, and Waybar with a unified, lightweight QML architecture."/>
-<meta property="og:title" content="Zen Shell — Quickshell Desktop for Hyprland"/>
-<meta property="og:description" content="Control everything. Theme everything. Break nothing."/>
-<meta property="og:image" content="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#080808;--bg1:#0e0e0e;--bg2:#141414;
-  --surface:rgba(255,255,255,0.04);--surface-hover:rgba(255,255,255,0.07);
-  --border:rgba(255,255,255,0.08);--border-hover:rgba(255,255,255,0.14);
-  --text:#e8e8e8;--muted:#6b7280;--muted2:#4b5563;
-  --accent:#60a5fa;--accent2:#a78bfa;
-  --accent-dim:rgba(96,165,250,0.15);--accent2-dim:rgba(167,139,250,0.12);
-  --green:#34d399;--red:#f87171;--yellow:#fbbf24;--orange:#fb923c;
-  --font-display:'Afacad Flux',sans-serif;--font-body:'Afacad Flux',sans-serif;--font-mono:'JetBrains Mono',monospace;
-  --tracking-tightest:-0.045em;--tracking-tighter:-0.03em;--tracking-tight:-0.015em;--tracking-normal:0;
-  --tracking-wide:0.04em;--tracking-wider:0.08em;--tracking-widest:0.16em;
-  --leading-tight:1.05;--leading-snug:1.25;--leading-normal:1.55;--leading-relaxed:1.75;
-  --fs-hero:clamp(2.6rem,8.5vw,6rem);--fs-h2:clamp(1.75rem,4.5vw,2.9rem);
-  --fs-h3:clamp(1.1rem,2vw,1.35rem);--fs-lead:clamp(1rem,1.4vw,1.2rem);--fs-body:clamp(0.95rem,1vw,1rem);
-}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent}
-body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--leading-relaxed);font-weight:300;letter-spacing:var(--tracking-tight);font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"ss01" 1;font-variant-numeric:lining-nums tabular-nums;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(96,165,250,0.06),transparent),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(167,139,250,0.05),transparent);pointer-events:none;z-index:0}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#14140f" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,8,8,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-logo{font-family:var(--font-display);font-size:1.1rem;font-weight:700;letter-spacing:-0.01em;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.6rem}
-.nav-logo span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-badge{font-family:var(--font-mono);font-size:0.7rem;padding:2px 8px;background:var(--surface);border:1px solid var(--border);border-radius:99px;color:var(--muted)}
-.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:0.875rem;transition:color 0.2s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{display:flex;align-items:center;gap:0.75rem}
-.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.45rem 1.1rem;border-radius:8px;font-family:var(--font-body);font-size:0.875rem;font-weight:500;text-decoration:none;cursor:pointer;transition:all 0.2s;border:none}
-.btn-ghost{background:var(--surface);color:var(--text);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--surface-hover);border-color:var(--border-hover)}
-.btn-primary{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
-.btn-primary:hover{opacity:0.88;transform:translateY(-1px)}
-.btn svg{width:16px;height:16px;flex-shrink:0}
+  <title>Zen Shell — Quickshell-native desktop environment for Hyprland</title>
+  <meta name="description" content="Zen Shell is a QML-native desktop environment for Hyprland on Arch / CachyOS. Panel, control center, wallpaper engine, theme system — all driven by Quickshell." />
 
-.hero{position:relative;padding:60px 2rem 80px;text-align:center;z-index:1;max-width:1100px;margin:0 auto}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.75rem;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;padding:4px 14px;background:var(--accent-dim);border:1px solid rgba(96,165,250,0.2);border-radius:99px;margin-bottom:1.5rem}
-.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.hero h1{font-family:var(--font-display);font-size:var(--fs-hero);font-weight:200;line-height:var(--leading-tight);letter-spacing:var(--tracking-tightest);color:#fff;margin-bottom:1.5rem;font-feature-settings:"kern" 1,"liga" 1,"ss01" 1,"cv01" 1}
-.hero h1 strong{font-weight:700;letter-spacing:var(--tracking-tighter)}
-.hero h1 .gradient-text{background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 60%,#ec4899 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:var(--fs-lead);color:var(--muted);max-width:580px;margin:0 auto 2.5rem;font-weight:300;line-height:var(--leading-normal);letter-spacing:var(--tracking-tight)}
-.hero-sub em{font-style:italic;color:var(--text);font-weight:400}
-.hero-actions{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
-.hero-install{display:flex;align-items:center;gap:0.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:0.6rem 1rem 0.6rem 1.25rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--muted)}
-.hero-install code{color:var(--text)}
-.hero-install code .cmd{color:var(--accent)}
-.copy-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 10px;font-size:0.75rem;cursor:pointer;font-family:var(--font-body);transition:all 0.2s}
-.copy-btn:hover{background:var(--surface-hover);color:var(--text)}
-.hero-badges{display:flex;align-items:center;justify-content:center;gap:0.5rem;flex-wrap:wrap;margin-top:1rem}
-.badge{display:inline-flex;align-items:center;gap:0.35rem;font-family:var(--font-mono);font-size:0.7rem;padding:3px 10px;border-radius:99px;border:1px solid var(--border);color:var(--muted);background:var(--surface)}
-.badge.blue{color:var(--accent);border-color:rgba(96,165,250,0.25);background:var(--accent-dim)}
-.badge.purple{color:var(--accent2);border-color:rgba(167,139,250,0.25);background:var(--accent2-dim)}
-.badge.green{color:var(--green);border-color:rgba(52,211,153,0.2);background:rgba(52,211,153,0.08)}
-.badge.orange{color:var(--orange);border-color:rgba(251,146,60,0.25);background:rgba(251,146,60,0.1)}
-.badge.red{color:var(--red);border-color:rgba(248,113,113,0.25);background:rgba(248,113,113,0.08)}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Zen Shell — Quickshell-native desktop environment" />
+  <meta property="og:description" content="QML-native desktop environment for Hyprland. Panel, control center, wallpaper, themes. All Quickshell." />
+  <meta property="og:url" content="https://zenshell.obsidevs.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-.hero-media{position:relative;margin:3.5rem auto 0;max-width:960px;border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 0 0 1px rgba(255,255,255,0.03),0 40px 100px rgba(0,0,0,0.7),0 0 60px rgba(96,165,250,0.06)}
-.hero-media img{width:100%;display:block}
-.hero-media-glow{position:absolute;inset:-1px;border-radius:16px;background:linear-gradient(135deg,rgba(96,165,250,0.08),transparent 40%,rgba(167,139,250,0.08));pointer-events:none}
+  <link rel="canonical" href="https://zenshell.obsidevs.com/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://api.github.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..900;1,7..72,300..900&family=JetBrains+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0"
+  />
 
-section{position:relative;z-index:1}
-.container{max-width:1100px;margin:0 auto;padding:0 2rem}
-.section-header{text-align:center;margin-bottom:4rem}
-.section-tag{display:inline-block;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem}
-.section-header h2{font-family:var(--font-display);font-size:var(--fs-h2);font-weight:300;letter-spacing:var(--tracking-tighter);color:#fff;line-height:var(--leading-snug);font-feature-settings:"kern" 1,"liga" 1,"ss01" 1}
-.section-header h2 strong{font-weight:600}
-.section-header p{font-size:1rem;color:var(--muted);max-width:500px;margin:0.75rem auto 0}
+  <style>
+    /* =================================================================
+       Design tokens — inherited from OBSIDEVS editorial system
+       with dark mode tokens for the night side.
+       ================================================================= */
+    :root {
+      --ink:          #2a2a2a;
+      --ink-soft:     #3a3a3a;
+      --paper:        #ffffff;
+      --bone:         #fafaf7;
+      --bone-deep:    #f4f2eb;
+      --mute:         #666666;
+      --hairline:     #e5e3dd;
+      --sage:         #7A9068;
+      --sage-deep:    #5f7450;
+      --alpha-tone:   #c68a4a;
+      --alpha-deep:   #a66f38;
+      --stable-tone:  #5f7450;
 
-.stats-bar{padding:3rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg1);margin:5rem 0}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
-.stat-val{font-family:var(--font-display);font-size:clamp(1.75rem,3.5vw,2.4rem);font-weight:300;letter-spacing:var(--tracking-tighter);background:linear-gradient(135deg,#fff,rgba(255,255,255,0.55));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-variant-numeric:lining-nums tabular-nums}
-.stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.25rem}
+      --serif: 'Literata', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+      --mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-.features-section{padding:6rem 0}
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-.feature-card{background:var(--bg1);padding:2rem;transition:background 0.2s}
-.feature-card:hover{background:var(--bg2)}
-.feature-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1.25rem;background:var(--surface);border:1px solid var(--border)}
-.feature-card h3{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:500;color:#fff;margin-bottom:0.5rem;letter-spacing:var(--tracking-tight)}
-.feature-card p{font-size:0.875rem;color:var(--muted);line-height:1.6}
-.feature-version{font-family:var(--font-mono);font-size:0.65rem;color:var(--accent2);margin-top:0.75rem;opacity:0.7}
+      --shell-max: 1280px;
+      --gutter:    clamp(1.25rem, 4vw, 4rem);
+      --easing:    cubic-bezier(0.16, 1, 0.3, 1);
+      --tx:        420ms var(--easing);
+    }
 
-.demo-section{padding:6rem 0}
-.demo-wrapper{border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 40px 100px rgba(0,0,0,0.5);position:relative}
-.demo-wrapper iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
+    :root.dark {
+      --ink:          #ededed;
+      --ink-soft:     #c9c9c9;
+      --paper:        #1c1c17;
+      --bone:         #14140f;
+      --bone-deep:    #0e0e0a;
+      --mute:         #8a8a85;
+      --hairline:     #2a2a24;
+      --sage:         #98b283;
+      --sage-deep:    #bccda7;
+      --alpha-tone:   #d89a60;
+      --alpha-deep:   #e8ae78;
+      --stable-tone:  #98b283;
+    }
 
-.new-section{padding:6rem 0}
-.new-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
-.new-card{background:var(--bg1);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color 0.2s}
-.new-card:hover{border-color:var(--border-hover)}
-.new-card-tag{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:0.6rem}
-.new-card h3{font-family:var(--font-display);font-size:0.975rem;font-weight:600;color:#fff;margin-bottom:0.5rem}
-.new-card p{font-size:0.85rem;color:var(--muted);line-height:1.6}
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
 
-.roadmap-section{padding:5rem 0}
-.roadmap-card{position:relative;background:linear-gradient(180deg,rgba(167,139,250,0.04) 0%,transparent 100%),var(--bg1);border:1px solid var(--border);border-radius:18px;padding:clamp(2rem,4vw,3.5rem);overflow:hidden}
-.roadmap-card::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--accent2),transparent);opacity:0.5}
-.roadmap-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--accent2);padding:4px 12px;background:var(--accent2-dim);border:1px solid rgba(167,139,250,0.2);border-radius:99px;margin-bottom:1.25rem}
-.roadmap-eyebrow .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}
-.roadmap-card h3{font-family:var(--font-display);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:200;letter-spacing:var(--tracking-tightest);color:#fff;line-height:var(--leading-tight);margin-bottom:0.85rem}
-.roadmap-card h3 strong{font-weight:600}
-.roadmap-card .roadmap-lead{font-size:var(--fs-lead);color:var(--muted);font-weight:300;letter-spacing:var(--tracking-tight);max-width:680px;margin-bottom:2.25rem;line-height:var(--leading-normal)}
-.roadmap-card .roadmap-lead em{font-style:italic;color:var(--text);font-weight:400}
-.roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.roadmap-phase{background:var(--bg2);padding:1.5rem;position:relative;transition:background 0.25s ease}
-.roadmap-phase:hover{background:var(--bg1)}
-.roadmap-phase.is-current{background:linear-gradient(180deg,rgba(52,211,153,0.06) 0%,var(--bg2) 100%)}
-.roadmap-phase.is-next{background:linear-gradient(180deg,rgba(167,139,250,0.05) 0%,var(--bg2) 100%)}
-.phase-version{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:var(--tracking-wider);color:var(--muted);margin-bottom:0.4rem}
-.phase-status{display:inline-block;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:var(--tracking-wider);text-transform:uppercase;padding:2px 7px;border-radius:99px;margin-left:0.4rem;vertical-align:middle}
-.phase-status.shipped{color:var(--green);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2)}
-.phase-status.stable{color:var(--green);background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.3)}
-.phase-status.next{color:var(--accent2);background:var(--accent2-dim);border:1px solid rgba(167,139,250,0.25)}
-.phase-title{font-family:var(--font-display);font-size:1rem;font-weight:500;color:#fff;letter-spacing:var(--tracking-tight);margin-bottom:0.65rem}
-.phase-list{list-style:none;padding:0;margin:0}
-.phase-list li{font-size:0.8rem;color:var(--muted);line-height:1.55;padding-left:1.1rem;position:relative;margin-bottom:0.35rem}
-.phase-list li::before{content:'';position:absolute;left:0;top:0.55rem;width:5px;height:5px;border-radius:50%;background:var(--muted2)}
-.roadmap-phase.is-current .phase-list li::before{background:var(--green)}
-.roadmap-phase.is-next .phase-list li::before{background:var(--accent2)}
-.roadmap-note{margin-top:1.75rem;padding-top:1.5rem;border-top:1px dashed var(--border);font-size:0.85rem;color:var(--muted);font-style:italic;line-height:var(--leading-normal)}
-.roadmap-note code{font-family:var(--font-mono);font-size:0.78rem;font-style:normal;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px;border:1px solid rgba(96,165,250,0.18)}
+    body {
+      margin: 0;
+      background: var(--bone);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 1.6;
+      font-feature-settings: "kern", "liga", "calt";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      transition: background var(--tx), color var(--tx);
+    }
 
-.keybinds-section{padding:6rem 0}
-.kb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem}
-.kb-row{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border-radius:8px;background:var(--bg1);border:1px solid var(--border);gap:1rem}
-.kb-keys{display:flex;gap:4px;flex-shrink:0}
-.kb-key{font-family:var(--font-mono);font-size:0.7rem;padding:2px 8px;background:var(--bg2);border:1px solid var(--border-hover);border-radius:5px;color:var(--text)}
-.kb-action{font-size:0.82rem;color:var(--muted);text-align:right}
-.kb-row.new-feature .kb-action{color:var(--accent2)}
-.kb-row.panic{border-color:rgba(248,113,113,0.3);background:rgba(248,113,113,0.04)}
-.kb-row.panic .kb-key{border-color:rgba(248,113,113,0.4);color:var(--red)}
-.kb-row.panic .kb-action{color:var(--red)}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.035;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+    :root.dark body::before { mix-blend-mode: screen; opacity: 0.05; }
 
-.cta-section{padding:8rem 2rem;text-align:center;position:relative;z-index:1}
-.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(96,165,250,0.07),transparent 70%);pointer-events:none}
-.cta-section h2{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:200;letter-spacing:var(--tracking-tightest);color:#fff;margin-bottom:1rem;line-height:var(--leading-tight)}
-.cta-section h2 strong{font-weight:700}
-.cta-section p{font-size:1rem;color:var(--muted);max-width:480px;margin:0 auto 2.5rem}
-.cta-actions{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
-.btn-large{padding:0.7rem 1.75rem;font-size:1rem}
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--sage); color: var(--paper); }
 
-footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;z-index:1}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
-.footer-left{font-size:0.85rem;color:var(--muted)}
-.footer-left a{color:var(--accent);text-decoration:none}
-.footer-right{display:flex;gap:1.25rem}
-.footer-right a{font-size:0.82rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
-.footer-right a:hover{color:var(--text)}
+    :focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
 
-.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;font-size:20px;line-height:1;vertical-align:middle;user-select:none}
-.feature-icon .material-symbols-outlined{font-size:22px}
-.btn .material-symbols-outlined{font-size:17px}
-.nav-logo .material-symbols-outlined{font-size:18px;color:var(--accent2)}
+    .shell {
+      max-width: var(--shell-max);
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+      position: relative;
+    }
 
-.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
-.fade-up.visible{opacity:1;transform:translateY(0)}
+    .eyebrow {
+      font-family: var(--serif);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.6;
+    }
 
-.section-divider{border:none;border-top:1px solid var(--border);margin:0}
+    .section-label {
+      font-family: var(--serif);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute);
+      font-weight: 500;
+    }
 
-.release-banner{position:relative;z-index:50;margin-top:60px;background:linear-gradient(90deg,rgba(52,211,153,0.06),rgba(167,139,250,0.06));border-bottom:1px solid rgba(255,255,255,0.06);padding:10px 2rem;display:flex;align-items:center;justify-content:center;gap:1rem 1.25rem;flex-wrap:wrap;text-align:center}
-.rb-item{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--muted);white-space:nowrap}
-.rb-item-text{display:inline-flex;align-items:center;gap:0.4rem;white-space:nowrap}
-.rb-tag{font-family:var(--font-mono);font-size:0.65rem;padding:2px 9px;border-radius:99px;font-weight:500;letter-spacing:var(--tracking-wider);white-space:nowrap}
-.rb-tag.stable{background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);color:var(--green)}
-.rb-tag.next{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);color:var(--accent2)}
-.rb-tag.hint{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);color:var(--accent2)}
-.rb-link{color:var(--accent)!important;text-decoration:none;font-family:var(--font-mono);font-size:0.75rem;transition:opacity 0.2s;white-space:nowrap}
-.rb-link:hover{opacity:0.7}
-.rb-sep{color:var(--muted2);font-size:0.7rem;user-select:none}
-.rb-sep-major{color:var(--border-hover);font-weight:200;font-size:0.95rem;user-select:none;opacity:0.6}
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0.5rem 0 0 0;
+    }
 
-.install-section{padding:6rem 0}
+    /* =================================================================
+       Nav
+       ================================================================= */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--bone) 85%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+    }
+    .brand {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .brand__mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: conic-gradient(from 220deg, var(--sage) 0%, var(--ink) 40%, var(--sage-deep) 70%, var(--sage) 100%);
+    }
+    .nav__links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      color: var(--ink-soft);
+    }
+    .nav__links a { position: relative; padding: 0.3rem 0; }
+    .nav__links a::after {
+      content: "";
+      position: absolute; left: 0; right: 0; bottom: -2px;
+      height: 1px; background: var(--sage);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 220ms var(--easing);
+    }
+    .nav__links a:hover::after { transform: scaleX(1); }
 
-/* Alpha heads-up card */
-.alpha-section{padding:5rem 0}
-.alpha-card{background:linear-gradient(180deg,rgba(251,146,60,0.04) 0%,transparent 100%),var(--bg1);border:1px solid rgba(251,146,60,0.2);border-radius:18px;padding:clamp(2rem,4vw,3rem);position:relative;overflow:hidden}
-.alpha-card::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:0.5}
-.alpha-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--orange);padding:4px 12px;background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.25);border-radius:99px;margin-bottom:1.25rem}
-.alpha-eyebrow .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
-.alpha-card h3{font-family:var(--font-display);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:200;letter-spacing:var(--tracking-tightest);color:#fff;line-height:var(--leading-tight);margin-bottom:0.85rem}
-.alpha-card h3 strong{font-weight:600}
-.alpha-card .alpha-lead{font-size:var(--fs-lead);color:var(--muted);font-weight:300;letter-spacing:var(--tracking-tight);max-width:680px;margin-bottom:2rem;line-height:var(--leading-normal)}
-.alpha-card .alpha-lead em{font-style:italic;color:var(--text);font-weight:400}
-.alpha-hotfix-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
-.alpha-hotfix{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.1rem;transition:border-color 0.2s}
-.alpha-hotfix:hover{border-color:rgba(251,146,60,0.3)}
-.alpha-hotfix-ver{font-family:var(--font-mono);font-size:0.75rem;color:var(--orange);margin-bottom:0.4rem;font-weight:500}
-.alpha-hotfix h4{font-family:var(--font-display);font-size:0.95rem;font-weight:500;color:#fff;margin-bottom:0.5rem;letter-spacing:var(--tracking-tight)}
-.alpha-hotfix p{font-size:0.8rem;color:var(--muted);line-height:1.55}
-.alpha-install{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem;font-family:var(--font-mono);font-size:0.82rem;line-height:1.7;color:var(--text)}
-.alpha-install .c-comment{color:var(--muted2)}
-.alpha-install .c-cmd{color:var(--accent)}
-.alpha-install .c-flag{color:var(--orange)}
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: border-color 200ms var(--easing), background 200ms var(--easing);
+    }
+    .theme-toggle:hover {
+      border-color: var(--sage);
+      background: color-mix(in srgb, var(--sage) 8%, transparent);
+    }
+    .theme-toggle__icon {
+      font-family: 'Material Symbols Outlined';
+      font-size: 18px;
+      font-variation-settings: 'opsz' 24, 'wght' 400, 'GRAD' 0, 'FILL' 0;
+      line-height: 1;
+    }
+    .theme-toggle__label { letter-spacing: 0.02em; }
 
-/* Phase 5 Updates Manager preview */
-.updates-section{padding:5rem 0}
-.updates-card{background:linear-gradient(180deg,rgba(96,165,250,0.03) 0%,transparent 100%),var(--bg1);border:1px solid var(--border);border-radius:18px;padding:clamp(2rem,4vw,3rem);position:relative;overflow:hidden}
-.updates-card h3{font-family:var(--font-display);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:200;letter-spacing:var(--tracking-tightest);color:#fff;line-height:var(--leading-tight);margin-bottom:0.85rem}
-.updates-card h3 strong{font-weight:600}
-.updates-card .updates-lead{font-size:var(--fs-lead);color:var(--muted);font-weight:300;max-width:680px;margin-bottom:2rem;line-height:var(--leading-normal)}
-.updates-mockup{background:#050505;border:1px solid var(--border);border-radius:12px;padding:1.5rem;font-family:var(--font-mono);color:var(--text);overflow-x:auto}
-.updates-mockup-title{display:flex;align-items:center;gap:0.5rem;padding-bottom:0.9rem;border-bottom:1px solid var(--border);margin-bottom:1rem;font-size:0.85rem;color:var(--muted)}
-.updates-mockup-title .material-symbols-outlined{color:var(--accent);font-size:18px}
-.updates-row{display:flex;align-items:center;justify-content:space-between;padding:0.65rem 0;border-bottom:1px dashed rgba(255,255,255,0.04);font-size:0.8rem}
-.updates-row:last-child{border-bottom:none}
-.updates-channel-pick{display:flex;gap:0.75rem;flex-wrap:wrap;margin:0.75rem 0 1.25rem}
-.channel-pill{padding:4px 12px;border-radius:99px;font-size:0.72rem;font-family:var(--font-mono);background:var(--bg2);border:1px solid var(--border);color:var(--muted);letter-spacing:0.05em}
-.channel-pill.active{background:rgba(52,211,153,0.1);border-color:rgba(52,211,153,0.35);color:var(--green)}
-.updates-available{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;margin:0.75rem 0}
-.update-entry{display:flex;gap:0.9rem;padding:0.7rem 0;border-bottom:1px dashed rgba(255,255,255,0.05)}
-.update-entry:last-child{border-bottom:none}
-.update-entry-icon{width:8px;height:8px;border-radius:50%;background:var(--green);margin-top:0.4rem;flex-shrink:0;box-shadow:0 0 8px rgba(52,211,153,0.4)}
-.update-entry-body{flex:1}
-.update-entry-ver{font-family:var(--font-mono);font-size:0.8rem;color:var(--orange);margin-bottom:0.2rem}
-.update-entry-ver .date{color:var(--muted2);margin-left:0.6rem}
-.update-entry-desc{font-size:0.78rem;color:var(--muted);line-height:1.5}
-.update-entry-actions{display:flex;gap:0.5rem;margin-top:0.45rem}
-.update-mini-btn{padding:2px 10px;font-size:0.68rem;border-radius:5px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-body)}
-.update-mini-btn.primary{background:linear-gradient(135deg,#3b82f6,#8b5cf6);border:none;color:#fff}
-.updates-footer-actions{display:flex;gap:0.6rem;margin-top:1.25rem;flex-wrap:wrap}
-.updates-mock-btn{padding:0.5rem 1.1rem;font-size:0.8rem;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:500}
-.updates-mock-btn.primary{background:linear-gradient(135deg,#3b82f6,#8b5cf6);border:none;color:#fff}
-.updates-caption{margin-top:1.5rem;padding-top:1.25rem;border-top:1px dashed var(--border);font-size:0.85rem;color:var(--muted);font-style:italic;line-height:var(--leading-normal)}
-.code-block{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.code-header{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.25rem;border-bottom:1px solid var(--border)}
-.code-dots{display:flex;gap:6px}
-.code-dot{width:10px;height:10px;border-radius:50%}
-.code-dot:nth-child(1){background:#ff5f57}
-.code-dot:nth-child(2){background:#ffbd2e}
-.code-dot:nth-child(3){background:#28ca41}
-.code-lang{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted2)}
-.code-body{padding:1.25rem;overflow-x:auto}
-.code-body pre{font-family:var(--font-mono);font-size:0.82rem;line-height:1.8;color:var(--text)}
-.code-body pre .c-comment{color:var(--muted2)}
-.code-body pre .c-cmd{color:var(--accent)}
-.code-body pre .c-flag{color:var(--accent2)}
-.code-body pre .c-str{color:var(--green)}
+    @media (max-width: 720px) {
+      .nav__links { display: none; }
+      .theme-toggle__label { display: none; }
+    }
 
-/* LEGACY ARCHIVE — alpha 2025 */
-.archive-section{padding:6rem 0;background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,0.015) 50%,transparent 100%);position:relative}
-.archive-section::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 80px,rgba(255,255,255,0.008) 80px,rgba(255,255,255,0.008) 81px);pointer-events:none}
-.archive-section .container{position:relative;z-index:1}
-.archive-tag{display:inline-block;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem}
-.archive-section .section-header h2{color:rgba(255,255,255,0.85)}
-.archive-note{max-width:680px;margin:0 auto 3rem;padding:1.2rem 1.5rem;background:var(--bg1);border:1px dashed var(--border);border-radius:12px;font-size:0.85rem;color:var(--muted);line-height:1.7;text-align:left}
-.archive-note strong{color:var(--text);font-weight:500}
-.archive-note a{color:var(--accent);text-decoration:none}
-.archive-note a:hover{text-decoration:underline}
-.archive-note code{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);background:var(--bg2);padding:1px 7px;border-radius:5px;border:1px solid var(--border)}
-.archive-hero{margin:0 auto 2rem;max-width:880px;border-radius:14px;overflow:hidden;border:1px solid var(--border);filter:grayscale(15%);transition:filter 0.3s}
-.archive-hero:hover{filter:grayscale(0%)}
-.archive-hero img{width:100%;display:block}
-.archive-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
-.archive-item{border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--bg1);filter:grayscale(20%);transition:filter 0.3s,border-color 0.3s,transform 0.3s}
-.archive-item:hover{filter:grayscale(0%);border-color:var(--border-hover);transform:translateY(-2px)}
-.archive-item img{width:100%;display:block}
-.archive-caption{padding:0.7rem 1rem;font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);border-top:1px solid var(--border);background:var(--bg2)}
+    /* =================================================================
+       Hero
+       ================================================================= */
+    .hero {
+      padding: clamp(4rem, 10vh, 8rem) 0 clamp(5rem, 12vh, 10rem);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .hero__eyebrow { margin-bottom: 2rem; }
+    .hero__headline {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.75rem, 6vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin: 0;
+      max-width: 18ch;
+    }
+    .hero__headline em {
+      font-style: italic;
+      color: var(--sage-deep);
+    }
+    :root.dark .hero__headline em { color: var(--sage); }
 
-@media(max-width:768px){
-  nav{padding:0 1rem;height:60px}
-  .nav-links,.nav-badge{display:none}
-  .release-banner{margin-top:60px;flex-direction:column;gap:0.5rem;padding:0.75rem 1rem}
-  .rb-sep-major{display:none}
-  .rb-item{flex-wrap:wrap;justify-content:center;gap:0.4rem}
-  .hero{padding:30px 1.25rem 50px}
-  .hero-actions{flex-direction:column;width:100%;gap:0.75rem}
-  .hero-actions .btn{width:100%;justify-content:center}
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:1.5rem 1rem}
-  .features-grid{grid-template-columns:1fr;border-radius:12px}
-  .new-grid{grid-template-columns:1fr}
-  .roadmap-grid{grid-template-columns:1fr}
-  .roadmap-card{padding:1.75rem 1.25rem}
-  .kb-grid{grid-template-columns:1fr;gap:0.5rem}
-  .alpha-hotfix-grid{grid-template-columns:1fr;gap:0.75rem}
-  .updates-channel-pick{gap:0.4rem}
-  .archive-grid{grid-template-columns:1fr;gap:0.75rem}
-  .archive-note{padding:1rem 1.25rem;font-size:0.78rem}
-  .cta-actions{flex-direction:column;width:100%;gap:0.75rem}
-  .cta-actions .btn{width:100%;justify-content:center}
-  .footer-inner{flex-direction:column;text-align:center;gap:1rem}
-  .footer-right{flex-wrap:wrap;justify-content:center;gap:1rem}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
-}
-</style>
+    .hero__lede {
+      max-width: 60ch;
+      margin: 2rem 0 0;
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+
+    .hero__pills {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-family: var(--mono);
+      letter-spacing: 0.02em;
+      color: var(--mute);
+    }
+    .pill__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .pill--stable { color: var(--stable-tone); border-color: color-mix(in srgb, var(--stable-tone) 30%, var(--hairline)); }
+    .pill--alpha  { color: var(--alpha-tone);  border-color: color-mix(in srgb, var(--alpha-tone) 30%, var(--hairline)); }
+
+    .hero__cta {
+      margin-top: 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.95rem 1.5rem;
+      border-radius: 999px;
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      transition: transform 200ms var(--easing), background 200ms var(--easing), color 200ms var(--easing);
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .cta--primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .cta--primary:hover { transform: translateY(-1px); background: var(--sage-deep); }
+    :root.dark .cta--primary { background: var(--sage); color: var(--bone); }
+    :root.dark .cta--primary:hover { background: var(--sage-deep); }
+
+    .cta--ghost {
+      border-color: var(--hairline);
+      color: var(--ink);
+    }
+    .cta--ghost:hover {
+      border-color: var(--sage);
+      color: var(--sage-deep);
+    }
+    :root.dark .cta--ghost:hover { color: var(--sage); }
+    .cta__icon {
+      font-family: 'Material Symbols Outlined';
+      font-size: 18px;
+      font-variation-settings: 'opsz' 24, 'wght' 300, 'GRAD' 0, 'FILL' 0;
+    }
+
+    /* =================================================================
+       GitHub counters — pulled from public API
+       ================================================================= */
+    .counters {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--tx);
+    }
+    :root.dark .counters { background: var(--bone-deep); }
+    .counters::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+    }
+    :root.dark .counters::before {
+      background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+    }
+
+    .counters__head { position: relative; margin-bottom: 3rem; max-width: 64ch; }
+    .counters .section-label { color: rgba(255, 255, 255, 0.55); }
+    :root.dark .counters .section-label { color: var(--mute); }
+    .counters__title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      line-height: 1.15;
+      margin: 0.5rem 0 0;
+      color: var(--paper);
+    }
+    :root.dark .counters__title { color: var(--ink); }
+    .counters__note {
+      margin: 0.8rem 0 0;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.55);
+      font-style: italic;
+    }
+    :root.dark .counters__note { color: var(--mute); }
+
+    .counters__grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    :root.dark .counters__grid { border-top-color: var(--hairline); }
+
+    .counter {
+      padding: 2rem 0 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+    :root.dark .counter { border-right-color: var(--hairline); }
+    .counter:last-child { border-right: 0; }
+    .counter__num {
+      font-size: clamp(2.5rem, 5vw, 3.75rem);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      color: var(--paper);
+      display: inline-flex;
+      align-items: baseline;
+      transition: opacity 300ms var(--easing);
+    }
+    :root.dark .counter__num { color: var(--ink); }
+    .counter__num.loading { opacity: 0.3; }
+    .counter__icon {
+      font-family: 'Material Symbols Outlined';
+      font-size: 0.55em;
+      margin-left: 0.2em;
+      color: var(--sage);
+      font-variation-settings: 'opsz' 24, 'wght' 400, 'FILL' 1;
+    }
+    .counter__label {
+      display: block;
+      margin-top: 1.25rem;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+    }
+    :root.dark .counter__label { color: var(--mute); }
+    .counter__sub {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.45);
+      font-style: italic;
+    }
+    :root.dark .counter__sub { color: var(--mute); }
+
+    @media (max-width: 860px) {
+      .counters__grid { grid-template-columns: repeat(2, 1fr); }
+      .counter {
+        padding: 1.5rem 1.25rem 1.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      :root.dark .counter { border-bottom-color: var(--hairline); }
+      .counter:nth-child(even) { border-right: 0; padding-right: 0; }
+      .counter:nth-last-child(-n+2) { border-bottom: 0; }
+    }
+
+    /* =================================================================
+       Version timeline chart — SVG-driven horizontal track
+       ================================================================= */
+    .timeline {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .timeline__head {
+      max-width: 720px;
+      margin-bottom: 3.5rem;
+    }
+    .timeline__intro {
+      color: var(--mute);
+      margin: 1rem 0 0;
+      font-size: 1.05rem;
+    }
+
+    .chart {
+      position: relative;
+      width: 100%;
+      padding: 2.5rem 0 3rem;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .chart__inner {
+      min-width: 980px;
+      position: relative;
+      height: 260px;
+    }
+
+    .chart__axis {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: var(--hairline);
+    }
+    .chart__axis-label {
+      position: absolute;
+      left: 0;
+      top: calc(50% + 8px);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+
+    .chart__node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: default;
+    }
+    .chart__node-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--hairline);
+      border: 2px solid var(--bone);
+      box-shadow: 0 0 0 1px var(--hairline);
+      transition: transform 200ms var(--easing);
+    }
+    .chart__node:hover .chart__node-dot { transform: scale(1.35); }
+
+    .chart__node--stable .chart__node-dot {
+      background: var(--stable-tone);
+      box-shadow: 0 0 0 1px var(--stable-tone);
+    }
+    .chart__node--alpha .chart__node-dot {
+      background: var(--alpha-tone);
+      box-shadow: 0 0 0 1px var(--alpha-tone);
+    }
+    .chart__node--current .chart__node-dot {
+      width: 18px; height: 18px;
+      background: var(--ink);
+      box-shadow: 0 0 0 2px var(--ink), 0 0 0 6px color-mix(in srgb, var(--sage) 25%, transparent);
+    }
+    :root.dark .chart__node--current .chart__node-dot {
+      background: var(--paper);
+      box-shadow: 0 0 0 2px var(--paper), 0 0 0 6px color-mix(in srgb, var(--sage) 30%, transparent);
+    }
+
+    .chart__node-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--ink-soft);
+      white-space: nowrap;
+    }
+    .chart__node-bullet {
+      font-family: var(--serif);
+      font-size: 11.5px;
+      font-style: italic;
+      color: var(--mute);
+      max-width: 110px;
+      text-align: center;
+      line-height: 1.35;
+    }
+    .chart__node--above { top: calc(50% - 70px); }
+    .chart__node--above .chart__node-label { order: 3; }
+    .chart__node--above .chart__node-bullet { order: 2; }
+    .chart__node--above .chart__node-dot    { order: 1; margin-bottom: -4px; }
+
+    .chart__node--below { top: calc(50% + 70px); }
+    .chart__node--below .chart__node-label { order: 1; margin-bottom: -4px; }
+    .chart__node--below .chart__node-dot   { order: 2; }
+    .chart__node--below .chart__node-bullet { order: 3; }
+
+    .chart__legend {
+      margin-top: 2rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+    .chart__legend-item { display: inline-flex; align-items: center; gap: 0.55rem; }
+    .chart__legend-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .chart__legend-dot--stable { background: var(--stable-tone); }
+    .chart__legend-dot--alpha  { background: var(--alpha-tone); }
+    .chart__legend-dot--current {
+      background: var(--ink);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--sage) 30%, transparent);
+    }
+    :root.dark .chart__legend-dot--current { background: var(--paper); }
+
+    /* =================================================================
+       Install blocks
+       ================================================================= */
+    .install {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .install__head { max-width: 720px; margin-bottom: 3rem; }
+    .install__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
+
+    .install__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    @media (max-width: 780px) {
+      .install__grid { grid-template-columns: 1fr; }
+    }
+
+    .install__card {
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      padding: 1.5rem;
+      border-radius: 3px;
+    }
+    .install__card--alpha {
+      border-color: color-mix(in srgb, var(--alpha-tone) 35%, var(--hairline));
+      background: color-mix(in srgb, var(--alpha-tone) 4%, var(--paper));
+    }
+    .install__card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin: 0 0 0.35rem;
+    }
+    .install__card-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--mute);
+      text-transform: uppercase;
+      margin: 0 0 1.25rem;
+    }
+    .install__code {
+      background: var(--bone-deep);
+      border: 1px solid var(--hairline);
+      border-radius: 3px;
+      padding: 1rem 1.15rem;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--ink);
+      overflow-x: auto;
+      white-space: pre;
+      margin: 0 0 1rem;
+      position: relative;
+    }
+    .install__copy {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.65rem;
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      border-radius: 2px;
+      padding: 0.25rem 0.55rem;
+      font-family: var(--serif);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: border-color 150ms var(--easing);
+    }
+    .install__copy:hover { border-color: var(--sage); color: var(--sage-deep); }
+    :root.dark .install__copy:hover { color: var(--sage); }
+    .install__copy.copied { color: var(--sage-deep); border-color: var(--sage-deep); }
+
+    .install__card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+
+    /* =================================================================
+       Footer
+       ================================================================= */
+    .foot {
+      padding: 3rem 0 4rem;
+      font-size: 0.85rem;
+      color: var(--mute);
+    }
+    .foot__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .foot__links { display: flex; gap: 1.5rem; }
+    .foot__links a:hover { color: var(--sage-deep); }
+    :root.dark .foot__links a:hover { color: var(--sage); }
+
+    /* =================================================================
+       Showcase gallery — current UI screenshots
+       ================================================================= */
+    .showcase {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .showcase__head {
+      max-width: 720px;
+      margin-bottom: 3.5rem;
+    }
+    .showcase__intro {
+      color: var(--mute);
+      margin: 1rem 0 0;
+      font-size: 1.05rem;
+    }
+
+    .showcase__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+    @media (max-width: 780px) {
+      .showcase__grid { grid-template-columns: 1fr; }
+    }
+
+    .shot {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 1px solid var(--hairline);
+      background: var(--bone-deep);
+      transition: transform 300ms var(--easing), border-color 300ms var(--easing);
+    }
+    .shot:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--sage) 40%, var(--hairline));
+    }
+
+    .shot__frame {
+      aspect-ratio: 16 / 10;
+      width: 100%;
+      background: var(--bone-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .shot__frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    /* Placeholder state when image missing */
+    .shot__frame::before {
+      content: "screenshot placeholder";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mute);
+      background-image:
+        linear-gradient(45deg, transparent 48%, var(--hairline) 49%, var(--hairline) 51%, transparent 52%);
+      background-size: 18px 18px;
+      opacity: 0.4;
+      z-index: 0;
+    }
+    .shot__frame img {
+      position: relative;
+      z-index: 1;
+    }
+    .shot__frame img:not([src]), .shot__frame img[src=""] { display: none; }
+
+    .shot__caption {
+      padding: 1rem 1.25rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .shot__caption-title {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .shot__caption-sub {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+    .shot__caption-hint {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--mute);
+      margin-top: 0.35rem;
+      line-height: 1.45;
+    }
+
+    .shot__badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 2;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--bone) 85%, transparent);
+      backdrop-filter: blur(6px);
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      border: 1px solid var(--hairline);
+    }
+    .shot__badge--new {
+      color: var(--sage-deep);
+      border-color: color-mix(in srgb, var(--sage) 50%, var(--hairline));
+    }
+    :root.dark .shot__badge--new { color: var(--sage); }
+
+    /* =================================================================
+       Deprecated versions archive
+       ================================================================= */
+    .archive {
+      padding: 6rem 0;
+      background: var(--bone-deep);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .archive__head {
+      max-width: 720px;
+      margin-bottom: 2.5rem;
+    }
+    .archive__intro {
+      color: var(--mute);
+      margin: 1rem 0 0;
+      font-size: 1.05rem;
+    }
+
+    .archive__warn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--alpha-tone) 15%, transparent);
+      border: 1px solid color-mix(in srgb, var(--alpha-tone) 40%, var(--hairline));
+      color: var(--alpha-deep);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 1rem;
+    }
+    :root.dark .archive__warn { color: var(--alpha-tone); }
+
+    .archive__list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 860px) {
+      .archive__list { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .archive__list { grid-template-columns: 1fr; }
+    }
+
+    .archive__item {
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      border-radius: 3px;
+      padding: 1.1rem 1.25rem;
+      transition: border-color 200ms var(--easing);
+    }
+    .archive__item:hover {
+      border-color: color-mix(in srgb, var(--mute) 35%, var(--hairline));
+    }
+    .archive__item-ver {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      letter-spacing: 0.03em;
+      color: var(--ink);
+      font-weight: 500;
+      margin: 0 0 0.35rem;
+    }
+    .archive__item-label {
+      font-family: var(--serif);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--alpha-tone);
+      margin: 0 0 0.6rem;
+    }
+    .archive__item-desc {
+      font-family: var(--serif);
+      font-size: 13px;
+      font-style: italic;
+      color: var(--mute);
+      line-height: 1.5;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
 
-<nav>
-  <a href="#" class="nav-logo">
-    <span class="material-symbols-outlined">blur_on</span>
-    <span>Zen</span> Shell
-  </a>
-  <span class="nav-badge">v6.16.4.1 stable · v6.16.4.5 alpha</span>
-  <ul class="nav-links">
-    <li><a href="#features">Features</a></li>
-    <li><a href="#whats-new">What's New</a></li>
-    <li><a href="#alpha">Alpha</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#install">Install</a></li>
-    <li><a href="#archive">Archive</a></li>
-  </ul>
-  <div class="nav-cta">
-    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" class="btn btn-ghost" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-      GitHub
+<nav class="nav">
+  <div class="shell nav__inner">
+    <a href="#" class="brand">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span>Zen Shell</span>
     </a>
-    <a href="#install" class="btn btn-primary">Install</a>
+    <div class="nav__links">
+      <a href="#showcase">Showcase</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#install">Install</a>
+      <a href="#archive">Archive</a>
+      <a href="https://github.com/Gekinzen/zen-shell" rel="noopener">GitHub</a>
+    </div>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+      <span class="theme-toggle__icon" id="themeIcon">dark_mode</span>
+      <span class="theme-toggle__label" id="themeLabel">Dark</span>
+    </button>
   </div>
 </nav>
 
-<div class="release-banner">
-  <div class="rb-item">
-    <span class="rb-tag stable">Stable</span>
-    <span class="rb-item-text">v6.16.4.1</span>
-    <span class="rb-sep">·</span>
-    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/v6.16.4.1" class="rb-link" target="_blank">main</a>
-    <span class="rb-tag hint">official release</span>
-  </div>
-  <span class="rb-sep rb-sep-major">|</span>
-  <div class="rb-item">
-    <span class="rb-tag" style="background:rgba(251,146,60,0.12);border:1px solid rgba(251,146,60,0.3);color:var(--orange)">Alpha</span>
-    <span class="rb-item-text">v6.16.4.5</span>
-    <span class="rb-sep">·</span>
-    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/alpha-v6.16.4.5" class="rb-link" target="_blank" style="color:var(--orange)!important">alpha-v6.16.4.5</a>
-  </div>
-  <span class="rb-sep rb-sep-major">|</span>
-  <div class="rb-item">
-    <span class="rb-tag next">Next</span>
-    <span class="rb-item-text">v6.16.5</span>
-    <span class="rb-sep">·</span>
-    <span class="rb-link" style="color:var(--accent2)!important">configreloaded IPC listener — planned</span>
-  </div>
-</div>
+<!-- ═══════════════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="shell">
+    <div class="hero__eyebrow eyebrow">v6.16.4.11.2 · Current Stable</div>
+    <h1 class="hero__headline">
+      A QML-native desktop <em>environment</em> for Hyprland.
+    </h1>
+    <p class="hero__lede">
+      Zen Shell replaces GTK4, Python, and Waybar with a unified Quickshell architecture.
+      Panel, control center, wallpaper engine, themes, widgets — all one process, one language, one design system.
+      Built for Arch and CachyOS. Extensively tested on AMD Ryzen + Radeon. Runs on Hyprland 0.54+.
+    </p>
 
-<section class="hero container">
-  <div class="hero-eyebrow">Quickshell · QML-Native · Hyprland 0.54+</div>
-  <h1>
-    Control <strong>everything.</strong><br/>
-    <span class="gradient-text">Theme everything.</span>
-  </h1>
-  <p class="hero-sub">A complete desktop shell built entirely in <em>QML</em> — replacing GTK4, Python, and Waybar with a unified, lightweight architecture.</p>
-
-  <div class="hero-actions">
-    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" class="btn btn-primary btn-large" target="_blank">
-      <span class="material-symbols-outlined">open_in_new</span>
-      View on GitHub
-    </a>
-    <a href="https://www.youtube.com/watch?v=dNwGRBhA97g" class="btn btn-ghost btn-large" target="_blank">
-      <span class="material-symbols-outlined">play_circle</span>
-      Watch Demo
-    </a>
-  </div>
-
-  <div class="hero-install">
-    <code><span class="cmd">git clone</span> github.com/Gekinzen/zen_barebone_alpha_development</code>
-    <button class="copy-btn" onclick="
-      navigator.clipboard.writeText('git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git');
-      this.innerHTML='<span class=\'material-symbols-outlined\' style=\'font-size:14px\'>check</span> Copied!';
-      setTimeout(()=>this.innerHTML='<span class=\'material-symbols-outlined\' style=\'font-size:14px\'>content_copy</span>',2000)
-    "><span class="material-symbols-outlined" style="font-size:14px">content_copy</span></button>
-  </div>
-
-  <div class="hero-badges">
-    <span class="badge green">v6.16.4.1 stable</span>
-    <span class="badge orange">v6.16.4.5 alpha</span>
-    <span class="badge purple">v6.16.5 planned</span>
-    <span class="badge red">Panic keybind</span>
-    <span class="badge">Arch Linux</span>
-    <span class="badge">Hyprland 0.54+</span>
-    <span class="badge">Quickshell 0.2.1+</span>
-    <span class="badge green">MIT License</span>
-  </div>
-
-  <div class="hero-media">
-    <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell v6.16.4.1 desktop preview" loading="lazy"/>
-    <div class="hero-media-glow"></div>
-  </div>
-</section>
-
-<div class="stats-bar">
-  <div class="container">
-    <div class="stats-grid">
-      <div><div class="stat-val">76+</div><div class="stat-label">QML source files</div></div>
-      <div><div class="stat-val">17</div><div class="stat-label">Built-in themes</div></div>
-      <div><div class="stat-val">14</div><div class="stat-label">Settings pages</div></div>
-      <div><div class="stat-val">9</div><div class="stat-label">Recovery steps on panic</div></div>
+    <div class="hero__pills">
+      <span class="pill pill--stable"><span class="pill__dot"></span>Stable · v6.16.4.11.2</span>
+      <span class="pill pill--alpha"><span class="pill__dot"></span>Alpha · (none active)</span>
+      <span class="pill">Hyprland ≥ 0.54</span>
+      <span class="pill">Arch / CachyOS</span>
     </div>
-  </div>
-</div>
 
-<section class="features-section" id="features">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Features</div>
-      <h2>Everything in <strong>one shell.</strong></h2>
-      <p>One QML runtime. The entire desktop experience.</p>
-    </div>
-    <div class="features-grid fade-up">
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">bolt</span></div>
-        <h3>Panic Recovery</h3>
-        <p>SUPER+SHIFT+CTRL+Esc keybind fires even through frozen hyprlock. 9-step recovery in ~2s. Never force-power-off again.</p>
-        <div class="feature-version">→ v6.16.4+</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">bedtime</span></div>
-        <h3>Idle &amp; Sleep</h3>
-        <p>Configurable lock / sleep timeouts (30s → 5h → Never). Lid close action: sleep / lock / nothing. Live sed-rewrite of hypridle.conf.</p>
-        <div class="feature-version">→ v6.16.3.8</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">aspect_ratio</span></div>
-        <h3>Widget Scale</h3>
-        <p>Universal 0.5× → 2.0× slider resizes clocks + weather + sysmon widgets in lockstep. 68 scale multipliers baked in.</p>
-        <div class="feature-version">→ v6.16.3.7</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">lock</span></div>
-        <h3>Lock Screen overhaul</h3>
-        <p>Clock font matches your widget. Weather mood line. Gender-aware rotating care message (Neutral / Male / Female). No more "Heyah Username".</p>
-        <div class="feature-version">→ v6.16.3.6</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">developer_board</span></div>
-        <h3>PowerBadge</h3>
-        <p>Bar pill with power profile + GPU mode. 300ms hover popup. Right-click cycles profile, middle-click Gaming Boost.</p>
-        <div class="feature-version">→ v6.16.3.4</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">laptop_mac</span></div>
-        <h3>Lid-Close Patch</h3>
-        <p>Separate hypr-config/ overlay handles every lid scenario — docked, close+external, close→open. Now with configurable system action.</p>
-        <div class="feature-version">→ v6.16.3.2 + .3.8</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">palette</span></div>
-        <h3>Unified theming</h3>
-        <p>One switch syncs your bar, settings, control panel, notifications, terminal, and launcher. 17 built-in themes + custom editor.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">tune</span></div>
-        <h3>GUI-driven config</h3>
-        <p>14 settings pages with live preview. No config files. No restarts. Animations page now scrollable + live-reload.</p>
-        <div class="feature-version">→ v6.16.3.4.3</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">battery_charging_full</span></div>
-        <h3>Battery &amp; Power</h3>
-        <p>Full laptop-grade power management — profiles, gaming boost, ROG brightness detection, OSD notifications.</p>
-        <div class="feature-version">→ v6.16 + .3.4.4</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">graphic_eq</span></div>
-        <h3>Music Strings</h3>
-        <p>Audio-reactive bezier curve driven by cava. Floats above and below the bar — now click-through.</p>
-        <div class="feature-version">→ v6.15</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">screenshot_region</span></div>
-        <h3>Screenshot Ropes</h3>
-        <p>Region screenshot with physics-draped rope ornaments. Clipboard-backed — paste on the first try.</p>
-        <div class="feature-version">→ v6.15</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-symbols-outlined">wallpaper</span></div>
-        <h3>Wallpaper Repo</h3>
-        <p>Online tab fetches Gekinzen/images-demo via GitHub API. One-click download + apply. Fit/stretch modes coming in v6.16.6.</p>
-        <div class="feature-version">→ v6.16.2.3</div>
-      </div>
+    <div class="hero__cta">
+      <a href="https://github.com/Gekinzen/zen-shell/releases/latest" class="cta cta--primary" rel="noopener">
+        <span class="cta__icon">download</span>
+        <span>Download Latest</span>
+      </a>
+      <a href="#timeline" class="cta cta--ghost">
+        <span class="cta__icon">timeline</span>
+        <span>Version Timeline</span>
+      </a>
     </div>
   </div>
 </section>
 
-<hr class="section-divider"/>
-
-<section class="demo-section">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Demo</div>
-      <h2>See it in action</h2>
-      <p>Full tour — Music Strings, screenshot ropes, settings, and the complete desktop experience.</p>
+<!-- ═══════════════════════════════════════════════════════════════════
+     SHOWCASE — current UI gallery
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="showcase" id="showcase">
+  <div class="shell">
+    <div class="showcase__head">
+      <span class="section-label">Showcase</span>
+      <h2 class="section-title">Zen Shell, in practice.</h2>
+      <p class="showcase__intro">
+        The current UI as shipped in v6.16.4.11.2. Panel, Start Menu, Settings,
+        Control Panel, Wallpaper browser, Theme engine. Click any image to
+        open full-resolution.
+      </p>
     </div>
-    <div class="demo-wrapper fade-up">
-      <iframe src="https://www.youtube.com/embed/dNwGRBhA97g" title="Zen Shell Full Tour" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+
+    <div class="showcase__grid">
+      <!-- Panel / Bar -->
+      <a class="shot" href="./screenshots/panel.png" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge">Panel</span>
+          <img src="./screenshots/panel.png" alt="Zen Shell top panel bar with workspace indicators, clock, system tray" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Status bar</span>
+          <span class="shot__caption-sub">Configurable modules · island mode · system tray</span>
+          <span class="shot__caption-hint">Workspace indicators, clock with hover peek and scroll-wheel month cycle, system tray with hover tooltips. Bar modules configurable from Settings → Bar Modules.</span>
+        </div>
+      </a>
+
+      <!-- Start Menu -->
+      <a class="shot" href="./screenshots/start-menu.png" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge">Super+A</span>
+          <img src="./screenshots/start-menu.png" alt="Start Menu with pinned tiles and app grid" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Start Menu</span>
+          <span class="shot__caption-sub">Pinned tiles · app grid · sys-info footer</span>
+          <span class="shot__caption-hint">Pinned tiles (72px, breathing room via v4.5). Live search. Sys-info popover with Hyprland version / kernel / DMI device / BIOS from /sys/class/dmi/id.</span>
+        </div>
+      </a>
+
+      <!-- Settings / Themes -->
+      <a class="shot" href="./screenshots/settings-themes.png" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge shot__badge--new">New · v4.11.2</span>
+          <img src="./screenshots/settings-themes.png" alt="Settings page showing Themes with custom themes manager" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Themes page</span>
+          <span class="shot__caption-sub">PaletteBox · Custom Themes manager · WCAG dropdown</span>
+          <span class="shot__caption-hint">Theme palette relocated from General. Click any 60×60 box to open PopupWindow picker with live hex typing. Save / Rename / Delete custom themes below.</span>
+        </div>
+      </a>
+
+      <!-- Control Panel -->
+      <a class="shot" href="./screenshots/control-panel.png" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge">Super+C</span>
+          <img src="./screenshots/control-panel.png" alt="Control Panel with quick toggles and Dark Mode switch" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Control Panel</span>
+          <span class="shot__caption-sub">Connectivity · Power · Audio · Dark Mode · Input</span>
+          <span class="shot__caption-hint">Quick toggles for WiFi / Bluetooth / Audio + Power Profile + Gaming Boost + Dark Mode (syncs GTK3/4 + libadwaita + gsettings). Tap-through backgrounds via mask:Region.</span>
+        </div>
+      </a>
+
+      <!-- Color Picker -->
+      <a class="shot" href="./screenshots/color-picker.png" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge shot__badge--new">New · v4.10</span>
+          <img src="./screenshots/color-picker.png" alt="Quickshell PopupWindow color picker with HS canvas and lightness slider" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Color Picker</span>
+          <span class="shot__caption-sub">PopupWindow · HS canvas · L slider · live hex</span>
+          <span class="shot__caption-hint">Fourth iteration. Uses Quickshell PopupWindow primitive backed by xdg_popup — compositor handles positioning, zero coord math. Hex textbox commits live on every valid keystroke.</span>
+        </div>
+      </a>
+
+      <!-- Wallpapers -->
+      <a class="shot" href="./screenshots/wallpaper-picker.png" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge">Super+W</span>
+          <img src="./screenshots/wallpaper-picker.png" alt="Wallpaper picker with grid of thumbnails" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Wallpaper Picker</span>
+          <span class="shot__caption-sub">Local grid · Online repo · change interval</span>
+          <span class="shot__caption-hint">4-column grid (v4.6, was 5). "Online" toggle browses Gekinzen/images-demo via GitHub API. Change interval, random transition, blue border = current.</span>
+        </div>
+      </a>
     </div>
   </div>
 </section>
 
-<hr class="section-divider"/>
-
-<section class="new-section" id="whats-new">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">What's New · v6.16.4.1</div>
-      <h2>Panic recovery. <strong>Idle/sleep control.</strong><br/>Lock screen overhaul.</h2>
-      <p>v6.16.4.1 rolls in 8 versions worth of shipping since v6.16.3.4.2 — lock screen + widget scale + idle cascade + the keybind that replaces force-power-off.</p>
+<!-- ═══════════════════════════════════════════════════════════════════
+     GITHUB COUNTERS — pulled via public API
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="counters">
+  <div class="shell">
+    <div class="counters__head">
+      <span class="section-label">Repository pulse</span>
+      <h2 class="counters__title">Zen Shell on GitHub.</h2>
+      <p class="counters__note">Live from the public GitHub API. Refreshes on every page load.</p>
     </div>
-    <div class="new-grid fade-up">
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.4.1 · Hotfix</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">build</span>Panic script fixes</h3>
-        <p>v6.16.4 panic had 3 bugs — wiped monitor config (hyprctl reload), killed Quickshell (SIGUSR2), looped music marquee (workspace bounce). All fixed. Single press now preserves Quickshell entirely; only double-press-within-10s restarts it.</p>
+    <div class="counters__grid">
+      <div class="counter">
+        <div class="counter__num loading" id="counterStars">—<span class="counter__icon">star</span></div>
+        <span class="counter__label">Stars</span>
+        <span class="counter__sub">People tracking the repo</span>
       </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.4 · Laptop</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">bolt</span>SUPER+SHIFT+CTRL+Esc</h3>
-        <p>Escape hatch keybind — fires through frozen hyprlock (Hyprland's bindl flag). Runs 9-step recovery: kill zombie hyprlock, DPMS kick, forcerendererreload, swww revive, input kick, clean relock. ~2 seconds.</p>
+      <div class="counter">
+        <div class="counter__num loading" id="counterForks">—<span class="counter__icon">fork_right</span></div>
+        <span class="counter__label">Forks</span>
+        <span class="counter__sub">Running their own variants</span>
       </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.3.8 · Power</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">bedtime</span>Idle &amp; Sleep cascade</h3>
-        <p>Lock after idle (30s / 1m / 30m / 1h / 3h / 5h / Never). Sleep after idle (same options). Lid close action (Sleep / Lock only / Do nothing). zen-hypridle-sync.sh rewrites hypridle.conf live.</p>
+      <div class="counter">
+        <div class="counter__num loading" id="counterWatchers">—<span class="counter__icon">visibility</span></div>
+        <span class="counter__label">Watchers</span>
+        <span class="counter__sub">Subscribed to every push</span>
       </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.3.7 · Widgets</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">aspect_ratio</span>Widget Scale slider</h3>
-        <p>Settings → Widgets → Widget Scale. Drag from 0.5× to 2.0× and all three desktop widgets (clocks, weather, sysmon) resize in lockstep. 68 scale multipliers baked in via single _scale property.</p>
-      </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.3.6 · Lock</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">lock</span>Lock screen overhaul</h3>
-        <p>Clock font now matches your bar widget font (Black/Bold weight per family). No "Heyah Username" greeting. Weather mood line + rotating care message, gender-aware (Neutral / Male / Female in Personal Preferences).</p>
-      </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.3.6 · Popups</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">info</span>Hover popup parity</h3>
-        <p>ZenClock + ZenSysMonitor now use proper PopupWindow with 350ms hover-intent. Clock shows live time + ISO week + timezone. SysMonitor shows CPU/GPU/Memory/Network sections. Identical styling across both.</p>
-      </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.3.5 · Start</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">image</span>Start Menu logo picker</h3>
-        <p>7 bundled SVG logos (Arch / CachyOS / EndeavourOS / Fedora / Ubuntu / NixOS / generic Linux). Auto-detect from /etc/os-release, or pick manually. Custom image upload supported. 4-column grid picker.</p>
-      </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.3.4.4 · Input</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">brightness_6</span>ROG brightness detection</h3>
-        <p>Laptop backlight detection extended — amdgpu_bl0 and asus::kbd_backlight now detected. Themes dropdown made scrollable (was cutting off Paper / Black / Navy). Part of the v6.16.3.4.x hotfix sub-series.</p>
-      </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.3.4.3 · Settings</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">animation</span>Animations live-reload + scroll</h3>
-        <p>Animations page now reflects current hyprctl state (was showing stale defaults). Scroll-to-bottom fix — last rows no longer cut off by ScrollView. Input toggle design synced with System Tray toggle design.</p>
-      </div>
-      <div class="new-card">
-        <div class="new-card-tag">v6.16.3.4.1 · Widgets</div>
-        <h3><span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;margin-right:6px">save</span>Widget color persistence</h3>
-        <p>Weather + sysmon widget background colors (mode, custom color, opacity) now persist across shell restart. Previously reverted to defaults on every restart — frustrating if you'd just picked your preferred theme.</p>
+      <div class="counter">
+        <div class="counter__num loading" id="counterReleases">—<span class="counter__icon">deployed_code</span></div>
+        <span class="counter__label">Releases</span>
+        <span class="counter__sub">Tagged versions shipped</span>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="section-divider"/>
+<!-- ═══════════════════════════════════════════════════════════════════
+     VERSION TIMELINE CHART
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="timeline" id="timeline">
+  <div class="shell">
+    <div class="timeline__head">
+      <span class="section-label">Release history</span>
+      <h2 class="section-title">From 4.1 stable through 4.11.2 — eleven drops, two days.</h2>
+      <p class="timeline__intro">
+        Green markers shipped to main. Amber markers stayed on the alpha branch. Current stable promoted on 2026-04-24.
+      </p>
+    </div>
 
-<!-- ALPHA HEADS-UP — v6.16.4.5 -->
-<section class="alpha-section" id="alpha">
-  <div class="container">
-    <div class="alpha-card fade-up">
-      <span class="alpha-eyebrow">
-        <span class="pulse-dot"></span>
-        Alpha channel · active
+    <div class="chart" role="img" aria-label="Version timeline from v6.16.4.1 to v6.16.4.11.2">
+      <div class="chart__inner">
+        <div class="chart__axis"></div>
+        <div class="chart__axis-label">2026 ← alpha cycle timeline</div>
+
+        <div class="chart__node chart__node--stable chart__node--below" style="left: 4%">
+          <span class="chart__node-label">v4.1</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Panic hotfix · stable</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 12%">
+          <span class="chart__node-label">v4.2</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Widget scale<br>(incomplete)</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 20%">
+          <span class="chart__node-label">v4.3</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Scale fix<br>+ oscillation kill</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 28%">
+          <span class="chart__node-label">v4.4</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Gaps preserved<br>after Displays</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 36%">
+          <span class="chart__node-label">v4.5</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Start Menu<br>breathing room</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 44%">
+          <span class="chart__node-label">v4.6</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Wallpaper cols<br>+ Picker v1</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 52%">
+          <span class="chart__node-label">v4.7</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Super+T<br>+ Dark Mode</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 60%">
+          <span class="chart__node-label">v4.8</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">WiFi log<br>+ Picker v2</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 68%">
+          <span class="chart__node-label">v4.9</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Window bounds<br>(still buggy)</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 76%">
+          <span class="chart__node-label">v4.10</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">PopupWindow<br>rewrite · live hex</span>
+        </div>
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 84%">
+          <span class="chart__node-label">v4.11</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Custom Themes<br>management</span>
+        </div>
+        <div class="chart__node chart__node--current chart__node--above" style="left: 94%">
+          <span class="chart__node-label">v4.11.2</span>
+          <span class="chart__node-dot"></span>
+          <span class="chart__node-bullet">Palette relocation<br>+ Material dropdown</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart__legend">
+      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--stable"></span>Stable on main</span>
+      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--alpha"></span>Alpha branch</span>
+      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--current"></span>Current release</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     INSTALL
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="install" id="install">
+  <div class="shell">
+    <div class="install__head">
+      <span class="section-label">Installation</span>
+      <h2 class="section-title">Pick your channel.</h2>
+      <p class="install__intro">
+        The alpha branch has caught up with stable — both currently point to v6.16.4.11.2.
+        The alpha slot stays live for the next cycle.
+      </p>
+    </div>
+
+    <div class="install__grid">
+      <div class="install__card">
+        <h3 class="install__card-title">
+          <span style="color: var(--stable-tone);">●</span> Stable
+        </h3>
+        <p class="install__card-meta">main · v6.16.4.11.2 · promoted 2026-04-24</p>
+        <div class="install__code" id="stableCode">git clone https://github.com/Gekinzen/zen-shell.git
+cd zen-shell
+git checkout main
+./install.sh
+<button class="install__copy" data-copy-target="stableCode">Copy</button></div>
+        <div class="install__card-foot">
+          <span>Tagged · Verified · Ready</span>
+          <a href="https://github.com/Gekinzen/zen-shell/releases/tag/v6.16.4.11.2" class="cta cta--ghost" rel="noopener" style="padding: 0.55rem 1rem; font-size: 0.82rem;">
+            <span class="cta__icon" style="font-size: 15px;">download</span>
+            <span>Release</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="install__card install__card--alpha">
+        <h3 class="install__card-title">
+          <span style="color: var(--alpha-tone);">●</span> Alpha
+        </h3>
+        <p class="install__card-meta">alpha-v6.16.4.11.2 · next cycle kicks off soon</p>
+        <div class="install__code" id="alphaCode">git clone https://github.com/Gekinzen/zen-shell.git
+cd zen-shell
+git checkout alpha-v6.16.4.11.2
+./install.sh
+<button class="install__copy" data-copy-target="alphaCode">Copy</button></div>
+        <div class="install__card-foot">
+          <span>Bleeding edge · Active development</span>
+          <a href="https://github.com/Gekinzen/zen-shell/tree/alpha-v6.16.4.11.2" class="cta cta--ghost" rel="noopener" style="padding: 0.55rem 1rem; font-size: 0.82rem;">
+            <span class="cta__icon" style="font-size: 15px;">code</span>
+            <span>Browse</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     DEPRECATED ARCHIVE — older version history
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="archive" id="archive">
+  <div class="shell">
+    <div class="archive__head">
+      <span class="section-label">Archive</span>
+      <h2 class="section-title">Deprecated versions.</h2>
+      <p class="archive__intro">
+        These releases are no longer maintained. Everything they shipped
+        has been preserved and forwarded into v6.16.4.11.2 — wala tayong
+        nabawasan. Listed for historical reference only.
+      </p>
+      <span class="archive__warn">
+        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;"></span>
+        No new patches — migrate to v6.16.4.11.2
       </span>
-      <h3>Alpha: <strong>v6.16.4.5</strong><br/>Four hotfixes on top of stable.</h3>
-      <p class="alpha-lead">
-        Stable is still <em>v6.16.4.1</em> on <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px">main</code>. The <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--orange);background:rgba(251,146,60,0.1);padding:1px 7px;border-radius:5px">alpha-v6.16.4.5</code> branch carries four rapid hotfixes — widget scale actually working at every scale, gaps preserved after DisplaysPage apply, Start Menu breathing room. Safe for daily use, promoting to stable after one more integration round.
-      </p>
+    </div>
 
-      <div class="alpha-hotfix-grid">
-        <div class="alpha-hotfix">
-          <div class="alpha-hotfix-ver">v6.16.4.5 · alpha head</div>
-          <h4>Start Menu breathing room</h4>
-          <p>Pinned tile 64→72px, label 58→66px. "Visual Stud…" instead of "Visual St…" — 2-3 more characters before ellipsis. Grid 5→4 columns to fit the 360px left pane.</p>
-        </div>
-        <div class="alpha-hotfix">
-          <div class="alpha-hotfix-ver">v6.16.4.4</div>
-          <h4>Gaps preserved after Displays</h4>
-          <p>hyprctl keyword monitor wipes runtime state — gaps/borders/rounding revert to hyprland.conf defaults. DisplaysPage now calls SettingsStateV2.applyToHyprland() after apply. Same pattern AnimationsPage used since v6.16.1.6.</p>
-        </div>
-        <div class="alpha-hotfix">
-          <div class="alpha-hotfix-ver">v6.16.4.3</div>
-          <h4>Widget scale actually applied</h4>
-          <p>v6.16.4.2 defined _padScale and never used it. 4.3 actually wires it to all 9 margins + adds content-aware Math.max sizing. Removed 3s polling Timer that caused oscillation.</p>
-        </div>
-        <div class="alpha-hotfix">
-          <div class="alpha-hotfix-ver">v6.16.4.2</div>
-          <h4>Display scale awareness</h4>
-          <p>3-tier resolution enumeration (hyprctl availableModes → native×fraction → 15 common standards). Monitor scale compensation. Widget reflow on scale change with clampX/Y bounds.</p>
-        </div>
+    <div class="archive__list">
+      <div class="archive__item">
+        <p class="archive__item-ver">v6.16.2.3.6</p>
+        <p class="archive__item-label">Deprecated · last of 2.3.x</p>
+        <p class="archive__item-desc">Duplicate-bar fix, clock wheel, island mode persistence, avatar upload hardening, DMI device info, wallpaper repo browse.</p>
       </div>
-
-      <div class="alpha-install">
-<span class="c-comment"># Alpha: v6.16.4.5 · safe for daily use</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">alpha-v6.16.4.5</span>
-<span class="c-cmd">./install.sh</span>
-
-<span class="c-comment"># Rollback to stable any time:</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>   <span class="c-comment"># v6.16.4.1</span>
-<span class="c-cmd">./install.sh</span>
+      <div class="archive__item">
+        <p class="archive__item-ver">v6.16.2.3.5</p>
+        <p class="archive__item-label">Deprecated</p>
+        <p class="archive__item-desc">Mouse sensitivity UI, Hyprland version tooltip in sys-info popover.</p>
+      </div>
+      <div class="archive__item">
+        <p class="archive__item-ver">v6.16.2.3.1 → .3.4</p>
+        <p class="archive__item-label">Deprecated</p>
+        <p class="archive__item-desc">Music rope click-through, settings click-through, OpacityMask avatar, default wallpaper download.</p>
+      </div>
+      <div class="archive__item">
+        <p class="archive__item-ver">v6.16.3.x series</p>
+        <p class="archive__item-label">Superseded</p>
+        <p class="archive__item-desc">Panel / Power / Notifications / Lid handling shipped during this cycle. Carried into v6.16.4.x intact.</p>
+      </div>
+      <div class="archive__item">
+        <p class="archive__item-ver">v6.15.x series</p>
+        <p class="archive__item-label">Historical</p>
+        <p class="archive__item-desc">The GTK4 / Python / Waybar rewrite. Replaced piece by piece through v6.15.1 → v6.15.15 before the unified v6.16 architecture.</p>
+      </div>
+      <div class="archive__item">
+        <p class="archive__item-ver">Pre-v6.15</p>
+        <p class="archive__item-label">Archaeological</p>
+        <p class="archive__item-desc">Original GTK4 + Python shell. Replaced fully by Quickshell-native v5 architecture. Not recommended for any use today.</p>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="section-divider"/>
-
-<!-- PHASE 5 PREVIEW — Updates Manager -->
-<section class="updates-section" id="updates-manager">
-  <div class="container">
-    <div class="updates-card fade-up">
-      <div style="display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--accent2);padding:4px 12px;background:var(--accent2-dim);border:1px solid rgba(167,139,250,0.2);border-radius:99px;margin-bottom:1.25rem">
-        <span class="material-symbols-outlined" style="font-size:14px">schedule</span>
-        Phase 5 · updates manager preview
-      </div>
-      <h3>No more <strong>git checkout alpha-…</strong><br/>from the terminal.</h3>
-      <p class="updates-lead">
-        The v6.16.4.x hotfix cascade (.2 → .3 → .4 → .5 in a single day) is exactly why Phase 5 exists. When it ships, users pick their channel, apply updates, and rollback — all from inside the shell. Here's what v6.16.4.5 will look like when the manager sees it:
-      </p>
-
-      <div class="updates-mockup">
-        <div class="updates-mockup-title">
-          <span class="material-symbols-outlined">system_update</span>
-          <span>Zen Shell — System Updates</span>
-        </div>
-
-        <div class="updates-row">
-          <span style="color:var(--muted)">Channel:</span>
-          <div class="updates-channel-pick" style="margin:0">
-            <span class="channel-pill">Official</span>
-            <span class="channel-pill">Beta</span>
-            <span class="channel-pill active">● Alpha</span>
-          </div>
-        </div>
-
-        <div class="updates-row">
-          <span style="color:var(--muted)">Installed:</span>
-          <span style="color:var(--green)">v6.16.4.1 · main ✓ current</span>
-        </div>
-
-        <div style="font-size:0.8rem;color:var(--muted);margin:1rem 0 0.5rem">Available on Alpha channel:</div>
-        <div class="updates-available">
-          <div class="update-entry">
-            <div class="update-entry-icon"></div>
-            <div class="update-entry-body">
-              <div class="update-entry-ver">alpha-v6.16.4.5 <span class="date">2026-04-24</span></div>
-              <div class="update-entry-desc">Start Menu pinned tile breathing room (72px tiles, 66px label width). Bundles 4.2-4.4 hotfixes.</div>
-              <div class="update-entry-actions">
-                <button class="update-mini-btn primary">Download</button>
-                <button class="update-mini-btn">Details</button>
-              </div>
-            </div>
-          </div>
-          <div class="update-entry">
-            <div class="update-entry-icon"></div>
-            <div class="update-entry-body">
-              <div class="update-entry-ver">alpha-v6.16.4.4 <span class="date">2026-04-24</span></div>
-              <div class="update-entry-desc">Gaps/borders preserved after DisplaysPage apply. Hyprland runtime-state wipe fix.</div>
-              <div class="update-entry-actions">
-                <button class="update-mini-btn">Download</button>
-                <button class="update-mini-btn">Details</button>
-              </div>
-            </div>
-          </div>
-          <div class="update-entry">
-            <div class="update-entry-icon"></div>
-            <div class="update-entry-body">
-              <div class="update-entry-ver">alpha-v6.16.4.3 <span class="date">2026-04-24</span></div>
-              <div class="update-entry-desc">Widget scale actually applied + oscillation removed. 4.2 was incomplete.</div>
-              <div class="update-entry-actions">
-                <button class="update-mini-btn">Download</button>
-                <button class="update-mini-btn">Skip version</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="updates-row" style="margin-top:1rem">
-          <span style="color:var(--muted)">Rollback available:</span>
-          <span style="color:var(--text);font-size:0.78rem">v6.16.4.1 · v6.16.3.4.2 · v6.16.3.8 · v6.16.3.7 ...</span>
-        </div>
-
-        <div class="updates-footer-actions">
-          <button class="updates-mock-btn primary">Apply Update</button>
-          <button class="updates-mock-btn">Skip this version</button>
-          <button class="updates-mock-btn">Cancel</button>
-        </div>
-      </div>
-
-      <p class="updates-caption">
-        Each installed version stored in <code style="font-family:var(--font-mono);font-size:0.8rem;color:var(--accent);background:var(--accent-dim);padding:1px 6px;border-radius:4px">~/.local/share/zen-shell/versions/&lt;version&gt;/</code> so rollback is one click. SwayNC notification on every new release in the user's chosen channel. Skip-version toggle per hotfix. Target ship: Phase 5, sometime after v6.16.6.
-      </p>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider"/>
-
-<section class="roadmap-section" id="roadmap">
-  <div class="container">
-    <div class="roadmap-card fade-up">
-      <span class="roadmap-eyebrow">
-        <span class="pulse-dot"></span>
-        Roadmap · v6.16.4.1 shipped · Phase 4 + 5 ahead
-      </span>
-      <h3>v6.16.4.1 is <strong>official main.</strong><br/>Phase 4 + 5 <strong>queued up.</strong></h3>
-      <p class="roadmap-lead">
-        The v6.16.3 sub-series (through .3.8) closed out with <em>lock screen overhaul · widget scale · idle cascade</em>. v6.16.4 shipped the panic recovery keybind; v6.16.4.1 hotfixed the three bugs it introduced. Next up: <em>configreloaded IPC listener</em> (v6.16.5), <em>wallpaper display modes</em> (v6.16.6), then the bigger Phase 4 + 5 arcs.
-      </p>
-
-      <div class="roadmap-grid">
-        <div class="roadmap-phase">
-          <div class="phase-version">
-            v6.16.3.1 → v6.16.3.8
-            <span class="phase-status shipped">Shipped</span>
-          </div>
-          <div class="phase-title">Lock · Widgets · Idle</div>
-          <ul class="phase-list">
-            <li>Material Power Icons · Lid-close patch</li>
-            <li>Display resolution fix · PowerBadge</li>
-            <li>Widget color persistence (.4.1)</li>
-            <li>Input toggle design sync (.4.2)</li>
-            <li>Animations live-reload + scroll (.4.3)</li>
-            <li>ROG brightness + themes scrollable (.4.4)</li>
-            <li>Start Menu logo picker (.5)</li>
-            <li><strong>Lock screen overhaul</strong> (.6)</li>
-            <li><strong>Universal widget scale</strong> (.7)</li>
-            <li><strong>Idle / Lid / Sleep cascade</strong> (.8)</li>
-          </ul>
-        </div>
-
-        <div class="roadmap-phase is-current">
-          <div class="phase-version">
-            v6.16.4 → v6.16.4.1
-            <span class="phase-status stable">Current stable</span>
-          </div>
-          <div class="phase-title">Laptop reliability · panic keybind · stable on main</div>
-          <ul class="phase-list">
-            <li><strong>SUPER+SHIFT+CTRL+Esc</strong> escape hatch</li>
-            <li>9-step recovery, works through frozen hyprlock</li>
-            <li>.4.1: forcerendererreload preserves monitor config</li>
-            <li>.4.1: removed SIGUSR2 (was killing Quickshell)</li>
-            <li>.4.1: removed workspace bounce (music widget loop)</li>
-            <li style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px dashed var(--border)"><strong style="color:var(--orange)">Alpha on branch</strong> — v6.16.4.2 → v6.16.4.5 shipped on <code style="font-family:var(--font-mono);font-size:0.72rem;color:var(--orange);background:rgba(251,146,60,0.08);padding:0 5px;border-radius:3px">alpha-v6.16.4.5</code></li>
-            <li>Widget scale actually working at every scale</li>
-            <li>Gaps preserved after DisplaysPage apply</li>
-            <li>Start Menu pinned tile breathing room</li>
-          </ul>
-        </div>
-
-        <div class="roadmap-phase is-next">
-          <div class="phase-version">
-            v6.16.5 → Phase 5
-            <span class="phase-status next">Next up</span>
-          </div>
-          <div class="phase-title">configreloaded · wallpaper modes · Phase 4+5</div>
-          <ul class="phase-list">
-            <li><strong>v6.16.5</strong> — Global configreloaded IPC listener (kills per-page reload boilerplate)</li>
-            <li><strong>v6.16.6</strong> — Wallpaper repo browser + fit / stretch / custom display modes</li>
-            <li><strong>Phase 4</strong> — Hyprland dark mode + GTK3/4 sync · hyprbars + minimize · float/tile assignment GUI · auto-clean memory</li>
-            <li><strong>Phase 5</strong> — <a href="#updates-manager" style="color:var(--accent2);text-decoration:none">Updates manager</a> (Official / Beta / Alpha channels · rollback to stored versions)</li>
-          </ul>
-        </div>
-      </div>
-
-      <p class="roadmap-note">
-        Naming: alpha branches carry the <code>alpha-v6.16.X</code> prefix (currently <code>alpha-v6.16.4.5</code>). When a phase reaches stable, it promotes to <code>main</code> and gets a <code>v6.16.X</code> tag. Wala tayong binawasan — every previous release stays reachable via its tag.
-      </p>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider"/>
-
-<section class="install-section" id="install">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Quick Start</div>
-      <h2>Up and running in <strong>minutes.</strong></h2>
-      <p>Bootstrap mode is safe for KDE, GNOME, and COSMIC users.</p>
-    </div>
-
-    <div class="fade-up">
-      <div class="code-block" style="margin-bottom:1rem">
-        <div class="code-header">
-          <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
-          <span class="code-lang">bash · main branch · v6.16.4.1 stable</span>
-        </div>
-        <div class="code-body">
-<pre><span class="c-comment"># Clone the repo</span>
-<span class="c-cmd">git clone</span> <span class="c-str">https://github.com/Gekinzen/zen_barebone_alpha_development.git</span>
-<span class="c-cmd">cd</span> zen_barebone_alpha_development
-
-<span class="c-comment"># Pin to the exact v6.16.4.1 tag — or stay on main</span>
-<span class="c-cmd">git fetch</span> <span class="c-flag">--tags</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">v6.16.4.1</span>     <span class="c-comment"># pinned</span>
-<span class="c-comment"># — or —</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>          <span class="c-comment"># always latest stable</span>
-
-<span class="c-comment"># --bootstrap: installs Hyprland + all deps, safe for KDE/GNOME/COSMIC</span>
-<span class="c-cmd">chmod +x</span> install.sh
-<span class="c-cmd">./install.sh</span> <span class="c-flag">--bootstrap</span>
-
-<span class="c-comment"># Already on Hyprland? Skip --bootstrap:</span>
-<span class="c-cmd">./install.sh</span>
-
-<span class="c-comment"># Verify panic keybind is wired</span>
-<span class="c-cmd">hyprctl</span> binds | <span class="c-cmd">grep</span> <span class="c-flag">-i</span> zen-panic
-
-<span class="c-comment"># Test it (safe — no damage)</span>
-<span class="c-cmd">~/.local/bin/zen-panic.sh</span>
-<span class="c-cmd">cat</span> <span class="c-flag">~/.cache/zen-shell/panic.log</span> | <span class="c-cmd">tail</span> <span class="c-flag">-30</span></pre>
-        </div>
-      </div>
-
-      <div class="code-block" style="border-color:rgba(251,146,60,0.2)">
-        <div class="code-header" style="border-bottom-color:rgba(251,146,60,0.15)">
-          <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
-          <span class="code-lang" style="color:var(--orange)">bash · alpha-v6.16.4.5 branch · daily-use safe</span>
-        </div>
-        <div class="code-body">
-<pre><span class="c-comment"># Alpha: bundles hotfixes .2 → .5 on top of stable .1</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">alpha-v6.16.4.5</span>
-<span class="c-cmd">./install.sh</span>
-
-<span class="c-comment"># Rollback to stable any time:</span>
-<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>
-<span class="c-cmd">./install.sh</span></pre>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider"/>
-
-<section class="keybinds-section" id="keybinds">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Keybinds</div>
-      <h2>Keyboard shortcuts</h2>
-    </div>
-    <div class="kb-grid fade-up">
-      <div class="kb-row panic">
-        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">Shift</span><span class="kb-key">Ctrl</span><span class="kb-key">Esc</span></div>
-        <div class="kb-action">Panic recovery (works through frozen lock) ← v6.16.4</div>
-      </div>
-      <div class="kb-row">
-        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">C</span></div>
-        <div class="kb-action">Control Panel</div>
-      </div>
-      <div class="kb-row">
-        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">A</span></div>
-        <div class="kb-action">Start Menu</div>
-      </div>
-      <div class="kb-row">
-        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">,</span></div>
-        <div class="kb-action">Zen Settings</div>
-      </div>
-      <div class="kb-row">
-        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">W</span></div>
-        <div class="kb-action">Wallpaper Picker</div>
-      </div>
-      <div class="kb-row new-feature">
-        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">Shift</span><span class="kb-key">S</span></div>
-        <div class="kb-action">Screenshot rope overlay ← v6.15</div>
-      </div>
-      <div class="kb-row">
-        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">/</span></div>
-        <div class="kb-action">Keybind cheatsheet</div>
-      </div>
-      <div class="kb-row new-feature">
-        <div class="kb-keys"><span class="kb-key">XF86AudioRaiseVolume</span></div>
-        <div class="kb-action">Volume up + OSD ← v6.16</div>
-      </div>
-      <div class="kb-row new-feature">
-        <div class="kb-keys"><span class="kb-key">XF86BrightnessUp/Down</span></div>
-        <div class="kb-action">Brightness + OSD (ROG detected .3.4.4+)</div>
-      </div>
-      <div class="kb-row new-feature">
-        <div class="kb-keys"><span class="kb-key">Hover clock</span></div>
-        <div class="kb-action">Live time + ISO week + timezone ← v6.16.3.6</div>
-      </div>
-      <div class="kb-row new-feature">
-        <div class="kb-keys"><span class="kb-key">Hover sysmonitor</span></div>
-        <div class="kb-action">CPU / GPU / Memory / Network popup ← v6.16.3.6</div>
-      </div>
-      <div class="kb-row new-feature">
-        <div class="kb-keys"><span class="kb-key">Right-click PowerBadge</span></div>
-        <div class="kb-action">Cycle power profile ← v6.16.3.4</div>
-      </div>
-      <div class="kb-row new-feature">
-        <div class="kb-keys"><span class="kb-key">Middle-click PowerBadge</span></div>
-        <div class="kb-action">Toggle Gaming Boost ← v6.16.3.4</div>
-      </div>
-      <div class="kb-row">
-        <div class="kb-keys"><span class="kb-key">Super</span><span class="kb-key">T</span></div>
-        <div class="kb-action">Terminal</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider"/>
-
-<hr class="section-divider"/>
-
-<!-- LEGACY ARCHIVE — 2025 ALPHA -->
-<section class="archive-section" id="archive">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="archive-tag">Historical Reference</div>
-      <h2>Legacy archive · <strong>2025 Alpha</strong></h2>
-      <p>The original Python / GTK4 / Waybar stack — preserved for posterity.</p>
-    </div>
-
-    <div class="archive-note fade-up">
-      These assets were captured on <strong>Hyprland 0.52</strong> and document the pre-Quickshell lineage of the project. Current Zen Shell runs on <strong>Hyprland 0.54+</strong> with a unified QML architecture — see the <a href="#features">Features</a> above for the latest look. The deprecated source is preserved at <code>zen-alpha-deprecated-0.52/</code> in the <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/zen-alpha-deprecated-0.52" target="_blank">archive branch</a>.
-    </div>
-
-    <div class="archive-hero fade-up">
-      <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" alt="Alpha main demo" loading="lazy"/>
-    </div>
-
-    <div class="archive-grid fade-up">
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" alt="Alpha theme switching" loading="lazy"/>
-        <div class="archive-caption">// Theme switching</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" alt="Alpha wallpaper picker" loading="lazy"/>
-        <div class="archive-caption">// Wallpaper picker</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" alt="Alpha panel modes" loading="lazy"/>
-        <div class="archive-caption">// Panel modes</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" alt="Alpha desktop looks" loading="lazy"/>
-        <div class="archive-caption">// Desktop looks</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" alt="Alpha dock" loading="lazy"/>
-        <div class="archive-caption">// Dock / taskbar</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" alt="Alpha control center" loading="lazy"/>
-        <div class="archive-caption">// Control center</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" alt="Alpha animation editor" loading="lazy"/>
-        <div class="archive-caption">// Animation editor</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter%20power%20profile.png" alt="Alpha power profile" loading="lazy"/>
-        <div class="archive-caption">// Power profile</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" alt="Alpha appearance settings" loading="lazy"/>
-        <div class="archive-caption">// Appearance settings</div>
-      </div>
-      <div class="archive-item">
-        <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.png" alt="Alpha theme engine" loading="lazy"/>
-        <div class="archive-caption">// Theme engine</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider"/>
-
-<section class="cta-section">
-  <h2>Built <strong>late nights.</strong><br/>One commit at a time.</h2>
-  <p>Zen Shell is an independent project. If it's made your desktop a better place, a coffee keeps the commits flowing.</p>
-  <div class="cta-actions">
-    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" class="btn btn-primary btn-large" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-      Star on GitHub
-    </a>
-    <a href="https://buymeacoffee.com/zenpy" class="btn btn-ghost btn-large" target="_blank">
-      <span class="material-symbols-outlined">coffee</span> Buy me a coffee
-    </a>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <strong>Zen Shell</strong> · Built by <a href="https://github.com/Gekinzen">Zenpy</a> · MIT License
-    </div>
-    <div class="footer-right">
-      <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" target="_blank">GitHub</a>
-      <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/issues" target="_blank">Issues</a>
-      <a href="https://github.com/Gekinzen/images-demo/tree/main/wallpapers" target="_blank">Wallpapers</a>
-      <a href="#archive">Alpha Archive</a>
-      <a href="https://buymeacoffee.com/zenpy" target="_blank">Support</a>
+<!-- ═══════════════════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════════════════ -->
+<footer class="foot">
+  <div class="shell foot__row">
+    <span>Zen Shell · Crafted in Antipolo · Shipped as an <a href="https://obsidevs.com" style="color: var(--sage-deep);">OBSIDEVS</a> project</span>
+    <div class="foot__links">
+      <a href="#showcase">Showcase</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#install">Install</a>
+      <a href="#archive">Archive</a>
+      <a href="https://github.com/Gekinzen/zen-shell" rel="noopener">GitHub</a>
     </div>
   </div>
 </footer>
 
 <script>
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-document.querySelectorAll('.feature-card').forEach((el, i) => {
-  el.style.transitionDelay = (i * 40) + 'ms';
-});
+/* ═══════════════════════════════════════════════════════════════════
+   Dark Mode — respects system, persists user choice
+   ═══════════════════════════════════════════════════════════════════ */
+(function() {
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+
+  const saved = localStorage.getItem('zs-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initial = saved || (prefersDark ? 'dark' : 'light');
+  applyTheme(initial);
+
+  btn.addEventListener('click', () => {
+    const next = root.classList.contains('dark') ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('zs-theme', next);
+  });
+
+  function applyTheme(mode) {
+    if (mode === 'dark') {
+      root.classList.add('dark');
+      icon.textContent = 'light_mode';
+      label.textContent = 'Light';
+    } else {
+      root.classList.remove('dark');
+      icon.textContent = 'dark_mode';
+      label.textContent = 'Dark';
+    }
+  }
+})();
+
+/* ═══════════════════════════════════════════════════════════════════
+   GitHub repo counters — pulled from public API
+   No backend, no auth, no tracking. Just the public numbers.
+   ═══════════════════════════════════════════════════════════════════
+   Endpoints used:
+     https://api.github.com/repos/Gekinzen/zen-shell
+       → stargazers_count, forks_count, subscribers_count
+     https://api.github.com/repos/Gekinzen/zen-shell/releases
+       → length of the array = release count
+
+   Cached for 5 minutes in localStorage to avoid burning the 60-req/hr
+   unauthenticated rate limit. If the API fails or you're rate limited,
+   we fall back to "—" and keep it quiet.
+   ═══════════════════════════════════════════════════════════════════ */
+(function() {
+  const REPO = 'Gekinzen/zen-shell';  // change if repo ever moves
+  const CACHE_KEY = 'zs-gh-stats';
+  const CACHE_TTL = 5 * 60 * 1000;  // 5 minutes
+
+  function setCounter(id, value) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('loading');
+    // preserve the icon <span> if present
+    const icon = el.querySelector('.counter__icon');
+    el.textContent = value.toLocaleString();
+    if (icon) el.appendChild(icon);
+  }
+
+  function render(stats) {
+    setCounter('counterStars',    stats.stars);
+    setCounter('counterForks',    stats.forks);
+    setCounter('counterWatchers', stats.watchers);
+    setCounter('counterReleases', stats.releases);
+  }
+
+  function readCache() {
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (Date.now() - obj.ts > CACHE_TTL) return null;
+      return obj.stats;
+    } catch (_) { return null; }
+  }
+
+  function writeCache(stats) {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), stats }));
+    } catch (_) {}
+  }
+
+  async function fetchStats() {
+    const cached = readCache();
+    if (cached) {
+      render(cached);
+      return;
+    }
+
+    try {
+      const [repoRes, relRes] = await Promise.all([
+        fetch(`https://api.github.com/repos/${REPO}`, {
+          headers: { 'Accept': 'application/vnd.github+json' },
+        }),
+        fetch(`https://api.github.com/repos/${REPO}/releases?per_page=100`, {
+          headers: { 'Accept': 'application/vnd.github+json' },
+        }),
+      ]);
+
+      if (!repoRes.ok) throw new Error('repo ' + repoRes.status);
+      const repo = await repoRes.json();
+      let releases = [];
+      if (relRes.ok) releases = await relRes.json();
+
+      const stats = {
+        stars:    repo.stargazers_count   || 0,
+        forks:    repo.forks_count        || 0,
+        watchers: repo.subscribers_count  || 0,
+        releases: Array.isArray(releases) ? releases.length : 0,
+      };
+
+      writeCache(stats);
+      render(stats);
+    } catch (err) {
+      // API failed or rate-limited — leave placeholders in place.
+      // The em dash with the icon is fine as a quiet fallback state.
+      console.warn('[zenshell] GitHub stats unavailable:', err.message);
+    }
+  }
+
+  fetchStats();
+})();
+
+/* ═══════════════════════════════════════════════════════════════════
+   Copy-to-clipboard for install snippets
+   ═══════════════════════════════════════════════════════════════════ */
+(function() {
+  document.querySelectorAll('.install__copy').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const targetId = btn.getAttribute('data-copy-target');
+      const block = document.getElementById(targetId);
+      if (!block) return;
+
+      // Extract text but strip the "Copy" button content
+      const clone = block.cloneNode(true);
+      const btnInside = clone.querySelector('.install__copy');
+      if (btnInside) btnInside.remove();
+      const text = clone.textContent.trim();
+
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.classList.add('copied');
+        btn.textContent = 'Copied';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 1800);
+      } catch (_) {
+        const range = document.createRange();
+        range.selectNodeContents(clone);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    });
+  });
+})();
 </script>
 
 </body>

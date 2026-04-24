@@ -7,32 +7,30 @@
   <meta name="theme-color" content="#14140f" media="(prefers-color-scheme: dark)" />
   <meta name="color-scheme" content="light dark" />
 
-  <title>Zen Shell — Quickshell-native desktop environment for Hyprland</title>
+  <title>Zen Shell — Kintsugi · v6.16.4.11.2</title>
   <meta name="description" content="Zen Shell is a QML-native desktop environment for Hyprland on Arch / CachyOS. Panel, control center, wallpaper engine, theme system — all driven by Quickshell." />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Zen Shell — Quickshell-native desktop environment" />
+  <meta property="og:title" content="Zen Shell — Kintsugi · v6.16.4.11.2" />
   <meta property="og:description" content="QML-native desktop environment for Hyprland. Panel, control center, wallpaper, themes. All Quickshell." />
-  <meta property="og:url" content="https://zenshell.obsidevs.com/" />
+  <meta property="og:url" content="https://gekinzen.github.io/zen-shell-site/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <link rel="canonical" href="https://zenshell.obsidevs.com/" />
+  <link rel="canonical" href="https://gekinzen.github.io/zen-shell-site/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://api.github.com" />
+  <link rel="preconnect" href="https://raw.githubusercontent.com" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..900;1,7..72,300..900&family=JetBrains+Mono:wght@300;400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..900;1,7..72,300..900&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+JP:wght@300;500;700&display=swap"
     rel="stylesheet"
   />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0"
-  />
+  <!-- All icons are inline SVG — no icon font dependency. -->
 
   <style>
     /* =================================================================
-       Design tokens — inherited from OBSIDEVS editorial system
-       with dark mode tokens for the night side.
+       Design tokens
        ================================================================= */
     :root {
       --ink:          #2a2a2a;
@@ -47,9 +45,12 @@
       --alpha-tone:   #c68a4a;
       --alpha-deep:   #a66f38;
       --stable-tone:  #5f7450;
+      --gold:         #b8924e;
+      --gold-soft:    #d4a85f;
 
-      --serif: 'Literata', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-      --mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+      --serif:    'Literata', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+      --serif-jp: 'Noto Serif JP', 'Literata', serif;
+      --mono:     'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
       --shell-max: 1280px;
       --gutter:    clamp(1.25rem, 4vw, 4rem);
@@ -70,6 +71,8 @@
       --alpha-tone:   #d89a60;
       --alpha-deep:   #e8ae78;
       --stable-tone:  #98b283;
+      --gold:         #d4a85f;
+      --gold-soft:    #e6be77;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -126,23 +129,13 @@
       position: relative;
     }
 
-    .eyebrow {
-      font-family: var(--serif);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--mute);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .eyebrow::before {
-      content: "";
-      width: 24px;
-      height: 1px;
-      background: currentColor;
-      opacity: 0.6;
+    .zs-icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      flex-shrink: 0;
     }
 
     .section-label {
@@ -164,7 +157,7 @@
     }
 
     /* =================================================================
-       Nav
+       Nav — with grass icon brand
        ================================================================= */
     .nav {
       position: sticky;
@@ -178,11 +171,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 0;
+      padding: 1rem 0;
+      gap: 1.5rem;
     }
     .brand {
       font-family: var(--serif);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 500;
       letter-spacing: -0.01em;
       display: flex;
@@ -190,10 +184,26 @@
       gap: 0.65rem;
     }
     .brand__mark {
-      width: 22px;
-      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: conic-gradient(from 220deg, var(--sage) 0%, var(--ink) 40%, var(--sage-deep) 70%, var(--sage) 100%);
+      background: color-mix(in srgb, var(--sage) 18%, transparent);
+      color: var(--sage-deep);
+      transition: background 200ms var(--easing), transform 200ms var(--easing);
+    }
+    :root.dark .brand__mark { color: var(--sage); }
+    .brand:hover .brand__mark {
+      background: color-mix(in srgb, var(--sage) 30%, transparent);
+      transform: rotate(-8deg);
+    }
+    .brand__mark svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      transition: transform 200ms var(--easing);
     }
     .nav__links {
       display: flex;
@@ -230,15 +240,14 @@
       border-color: var(--sage);
       background: color-mix(in srgb, var(--sage) 8%, transparent);
     }
-    .theme-toggle__icon {
-      font-family: 'Material Symbols Outlined';
-      font-size: 18px;
-      font-variation-settings: 'opsz' 24, 'wght' 400, 'GRAD' 0, 'FILL' 0;
-      line-height: 1;
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
     }
     .theme-toggle__label { letter-spacing: 0.02em; }
 
-    @media (max-width: 720px) {
+    @media (max-width: 820px) {
       .nav__links { display: none; }
       .theme-toggle__label { display: none; }
     }
@@ -247,14 +256,50 @@
        Hero
        ================================================================= */
     .hero {
-      padding: clamp(4rem, 10vh, 8rem) 0 clamp(5rem, 12vh, 10rem);
+      padding: clamp(3rem, 8vh, 6rem) 0 clamp(4rem, 10vh, 8rem);
       border-bottom: 1px solid var(--hairline);
     }
-    .hero__eyebrow { margin-bottom: 2rem; }
+
+    .codename-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem 0.5rem 0.65rem;
+      border: 1px solid color-mix(in srgb, var(--gold) 30%, var(--hairline));
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--gold) 6%, transparent);
+      margin-bottom: 1.75rem;
+    }
+    .codename-badge__kanji {
+      font-family: var(--serif-jp);
+      font-weight: 500;
+      font-size: 1.15rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .codename-badge__divider {
+      width: 1px;
+      height: 16px;
+      background: var(--hairline);
+    }
+    .codename-badge__name {
+      font-family: var(--serif);
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--ink);
+      letter-spacing: 0.01em;
+    }
+    .codename-badge__version {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--mute);
+      letter-spacing: 0.02em;
+    }
+
     .hero__headline {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(2.75rem, 6vw, 5rem);
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
       line-height: 1.05;
       letter-spacing: -0.025em;
       margin: 0;
@@ -269,9 +314,26 @@
     .hero__lede {
       max-width: 60ch;
       margin: 2rem 0 0;
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       color: var(--ink-soft);
       line-height: 1.6;
+    }
+
+    .hero__codename-meaning {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      border-left: 2px solid var(--gold);
+      background: color-mix(in srgb, var(--gold) 5%, transparent);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      max-width: 60ch;
+    }
+    .hero__codename-meaning strong {
+      font-style: normal;
+      font-weight: 500;
+      color: var(--gold);
     }
 
     .hero__pills {
@@ -279,7 +341,6 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      align-items: center;
     }
     .pill {
       display: inline-flex;
@@ -294,8 +355,7 @@
       color: var(--mute);
     }
     .pill__dot {
-      width: 7px;
-      height: 7px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: currentColor;
     }
@@ -321,31 +381,36 @@
       cursor: pointer;
       border: 1px solid transparent;
     }
-    .cta--primary {
-      background: var(--ink);
-      color: var(--paper);
-    }
+    .cta--primary { background: var(--ink); color: var(--paper); }
     .cta--primary:hover { transform: translateY(-1px); background: var(--sage-deep); }
     :root.dark .cta--primary { background: var(--sage); color: var(--bone); }
     :root.dark .cta--primary:hover { background: var(--sage-deep); }
 
-    .cta--ghost {
-      border-color: var(--hairline);
-      color: var(--ink);
-    }
-    .cta--ghost:hover {
-      border-color: var(--sage);
-      color: var(--sage-deep);
-    }
+    .cta--ghost { border-color: var(--hairline); color: var(--ink); }
+    .cta--ghost:hover { border-color: var(--sage); color: var(--sage-deep); }
     :root.dark .cta--ghost:hover { color: var(--sage); }
-    .cta__icon {
-      font-family: 'Material Symbols Outlined';
-      font-size: 18px;
-      font-variation-settings: 'opsz' 24, 'wght' 300, 'GRAD' 0, 'FILL' 0;
+    .cta svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      flex-shrink: 0;
     }
 
+    .hero-image {
+      margin-top: 4rem;
+      width: 100%;
+      max-width: 960px;
+      margin-inline: auto;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      box-shadow: 0 24px 60px -30px color-mix(in srgb, var(--ink) 40%, transparent);
+      background: var(--bone-deep);
+    }
+    .hero-image img { width: 100%; height: auto; display: block; }
+
     /* =================================================================
-       GitHub counters — pulled from public API
+       GitHub counters
        ================================================================= */
     .counters {
       background: var(--ink);
@@ -358,8 +423,7 @@
     :root.dark .counters { background: var(--bone-deep); }
     .counters::before {
       content: "";
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background-image:
         linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
@@ -371,7 +435,6 @@
         linear-gradient(to right, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
     }
-
     .counters__head { position: relative; margin-bottom: 3rem; max-width: 64ch; }
     .counters .section-label { color: rgba(255, 255, 255, 0.55); }
     :root.dark .counters .section-label { color: var(--mute); }
@@ -391,7 +454,6 @@
       font-style: italic;
     }
     :root.dark .counters__note { color: var(--mute); }
-
     .counters__grid {
       position: relative;
       display: grid;
@@ -399,7 +461,6 @@
       border-top: 1px solid rgba(255, 255, 255, 0.12);
     }
     :root.dark .counters__grid { border-top-color: var(--hairline); }
-
     .counter {
       padding: 2rem 0 0;
       border-right: 1px solid rgba(255, 255, 255, 0.08);
@@ -421,11 +482,12 @@
     :root.dark .counter__num { color: var(--ink); }
     .counter__num.loading { opacity: 0.3; }
     .counter__icon {
-      font-family: 'Material Symbols Outlined';
-      font-size: 0.55em;
-      margin-left: 0.2em;
-      color: var(--sage);
-      font-variation-settings: 'opsz' 24, 'wght' 400, 'FILL' 1;
+      width: 0.55em;
+      height: 0.55em;
+      margin-left: 0.3em;
+      fill: var(--sage);
+      vertical-align: baseline;
+      display: inline-block;
     }
     .counter__label {
       display: block;
@@ -444,7 +506,6 @@
       font-style: italic;
     }
     :root.dark .counter__sub { color: var(--mute); }
-
     @media (max-width: 860px) {
       .counters__grid { grid-template-columns: repeat(2, 1fr); }
       .counter {
@@ -457,21 +518,302 @@
     }
 
     /* =================================================================
-       Version timeline chart — SVG-driven horizontal track
+       Showcase — using real GitHub image URLs
+       ================================================================= */
+    .showcase {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .showcase__head { max-width: 720px; margin-bottom: 3.5rem; }
+    .showcase__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
+    .showcase__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+    @media (max-width: 780px) { .showcase__grid { grid-template-columns: 1fr; } }
+
+    .shot {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 1px solid var(--hairline);
+      background: var(--bone-deep);
+      transition: transform 300ms var(--easing), border-color 300ms var(--easing);
+    }
+    .shot:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--sage) 40%, var(--hairline));
+    }
+    .shot__frame {
+      aspect-ratio: 16 / 10;
+      width: 100%;
+      background: var(--bone-deep);
+      position: relative;
+      overflow: hidden;
+    }
+    .shot__frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .shot__caption {
+      padding: 1rem 1.25rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .shot__caption-title { font-family: var(--serif); font-size: 0.95rem; font-weight: 500; color: var(--ink); }
+    .shot__caption-sub {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+    .shot__caption-hint {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--mute);
+      margin-top: 0.35rem;
+      line-height: 1.45;
+    }
+    .shot__badge {
+      position: absolute;
+      top: 0.75rem; left: 0.75rem;
+      z-index: 2;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--bone) 88%, transparent);
+      backdrop-filter: blur(6px);
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      border: 1px solid var(--hairline);
+    }
+    .shot__badge--new {
+      color: var(--sage-deep);
+      border-color: color-mix(in srgb, var(--sage) 50%, var(--hairline));
+    }
+    :root.dark .shot__badge--new { color: var(--sage); }
+
+    /* ─── Kintsugi theme showcase (featured card) ────────────────────── */
+    .kintsugi-showcase { overflow: hidden; }
+    .kintsugi-showcase .shot__badge {
+      background: color-mix(in srgb, var(--bone) 92%, transparent);
+      color: var(--gold);
+      border-color: color-mix(in srgb, var(--gold) 50%, var(--hairline));
+    }
+    .kintsugi-showcase__frame {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      aspect-ratio: 21 / 9;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (max-width: 720px) {
+      .kintsugi-showcase__frame {
+        grid-template-columns: 1fr;
+        aspect-ratio: auto;
+      }
+    }
+    .kintsugi-showcase__half {
+      padding: 2rem 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.4rem;
+      min-height: 220px;
+    }
+    .kintsugi-showcase__half--light {
+      background: #fafaf7;
+      color: #2a2a2a;
+    }
+    .kintsugi-showcase__half--dark {
+      background: #14140f;
+      color: #ededed;
+    }
+    .kintsugi-showcase__kanji {
+      font-family: var(--serif-jp);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #b8924e;
+      line-height: 1;
+      margin-bottom: 0.15rem;
+    }
+    .kintsugi-showcase__name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      font-style: italic;
+      color: #2a2a2a;
+    }
+    .kintsugi-showcase__swatches {
+      display: flex;
+      gap: 5px;
+      margin-top: 0.65rem;
+    }
+    .kintsugi-showcase__swatches span {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      display: block;
+    }
+    .kintsugi-showcase__tags {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #666;
+      margin-top: 0.4rem;
+    }
+
+    /* =================================================================
+       Demos section (YouTube thumbnails)
+       ================================================================= */
+    .demos {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--hairline);
+      background: var(--bone-deep);
+    }
+    .demos__head { max-width: 720px; margin-bottom: 3rem; }
+    .demos__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
+    .demo-featured {
+      margin-bottom: 1.5rem;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      background: var(--paper);
+      transition: transform 300ms var(--easing);
+      display: block;
+      position: relative;
+    }
+    .demo-featured:hover { transform: translateY(-2px); }
+    .demo-featured__thumb { position: relative; aspect-ratio: 16 / 9; }
+    .demo-featured__thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .demo-featured__play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--ink) 70%, transparent);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      transition: transform 200ms var(--easing);
+    }
+    .demo-featured:hover .demo-featured__play {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    .demo-featured__play::before {
+      content: "";
+      width: 0; height: 0;
+      border-left: 22px solid #fff;
+      border-top: 13px solid transparent;
+      border-bottom: 13px solid transparent;
+      margin-left: 5px;
+    }
+    .demo-featured__cap { padding: 1.25rem 1.5rem; text-align: center; }
+    .demo-featured__cap-label {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+    .demo-featured__cap-title {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin: 0.35rem 0 0.4rem;
+    }
+    .demo-featured__cap-desc {
+      font-family: var(--serif);
+      font-size: 0.92rem;
+      font-style: italic;
+      color: var(--mute);
+    }
+    .demos__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    @media (max-width: 780px) { .demos__grid { grid-template-columns: 1fr; } }
+    .demo-card {
+      display: block;
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--paper);
+      transition: transform 300ms var(--easing), border-color 300ms var(--easing);
+    }
+    .demo-card:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--sage) 40%, var(--hairline));
+    }
+    .demo-card__thumb { aspect-ratio: 16 / 9; position: relative; overflow: hidden; }
+    .demo-card__thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .demo-card__play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--ink) 70%, transparent);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+    }
+    .demo-card__play::before {
+      content: "";
+      width: 0; height: 0;
+      border-left: 16px solid #fff;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      margin-left: 4px;
+    }
+    .demo-card__cap { padding: 1rem 1.25rem 1.25rem; text-align: center; }
+    .demo-card__cap-label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+    .demo-card__cap-title {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0.3rem 0 0.25rem;
+    }
+    .demo-card__cap-desc {
+      font-family: var(--serif);
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--mute);
+    }
+
+    /* =================================================================
+       Timeline chart
        ================================================================= */
     .timeline {
       padding: 6rem 0;
       border-bottom: 1px solid var(--hairline);
     }
-    .timeline__head {
-      max-width: 720px;
-      margin-bottom: 3.5rem;
-    }
-    .timeline__intro {
-      color: var(--mute);
-      margin: 1rem 0 0;
-      font-size: 1.05rem;
-    }
+    .timeline__head { max-width: 720px; margin-bottom: 3.5rem; }
+    .timeline__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
 
     .chart {
       position: relative;
@@ -483,15 +825,13 @@
       -webkit-overflow-scrolling: touch;
     }
     .chart__inner {
-      min-width: 980px;
+      min-width: 1100px;
       position: relative;
-      height: 260px;
+      height: 280px;
     }
-
     .chart__axis {
       position: absolute;
-      left: 0;
-      right: 0;
+      left: 0; right: 0;
       top: 50%;
       height: 1px;
       background: var(--hairline);
@@ -506,7 +846,6 @@
       color: var(--mute);
       text-transform: uppercase;
     }
-
     .chart__node {
       position: absolute;
       transform: translate(-50%, -50%);
@@ -517,8 +856,7 @@
       cursor: default;
     }
     .chart__node-dot {
-      width: 14px;
-      height: 14px;
+      width: 14px; height: 14px;
       border-radius: 50%;
       background: var(--hairline);
       border: 2px solid var(--bone);
@@ -526,7 +864,6 @@
       transition: transform 200ms var(--easing);
     }
     .chart__node:hover .chart__node-dot { transform: scale(1.35); }
-
     .chart__node--stable .chart__node-dot {
       background: var(--stable-tone);
       box-shadow: 0 0 0 1px var(--stable-tone);
@@ -536,15 +873,14 @@
       box-shadow: 0 0 0 1px var(--alpha-tone);
     }
     .chart__node--current .chart__node-dot {
-      width: 18px; height: 18px;
-      background: var(--ink);
-      box-shadow: 0 0 0 2px var(--ink), 0 0 0 6px color-mix(in srgb, var(--sage) 25%, transparent);
+      width: 20px; height: 20px;
+      background: var(--gold);
+      box-shadow: 0 0 0 2px var(--gold), 0 0 0 8px color-mix(in srgb, var(--gold) 25%, transparent);
     }
     :root.dark .chart__node--current .chart__node-dot {
-      background: var(--paper);
-      box-shadow: 0 0 0 2px var(--paper), 0 0 0 6px color-mix(in srgb, var(--sage) 30%, transparent);
+      background: var(--gold);
+      box-shadow: 0 0 0 2px var(--gold), 0 0 0 8px color-mix(in srgb, var(--gold) 30%, transparent);
     }
-
     .chart__node-label {
       font-family: var(--mono);
       font-size: 11px;
@@ -557,16 +893,22 @@
       font-size: 11.5px;
       font-style: italic;
       color: var(--mute);
-      max-width: 110px;
+      max-width: 120px;
       text-align: center;
       line-height: 1.35;
     }
-    .chart__node--above { top: calc(50% - 70px); }
+    .chart__node-current-mark {
+      font-family: var(--serif-jp);
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+    .chart__node--above { top: calc(50% - 80px); }
     .chart__node--above .chart__node-label { order: 3; }
     .chart__node--above .chart__node-bullet { order: 2; }
     .chart__node--above .chart__node-dot    { order: 1; margin-bottom: -4px; }
-
-    .chart__node--below { top: calc(50% + 70px); }
+    .chart__node--below { top: calc(50% + 80px); }
     .chart__node--below .chart__node-label { order: 1; margin-bottom: -4px; }
     .chart__node--below .chart__node-dot   { order: 2; }
     .chart__node--below .chart__node-bullet { order: 3; }
@@ -583,16 +925,97 @@
       text-transform: uppercase;
     }
     .chart__legend-item { display: inline-flex; align-items: center; gap: 0.55rem; }
-    .chart__legend-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-    }
+    .chart__legend-dot { width: 10px; height: 10px; border-radius: 50%; }
     .chart__legend-dot--stable { background: var(--stable-tone); }
     .chart__legend-dot--alpha  { background: var(--alpha-tone); }
     .chart__legend-dot--current {
-      background: var(--ink);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--sage) 30%, transparent);
+      background: var(--gold);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 30%, transparent);
     }
-    :root.dark .chart__legend-dot--current { background: var(--paper); }
+
+    /* =================================================================
+       Codename gallery
+       ================================================================= */
+    .codenames {
+      padding: 6rem 0;
+      background: var(--bone-deep);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .codenames__head { max-width: 720px; margin-bottom: 3rem; }
+    .codenames__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
+    .codenames__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 880px) { .codenames__grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .codenames__grid { grid-template-columns: 1fr; } }
+
+    .codename-card {
+      background: var(--paper);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      padding: 1.5rem;
+      position: relative;
+      transition: border-color 200ms var(--easing);
+    }
+    .codename-card:hover { border-color: color-mix(in srgb, var(--gold) 40%, var(--hairline)); }
+    .codename-card--current {
+      border-color: color-mix(in srgb, var(--gold) 60%, var(--hairline));
+      background: color-mix(in srgb, var(--gold) 4%, var(--paper));
+    }
+    .codename-card__kanji {
+      font-family: var(--serif-jp);
+      font-weight: 500;
+      font-size: 2.5rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .codename-card__name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      font-style: italic;
+      margin-bottom: 0.25rem;
+    }
+    .codename-card__meaning {
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--mute);
+      margin-bottom: 1rem;
+      line-height: 1.45;
+    }
+    .codename-card__versions {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--hairline);
+    }
+    .codename-card__status {
+      position: absolute;
+      top: 0.85rem; right: 0.85rem;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mute);
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+    }
+    .codename-card__status--current {
+      color: var(--gold);
+      border-color: color-mix(in srgb, var(--gold) 60%, var(--hairline));
+      background: color-mix(in srgb, var(--gold) 10%, transparent);
+    }
+    .codename-card__status--next {
+      color: var(--alpha-tone);
+      border-color: color-mix(in srgb, var(--alpha-tone) 50%, var(--hairline));
+    }
 
     /* =================================================================
        Install blocks
@@ -603,16 +1026,12 @@
     }
     .install__head { max-width: 720px; margin-bottom: 3rem; }
     .install__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
-
     .install__grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1.25rem;
     }
-    @media (max-width: 780px) {
-      .install__grid { grid-template-columns: 1fr; }
-    }
-
+    @media (max-width: 780px) { .install__grid { grid-template-columns: 1fr; } }
     .install__card {
       background: var(--paper);
       border: 1px solid var(--hairline);
@@ -656,8 +1075,7 @@
     }
     .install__copy {
       position: absolute;
-      top: 0.55rem;
-      right: 0.65rem;
+      top: 0.55rem; right: 0.65rem;
       background: var(--paper);
       border: 1px solid var(--hairline);
       border-radius: 2px;
@@ -672,7 +1090,6 @@
     .install__copy:hover { border-color: var(--sage); color: var(--sage-deep); }
     :root.dark .install__copy:hover { color: var(--sage); }
     .install__copy.copied { color: var(--sage-deep); border-color: var(--sage-deep); }
-
     .install__card-foot {
       display: flex;
       align-items: center;
@@ -683,6 +1100,149 @@
       letter-spacing: 0.06em;
       color: var(--mute);
       text-transform: uppercase;
+    }
+
+    /* =================================================================
+       Archive — full history timeline with pictures
+       ================================================================= */
+    .archive {
+      padding: 6rem 0;
+      background: var(--bone-deep);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .archive__head { max-width: 720px; margin-bottom: 3.5rem; }
+    .archive__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
+
+    .era {
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 4rem;
+    }
+    .era::before {
+      content: "";
+      position: absolute;
+      left: 8px; top: 18px; bottom: -3rem;
+      width: 1px;
+      background: var(--hairline);
+    }
+    .era:last-child::before { display: none; }
+    .era::after {
+      content: "";
+      position: absolute;
+      left: 0; top: 10px;
+      width: 17px; height: 17px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 2px solid var(--hairline);
+    }
+    .era--archive::after {
+      background: var(--alpha-tone);
+      border-color: var(--alpha-tone);
+    }
+    .era--legacy::after {
+      background: var(--mute);
+      border-color: var(--mute);
+    }
+    .era--modern::after {
+      background: var(--sage-deep);
+      border-color: var(--sage-deep);
+    }
+
+    .era__header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .era__version {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .era__label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mute);
+      padding: 0.2rem 0.55rem;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+    }
+    .era__label--archive { color: var(--alpha-tone); border-color: color-mix(in srgb, var(--alpha-tone) 40%, var(--hairline)); }
+    .era__label--legacy  { color: var(--mute); }
+    .era__label--modern  { color: var(--sage-deep); border-color: color-mix(in srgb, var(--sage) 40%, var(--hairline)); }
+    :root.dark .era__label--modern { color: var(--sage); }
+    .era__title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5rem;
+    }
+    .era__title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .era__desc {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      color: var(--mute);
+      line-height: 1.6;
+      max-width: 70ch;
+      margin: 0 0 1.5rem;
+    }
+
+    .era__gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+    }
+    @media (max-width: 780px) { .era__gallery { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .era__gallery { grid-template-columns: 1fr; } }
+
+    .era__shot {
+      position: relative;
+      overflow: hidden;
+      border-radius: 3px;
+      border: 1px solid var(--hairline);
+      background: var(--bone);
+      aspect-ratio: 16 / 10;
+      transition: transform 200ms var(--easing);
+    }
+    .era__shot:hover { transform: translateY(-2px); }
+    .era__shot img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .era__shot-cap {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.65rem 0.85rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .era__highlight {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mute);
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      background: var(--paper);
     }
 
     /* =================================================================
@@ -700,222 +1260,9 @@
       flex-wrap: wrap;
       gap: 1.5rem;
     }
-    .foot__links { display: flex; gap: 1.5rem; }
+    .foot__links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
     .foot__links a:hover { color: var(--sage-deep); }
     :root.dark .foot__links a:hover { color: var(--sage); }
-
-    /* =================================================================
-       Showcase gallery — current UI screenshots
-       ================================================================= */
-    .showcase {
-      padding: 6rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .showcase__head {
-      max-width: 720px;
-      margin-bottom: 3.5rem;
-    }
-    .showcase__intro {
-      color: var(--mute);
-      margin: 1rem 0 0;
-      font-size: 1.05rem;
-    }
-
-    .showcase__grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.75rem;
-    }
-    @media (max-width: 780px) {
-      .showcase__grid { grid-template-columns: 1fr; }
-    }
-
-    .shot {
-      position: relative;
-      overflow: hidden;
-      border-radius: 4px;
-      border: 1px solid var(--hairline);
-      background: var(--bone-deep);
-      transition: transform 300ms var(--easing), border-color 300ms var(--easing);
-    }
-    .shot:hover {
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--sage) 40%, var(--hairline));
-    }
-
-    .shot__frame {
-      aspect-ratio: 16 / 10;
-      width: 100%;
-      background: var(--bone-deep);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .shot__frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-    /* Placeholder state when image missing */
-    .shot__frame::before {
-      content: "screenshot placeholder";
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--mute);
-      background-image:
-        linear-gradient(45deg, transparent 48%, var(--hairline) 49%, var(--hairline) 51%, transparent 52%);
-      background-size: 18px 18px;
-      opacity: 0.4;
-      z-index: 0;
-    }
-    .shot__frame img {
-      position: relative;
-      z-index: 1;
-    }
-    .shot__frame img:not([src]), .shot__frame img[src=""] { display: none; }
-
-    .shot__caption {
-      padding: 1rem 1.25rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-    .shot__caption-title {
-      font-family: var(--serif);
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--ink);
-    }
-    .shot__caption-sub {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-    .shot__caption-hint {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 0.85rem;
-      color: var(--mute);
-      margin-top: 0.35rem;
-      line-height: 1.45;
-    }
-
-    .shot__badge {
-      position: absolute;
-      top: 0.75rem;
-      left: 0.75rem;
-      z-index: 2;
-      padding: 0.3rem 0.65rem;
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--bone) 85%, transparent);
-      backdrop-filter: blur(6px);
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      border: 1px solid var(--hairline);
-    }
-    .shot__badge--new {
-      color: var(--sage-deep);
-      border-color: color-mix(in srgb, var(--sage) 50%, var(--hairline));
-    }
-    :root.dark .shot__badge--new { color: var(--sage); }
-
-    /* =================================================================
-       Deprecated versions archive
-       ================================================================= */
-    .archive {
-      padding: 6rem 0;
-      background: var(--bone-deep);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .archive__head {
-      max-width: 720px;
-      margin-bottom: 2.5rem;
-    }
-    .archive__intro {
-      color: var(--mute);
-      margin: 1rem 0 0;
-      font-size: 1.05rem;
-    }
-
-    .archive__warn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.4rem 0.85rem;
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--alpha-tone) 15%, transparent);
-      border: 1px solid color-mix(in srgb, var(--alpha-tone) 40%, var(--hairline));
-      color: var(--alpha-deep);
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-top: 1rem;
-    }
-    :root.dark .archive__warn { color: var(--alpha-tone); }
-
-    .archive__list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
-    @media (max-width: 860px) {
-      .archive__list { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 540px) {
-      .archive__list { grid-template-columns: 1fr; }
-    }
-
-    .archive__item {
-      background: var(--paper);
-      border: 1px solid var(--hairline);
-      border-radius: 3px;
-      padding: 1.1rem 1.25rem;
-      transition: border-color 200ms var(--easing);
-    }
-    .archive__item:hover {
-      border-color: color-mix(in srgb, var(--mute) 35%, var(--hairline));
-    }
-    .archive__item-ver {
-      font-family: var(--mono);
-      font-size: 12.5px;
-      letter-spacing: 0.03em;
-      color: var(--ink);
-      font-weight: 500;
-      margin: 0 0 0.35rem;
-    }
-    .archive__item-label {
-      font-family: var(--serif);
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--alpha-tone);
-      margin: 0 0 0.6rem;
-    }
-    .archive__item-desc {
-      font-family: var(--serif);
-      font-size: 13px;
-      font-style: italic;
-      color: var(--mute);
-      line-height: 1.5;
-      margin: 0;
-    }
   </style>
 </head>
 <body>
@@ -923,18 +1270,33 @@
 <nav class="nav">
   <div class="shell nav__inner">
     <a href="#" class="brand">
-      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 20c-.7-2.5-1-5-1-8.5 0-1.5 0-3 .3-4.5.2 2.7.5 5.5 1.2 8.5.9-2.2 1.3-5 1.3-8.5-.8 2.8-.8 5.8-1.8 13z"/>
+          <path d="M5.5 20c-.5-2-.8-4-.5-6.8.3-.2.5.3.8.9 1.1 2 1.9 4 2.3 5.9-.7-.3-1.5-.6-2.6 0z" opacity="0.75"/>
+          <path d="M18.5 20c.5-2 .8-4 .5-6.8-.3-.2-.5.3-.8.9-1.1 2-1.9 4-2.3 5.9.7-.3 1.5-.6 2.6 0z" opacity="0.75"/>
+          <path d="M3 20.5h18v1H3z" opacity="0.35"/>
+        </svg>
+      </span>
       <span>Zen Shell</span>
     </a>
     <div class="nav__links">
       <a href="#showcase">Showcase</a>
+      <a href="#demos">Demos</a>
       <a href="#timeline">Timeline</a>
+      <a href="#codenames">Codenames</a>
       <a href="#install">Install</a>
       <a href="#archive">Archive</a>
-      <a href="https://github.com/Gekinzen/zen-shell" rel="noopener">GitHub</a>
+      <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" rel="noopener">GitHub</a>
     </div>
     <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
-      <span class="theme-toggle__icon" id="themeIcon">dark_mode</span>
+      <svg id="themeIconMoon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+      </svg>
+      <svg id="themeIconSun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+        <circle cx="12" cy="12" r="4.5"/>
+        <path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
       <span class="theme-toggle__label" id="themeLabel">Dark</span>
     </button>
   </div>
@@ -945,7 +1307,13 @@
      ═══════════════════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="shell">
-    <div class="hero__eyebrow eyebrow">v6.16.4.11.2 · Current Stable</div>
+    <div class="codename-badge">
+      <span class="codename-badge__kanji" lang="ja">金継ぎ</span>
+      <span class="codename-badge__divider"></span>
+      <span class="codename-badge__name">Kintsugi</span>
+      <span class="codename-badge__version">v6.16.4.11.2 · stable</span>
+    </div>
+
     <h1 class="hero__headline">
       A QML-native desktop <em>environment</em> for Hyprland.
     </h1>
@@ -955,28 +1323,49 @@
       Built for Arch and CachyOS. Extensively tested on AMD Ryzen + Radeon. Runs on Hyprland 0.54+.
     </p>
 
+    <p class="hero__codename-meaning">
+      <strong>Kintsugi (金継ぎ)</strong> — the Japanese art of repairing broken pottery with gold.
+      The seams aren't hidden; they're illuminated. This release took eleven iterations to land —
+      the color picker alone needed four attempts. What you get is the bowl, lacquered in gold.
+    </p>
+
     <div class="hero__pills">
       <span class="pill pill--stable"><span class="pill__dot"></span>Stable · v6.16.4.11.2</span>
-      <span class="pill pill--alpha"><span class="pill__dot"></span>Alpha · (none active)</span>
+      <span class="pill pill--alpha"><span class="pill__dot"></span>Alpha · Hikari (v4.12)</span>
       <span class="pill">Hyprland ≥ 0.54</span>
       <span class="pill">Arch / CachyOS</span>
     </div>
 
     <div class="hero__cta">
-      <a href="https://github.com/Gekinzen/zen-shell/releases/latest" class="cta cta--primary" rel="noopener">
-        <span class="cta__icon">download</span>
+      <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/releases/latest" class="cta cta--primary" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
         <span>Download Latest</span>
       </a>
       <a href="#timeline" class="cta cta--ghost">
-        <span class="cta__icon">timeline</span>
-        <span>Version Timeline</span>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5" cy="12" r="2" fill="currentColor"/>
+          <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          <circle cx="19" cy="12" r="2" fill="currentColor"/>
+          <path d="M7 12h3M14 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Release History</span>
       </a>
+    </div>
+
+    <div class="hero-image">
+      <img
+        src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png"
+        alt="Zen Shell desktop preview — Kintsugi v6.16.4.11.2"
+        loading="eager"
+      />
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     SHOWCASE — current UI gallery
+     SHOWCASE
      ═══════════════════════════════════════════════════════════════════ -->
 <section class="showcase" id="showcase">
   <div class="shell">
@@ -984,88 +1373,120 @@
       <span class="section-label">Showcase</span>
       <h2 class="section-title">Zen Shell, in practice.</h2>
       <p class="showcase__intro">
-        The current UI as shipped in v6.16.4.11.2. Panel, Start Menu, Settings,
-        Control Panel, Wallpaper browser, Theme engine. Click any image to
-        open full-resolution.
+        The current UI as shipped in Kintsugi (v6.16.4.11.2). Panel, Start Menu, Settings,
+        Control Panel, Wallpaper browser, Theme engine.
       </p>
     </div>
 
     <div class="showcase__grid">
-      <!-- Panel / Bar -->
-      <a class="shot" href="./screenshots/panel.png" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">Panel</span>
-          <img src="./screenshots/panel.png" alt="Zen Shell top panel bar with workspace indicators, clock, system tray" loading="lazy" />
+      <!-- Featured: Kintsugi themes (new) — spans full width -->
+      <a class="shot kintsugi-showcase" href="#install" style="grid-column: 1 / -1;">
+        <div class="kintsugi-showcase__frame">
+          <span class="shot__badge shot__badge--new" style="z-index: 5;">New · Kintsugi Themes</span>
+
+          <div class="kintsugi-showcase__half kintsugi-showcase__half--light">
+            <div class="kintsugi-showcase__kanji" lang="ja">金継ぎ</div>
+            <div class="kintsugi-showcase__name">Kintsugi Light</div>
+            <div class="kintsugi-showcase__swatches">
+              <span style="background: #fafaf7; border: 1px solid #e5e3dd;"></span>
+              <span style="background: #f4f2eb; border: 1px solid #e5e3dd;"></span>
+              <span style="background: #5f7450;"></span>
+              <span style="background: #b8924e;"></span>
+              <span style="background: #c68a4a;"></span>
+              <span style="background: #a4413c;"></span>
+            </div>
+            <div class="kintsugi-showcase__tags">Bone · Sage · Gold</div>
+          </div>
+
+          <div class="kintsugi-showcase__half kintsugi-showcase__half--dark">
+            <div class="kintsugi-showcase__kanji" lang="ja" style="color: #d4a85f;">金継ぎ</div>
+            <div class="kintsugi-showcase__name" style="color: #ededed;">Kintsugi Dark</div>
+            <div class="kintsugi-showcase__swatches">
+              <span style="background: #14140f; border: 1px solid #2a2a24;"></span>
+              <span style="background: #1c1c17; border: 1px solid #2a2a24;"></span>
+              <span style="background: #98b283;"></span>
+              <span style="background: #d4a85f;"></span>
+              <span style="background: #d89a60;"></span>
+              <span style="background: #d07a6a;"></span>
+            </div>
+            <div class="kintsugi-showcase__tags" style="color: #8a8a85;">Ink · Sage · Lacquered gold</div>
+          </div>
         </div>
         <div class="shot__caption">
-          <span class="shot__caption-title">Status bar</span>
-          <span class="shot__caption-sub">Configurable modules · island mode · system tray</span>
-          <span class="shot__caption-hint">Workspace indicators, clock with hover peek and scroll-wheel month cycle, system tray with hover tooltips. Bar modules configurable from Settings → Bar Modules.</span>
+          <span class="shot__caption-title">New themes — Kintsugi Light + Dark</span>
+          <span class="shot__caption-sub">17 + 2 = 19 built-in · matches this website's palette</span>
+          <span class="shot__caption-hint">The website's design tokens shipped back to the shell. Drop <code style="font-family: var(--mono); font-size: 0.85em;">kintsugi-light.json</code> and <code style="font-family: var(--mono); font-size: 0.85em;">kintsugi-dark.json</code> into <code style="font-family: var(--mono); font-size: 0.85em;">themes-builtin/</code> and the desktop pixel-matches the site.</span>
+        </div>
+      </a>
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" target="_blank" rel="noopener">
+        <div class="shot__frame">
+          <span class="shot__badge">Desktop</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell desktop with panel and widgets" loading="lazy" />
+        </div>
+        <div class="shot__caption">
+          <span class="shot__caption-title">Full desktop</span>
+          <span class="shot__caption-sub">Panel · desktop widgets · wallpaper engine</span>
+          <span class="shot__caption-hint">Status bar, clock hover popup, music strings, desktop widgets (clock / weather / sysmon), wallpaper backdrop.</span>
         </div>
       </a>
 
-      <!-- Start Menu -->
-      <a class="shot" href="./screenshots/start-menu.png" target="_blank" rel="noopener">
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge">Super+A</span>
-          <img src="./screenshots/start-menu.png" alt="Start Menu with pinned tiles and app grid" loading="lazy" />
+          <span class="shot__badge">Overview</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" alt="Zen Shell workspace overview" loading="lazy" />
         </div>
         <div class="shot__caption">
-          <span class="shot__caption-title">Start Menu</span>
-          <span class="shot__caption-sub">Pinned tiles · app grid · sys-info footer</span>
-          <span class="shot__caption-hint">Pinned tiles (72px, breathing room via v4.5). Live search. Sys-info popover with Hyprland version / kernel / DMI device / BIOS from /sys/class/dmi/id.</span>
+          <span class="shot__caption-title">Workspace</span>
+          <span class="shot__caption-sub">Island mode · control panel · themes</span>
+          <span class="shot__caption-hint">Island mode bar, Control Panel (Super+C) with quick toggles, active theme palette visible across surfaces.</span>
         </div>
       </a>
 
-      <!-- Settings / Themes -->
-      <a class="shot" href="./screenshots/settings-themes.png" target="_blank" rel="noopener">
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample3.png" target="_blank" rel="noopener">
         <div class="shot__frame">
           <span class="shot__badge shot__badge--new">New · v4.11.2</span>
-          <img src="./screenshots/settings-themes.png" alt="Settings page showing Themes with custom themes manager" loading="lazy" />
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample3.png" alt="Settings page with Themes, PaletteBox, and custom theme management" loading="lazy" />
         </div>
         <div class="shot__caption">
           <span class="shot__caption-title">Themes page</span>
-          <span class="shot__caption-sub">PaletteBox · Custom Themes manager · WCAG dropdown</span>
-          <span class="shot__caption-hint">Theme palette relocated from General. Click any 60×60 box to open PopupWindow picker with live hex typing. Save / Rename / Delete custom themes below.</span>
+          <span class="shot__caption-sub">PaletteBox · Custom Themes · WCAG dropdown</span>
+          <span class="shot__caption-hint">Theme palette relocated from General. 60×60 PaletteBoxes open PopupWindow picker with live hex typing. Material dropdown auto-contrasts via WCAG luminance.</span>
         </div>
       </a>
 
-      <!-- Control Panel -->
-      <a class="shot" href="./screenshots/control-panel.png" target="_blank" rel="noopener">
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_01_adaptive_theming.gif" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge">Super+C</span>
-          <img src="./screenshots/control-panel.png" alt="Control Panel with quick toggles and Dark Mode switch" loading="lazy" />
+          <span class="shot__badge">Adaptive</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_01_adaptive_theming.gif" alt="Adaptive theming across all surfaces" loading="lazy" />
         </div>
         <div class="shot__caption">
-          <span class="shot__caption-title">Control Panel</span>
-          <span class="shot__caption-sub">Connectivity · Power · Audio · Dark Mode · Input</span>
-          <span class="shot__caption-hint">Quick toggles for WiFi / Bluetooth / Audio + Power Profile + Gaming Boost + Dark Mode (syncs GTK3/4 + libadwaita + gsettings). Tap-through backgrounds via mask:Region.</span>
+          <span class="shot__caption-title">Adaptive theming</span>
+          <span class="shot__caption-sub">Unified palette · live rerender</span>
+          <span class="shot__caption-hint">One palette. Every surface — bar, settings, control panel, notifications, terminal, launcher — stays in sync.</span>
         </div>
       </a>
 
-      <!-- Color Picker -->
-      <a class="shot" href="./screenshots/color-picker.png" target="_blank" rel="noopener">
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_02_settings_tour.gif" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge shot__badge--new">New · v4.10</span>
-          <img src="./screenshots/color-picker.png" alt="Quickshell PopupWindow color picker with HS canvas and lightness slider" loading="lazy" />
+          <span class="shot__badge">Settings</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_02_settings_tour.gif" alt="Settings tour across 14 pages" loading="lazy" />
         </div>
         <div class="shot__caption">
-          <span class="shot__caption-title">Color Picker</span>
-          <span class="shot__caption-sub">PopupWindow · HS canvas · L slider · live hex</span>
-          <span class="shot__caption-hint">Fourth iteration. Uses Quickshell PopupWindow primitive backed by xdg_popup — compositor handles positioning, zero coord math. Hex textbox commits live on every valid keystroke.</span>
+          <span class="shot__caption-title">Settings tour</span>
+          <span class="shot__caption-sub">14 pages · live preview · no restart</span>
+          <span class="shot__caption-hint">Fourteen pages of live-preview configuration. No config files. No restart. Every change persists.</span>
         </div>
       </a>
 
-      <!-- Wallpapers -->
-      <a class="shot" href="./screenshots/wallpaper-picker.png" target="_blank" rel="noopener">
+      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_03_screenshot_module_ultrawide.gif" target="_blank" rel="noopener">
         <div class="shot__frame">
-          <span class="shot__badge">Super+W</span>
-          <img src="./screenshots/wallpaper-picker.png" alt="Wallpaper picker with grid of thumbnails" loading="lazy" />
+          <span class="shot__badge">Super+Shift+S</span>
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_03_screenshot_module_ultrawide.gif" alt="Screenshot module with physics-draped ropes" loading="lazy" />
         </div>
         <div class="shot__caption">
-          <span class="shot__caption-title">Wallpaper Picker</span>
-          <span class="shot__caption-sub">Local grid · Online repo · change interval</span>
-          <span class="shot__caption-hint">4-column grid (v4.6, was 5). "Online" toggle browses Gekinzen/images-demo via GitHub API. Change interval, random transition, blue border = current.</span>
+          <span class="shot__caption-title">Screenshot Ropes</span>
+          <span class="shot__caption-sub">Region capture · physics overlay · wl-copy</span>
+          <span class="shot__caption-hint">Region selection with physics-draped rope ornaments. Clipboard-backed paste, reliable on the first try.</span>
         </div>
       </a>
     </div>
@@ -1073,33 +1494,86 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     GITHUB COUNTERS — pulled via public API
+     DEMOS — YouTube
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="demos" id="demos">
+  <div class="shell">
+    <div class="demos__head">
+      <span class="section-label">Video demos</span>
+      <h2 class="section-title">The full tour.</h2>
+      <p class="demos__intro">
+        Strings music module, screenshot ropes, settings, the complete desktop experience. Click to watch on YouTube.
+      </p>
+    </div>
+
+    <a class="demo-featured" href="https://www.youtube.com/watch?v=dNwGRBhA97g" target="_blank" rel="noopener">
+      <div class="demo-featured__thumb">
+        <img src="https://img.youtube.com/vi/dNwGRBhA97g/maxresdefault.jpg" alt="Zen Shell — Full Tour" loading="lazy" />
+        <div class="demo-featured__play" aria-hidden="true"></div>
+      </div>
+      <div class="demo-featured__cap">
+        <div class="demo-featured__cap-label">Full Tour</div>
+        <div class="demo-featured__cap-title">Zen Shell — Full Tour</div>
+        <div class="demo-featured__cap-desc">Strings music module, screenshot ropes, settings, and the complete desktop experience.</div>
+      </div>
+    </a>
+
+    <div class="demos__grid">
+      <a class="demo-card" href="https://www.youtube.com/watch?v=YQxrh5_naMQ" target="_blank" rel="noopener">
+        <div class="demo-card__thumb">
+          <img src="https://img.youtube.com/vi/YQxrh5_naMQ/maxresdefault.jpg" alt="Zen Shell v6.14" loading="lazy" />
+          <div class="demo-card__play" aria-hidden="true"></div>
+        </div>
+        <div class="demo-card__cap">
+          <div class="demo-card__cap-label">Previous series</div>
+          <div class="demo-card__cap-title">Zen Shell v6.14</div>
+          <div class="demo-card__cap-desc">Theme switching, panel modes, control center.</div>
+        </div>
+      </a>
+
+      <a class="demo-card" href="https://www.youtube.com/watch?v=ao89J3DEqiA" target="_blank" rel="noopener">
+        <div class="demo-card__thumb">
+          <img src="https://img.youtube.com/vi/ao89J3DEqiA/maxresdefault.jpg" alt="Zen Shell v6.10 — QML Foundations" loading="lazy" />
+          <div class="demo-card__play" aria-hidden="true"></div>
+        </div>
+        <div class="demo-card__cap">
+          <div class="demo-card__cap-label">QML Foundations</div>
+          <div class="demo-card__cap-title">Zen Shell v6.10</div>
+          <div class="demo-card__cap-desc">The fresh QML rewrite — where the new stack began.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     GITHUB COUNTERS
      ═══════════════════════════════════════════════════════════════════ -->
 <section class="counters">
   <div class="shell">
     <div class="counters__head">
       <span class="section-label">Repository pulse</span>
       <h2 class="counters__title">Zen Shell on GitHub.</h2>
-      <p class="counters__note">Live from the public GitHub API. Refreshes on every page load.</p>
+      <p class="counters__note">Live from the public GitHub API. Cached 5 minutes.</p>
     </div>
     <div class="counters__grid">
       <div class="counter">
-        <div class="counter__num loading" id="counterStars">—<span class="counter__icon">star</span></div>
+        <div class="counter__num loading" id="counterStars">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
         <span class="counter__label">Stars</span>
         <span class="counter__sub">People tracking the repo</span>
       </div>
       <div class="counter">
-        <div class="counter__num loading" id="counterForks">—<span class="counter__icon">fork_right</span></div>
+        <div class="counter__num loading" id="counterForks">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="5" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="19" r="2.5"/><path d="M6 7.5v2.5c0 2 1.5 3 3 3h6c1.5 0 3-1 3-3v-2.5M12 13v3.5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
         <span class="counter__label">Forks</span>
         <span class="counter__sub">Running their own variants</span>
       </div>
       <div class="counter">
-        <div class="counter__num loading" id="counterWatchers">—<span class="counter__icon">visibility</span></div>
+        <div class="counter__num loading" id="counterWatchers">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
         <span class="counter__label">Watchers</span>
         <span class="counter__sub">Subscribed to every push</span>
       </div>
       <div class="counter">
-        <div class="counter__num loading" id="counterReleases">—<span class="counter__icon">deployed_code</span></div>
+        <div class="counter__num loading" id="counterReleases">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l-9 5v10l9 5 9-5V7l-9-5zm0 2.3l6.5 3.6L12 11.5 5.5 7.9 12 4.3zM5 9.5l6 3.3v7.4l-6-3.3V9.5zm8 10.7v-7.4l6-3.3v7.4l-6 3.3z"/></svg></div>
         <span class="counter__label">Releases</span>
         <span class="counter__sub">Tagged versions shipped</span>
       </div>
@@ -1108,90 +1582,191 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     VERSION TIMELINE CHART
+     TIMELINE
      ═══════════════════════════════════════════════════════════════════ -->
 <section class="timeline" id="timeline">
   <div class="shell">
     <div class="timeline__head">
       <span class="section-label">Release history</span>
-      <h2 class="section-title">From 4.1 stable through 4.11.2 — eleven drops, two days.</h2>
+      <h2 class="section-title">Kintsugi cycle — eleven drops, two days.</h2>
       <p class="timeline__intro">
-        Green markers shipped to main. Amber markers stayed on the alpha branch. Current stable promoted on 2026-04-24.
+        Amber markers are alpha iterations inside the 4.x cycle. Gold marker is the current stable —
+        v6.16.4.11.2 "Kintsugi", promoted to main on 2026-04-24. All prior nodes roll into the stable release.
       </p>
     </div>
 
-    <div class="chart" role="img" aria-label="Version timeline from v6.16.4.1 to v6.16.4.11.2">
+    <div class="chart" role="img" aria-label="Version timeline v6.16.4.1 to v6.16.4.11.2 Kintsugi">
       <div class="chart__inner">
         <div class="chart__axis"></div>
-        <div class="chart__axis-label">2026 ← alpha cycle timeline</div>
+        <div class="chart__axis-label">2026 ← Kintsugi alpha cycle</div>
 
-        <div class="chart__node chart__node--stable chart__node--below" style="left: 4%">
+        <div class="chart__node chart__node--stable chart__node--below" style="left: 3%">
           <span class="chart__node-label">v4.1</span>
           <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Panic hotfix · stable</span>
+          <span class="chart__node-bullet">Panic hotfix<br>prior stable</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 12%">
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 11%">
           <span class="chart__node-label">v4.2</span>
           <span class="chart__node-dot"></span>
           <span class="chart__node-bullet">Widget scale<br>(incomplete)</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 20%">
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 19%">
           <span class="chart__node-label">v4.3</span>
           <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Scale fix<br>+ oscillation kill</span>
+          <span class="chart__node-bullet">Scale fix<br>oscillation kill</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 28%">
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 27%">
           <span class="chart__node-label">v4.4</span>
           <span class="chart__node-dot"></span>
           <span class="chart__node-bullet">Gaps preserved<br>after Displays</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 36%">
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 35%">
           <span class="chart__node-label">v4.5</span>
           <span class="chart__node-dot"></span>
           <span class="chart__node-bullet">Start Menu<br>breathing room</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 44%">
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 42%">
           <span class="chart__node-label">v4.6</span>
           <span class="chart__node-dot"></span>
           <span class="chart__node-bullet">Wallpaper cols<br>+ Picker v1</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 52%">
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 50%">
           <span class="chart__node-label">v4.7</span>
           <span class="chart__node-dot"></span>
           <span class="chart__node-bullet">Super+T<br>+ Dark Mode</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 60%">
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 57%">
           <span class="chart__node-label">v4.8</span>
           <span class="chart__node-dot"></span>
           <span class="chart__node-bullet">WiFi log<br>+ Picker v2</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 68%">
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 65%">
           <span class="chart__node-label">v4.9</span>
           <span class="chart__node-dot"></span>
           <span class="chart__node-bullet">Window bounds<br>(still buggy)</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 76%">
+        <div class="chart__node chart__node--alpha chart__node--above" style="left: 73%">
           <span class="chart__node-label">v4.10</span>
           <span class="chart__node-dot"></span>
           <span class="chart__node-bullet">PopupWindow<br>rewrite · live hex</span>
         </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 84%">
+        <div class="chart__node chart__node--alpha chart__node--below" style="left: 81%">
           <span class="chart__node-label">v4.11</span>
           <span class="chart__node-dot"></span>
           <span class="chart__node-bullet">Custom Themes<br>management</span>
         </div>
-        <div class="chart__node chart__node--current chart__node--above" style="left: 94%">
-          <span class="chart__node-label">v4.11.2</span>
+        <div class="chart__node chart__node--current chart__node--above" style="left: 93%">
+          <span class="chart__node-label">v4.11.2 · STABLE</span>
           <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Palette relocation<br>+ Material dropdown</span>
+          <span class="chart__node-bullet">Palette relocation<br>Material dropdown</span>
+          <span class="chart__node-current-mark" lang="ja">金継ぎ · Kintsugi</span>
         </div>
       </div>
     </div>
 
     <div class="chart__legend">
-      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--stable"></span>Stable on main</span>
-      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--alpha"></span>Alpha branch</span>
-      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--current"></span>Current release</span>
+      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--stable"></span>Prior stable</span>
+      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--alpha"></span>Alpha iteration</span>
+      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--current"></span>Current stable · Kintsugi</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CODENAMES
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="codenames" id="codenames">
+  <div class="shell">
+    <div class="codenames__head">
+      <span class="section-label">Release codenames</span>
+      <h2 class="section-title">Japanese zen concepts.</h2>
+      <p class="codenames__intro">
+        Each release era gets a codename from Japanese zen vocabulary — aesthetics, states of mind,
+        seasonal phenomena. Fits the project. Also makes "which release was that again?" much
+        easier to answer than "v6.16.4.11.2".
+      </p>
+    </div>
+
+    <div class="codenames__grid">
+      <div class="codename-card">
+        <span class="codename-card__status">Genesis</span>
+        <div class="codename-card__kanji" lang="ja">若葉</div>
+        <div class="codename-card__name">Wakaba</div>
+        <div class="codename-card__meaning">Young leaf — the first sprout. Earliest concept build with bare Waybar + Python.</div>
+        <div class="codename-card__versions">Alpha v0.91</div>
+      </div>
+
+      <div class="codename-card">
+        <span class="codename-card__status">Legacy</span>
+        <div class="codename-card__kanji" lang="ja">苔</div>
+        <div class="codename-card__name">Koke</div>
+        <div class="codename-card__meaning">Moss — steady growth. GTK4 / Libadwaita control center era, custom dock, theme engine.</div>
+        <div class="codename-card__versions">Alpha v2.x (v2.1.3)</div>
+      </div>
+
+      <div class="codename-card">
+        <span class="codename-card__status">Historical</span>
+        <div class="codename-card__kanji" lang="ja">幽玄</div>
+        <div class="codename-card__name">Yugen</div>
+        <div class="codename-card__meaning">Subtle profound grace — the GTK4 → Quickshell rewrite. Foundational architectural shift.</div>
+        <div class="codename-card__versions">v6.15.x</div>
+      </div>
+
+      <div class="codename-card">
+        <span class="codename-card__status">Historical</span>
+        <div class="codename-card__kanji" lang="ja">円相</div>
+        <div class="codename-card__name">Ensō</div>
+        <div class="codename-card__meaning">The zen circle — unified 6.16 architecture closed the loop from scattered modules into one design system.</div>
+        <div class="codename-card__versions">v6.16.x base</div>
+      </div>
+
+      <div class="codename-card">
+        <span class="codename-card__status">Historical</span>
+        <div class="codename-card__kanji" lang="ja">間</div>
+        <div class="codename-card__name">Ma</div>
+        <div class="codename-card__meaning">The space between — cascade Control Panel, two-column layouts. About negative space and layout rhythm.</div>
+        <div class="codename-card__versions">v6.16.1.x</div>
+      </div>
+
+      <div class="codename-card">
+        <span class="codename-card__status">Historical</span>
+        <div class="codename-card__kanji" lang="ja">渋い</div>
+        <div class="codename-card__name">Shibui</div>
+        <div class="codename-card__meaning">Understated refinement — click-through fixes, OpacityMask avatar. Invisible polish that just works.</div>
+        <div class="codename-card__versions">v6.16.2.3.x</div>
+      </div>
+
+      <div class="codename-card">
+        <span class="codename-card__status">Historical</span>
+        <div class="codename-card__kanji" lang="ja">寂</div>
+        <div class="codename-card__name">Sabi</div>
+        <div class="codename-card__meaning">Beauty of age &amp; patina — Lock screen, PowerBadge, weather mood. Warm ambient details.</div>
+        <div class="codename-card__versions">v6.16.3.x</div>
+      </div>
+
+      <div class="codename-card codename-card--current">
+        <span class="codename-card__status codename-card__status--current">Current</span>
+        <div class="codename-card__kanji" lang="ja">金継ぎ</div>
+        <div class="codename-card__name">Kintsugi</div>
+        <div class="codename-card__meaning">Golden-repair of broken pottery — panic keybind, laptop reliability, color picker that took 4 tries. Golden repair for cracks that used to break the session.</div>
+        <div class="codename-card__versions">v6.16.4.x · v6.16.4.11.2</div>
+      </div>
+
+      <div class="codename-card">
+        <span class="codename-card__status codename-card__status--next">Next Alpha</span>
+        <div class="codename-card__kanji" lang="ja">光</div>
+        <div class="codename-card__name">Hikari</div>
+        <div class="codename-card__meaning">Light · clarity — Profile Export/Import. Making your setup portable, shareable, illuminated for friends.</div>
+        <div class="codename-card__versions">v6.16.4.12 (planned)</div>
+      </div>
+
+      <div class="codename-card">
+        <span class="codename-card__status codename-card__status--next">Future</span>
+        <div class="codename-card__kanji" lang="ja">道</div>
+        <div class="codename-card__name">Michi</div>
+        <div class="codename-card__meaning">The way · the path — in-app Updates Manager. Channel picker, rollback, the path forward.</div>
+        <div class="codename-card__versions">v6.16.5 (planned)</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1205,26 +1780,28 @@
       <span class="section-label">Installation</span>
       <h2 class="section-title">Pick your channel.</h2>
       <p class="install__intro">
-        The alpha branch has caught up with stable — both currently point to v6.16.4.11.2.
-        The alpha slot stays live for the next cycle.
+        The alpha branch has caught up with stable — both currently point to v6.16.4.11.2 Kintsugi.
+        The alpha slot opens next for Hikari (v4.12).
       </p>
     </div>
 
     <div class="install__grid">
       <div class="install__card">
         <h3 class="install__card-title">
-          <span style="color: var(--stable-tone);">●</span> Stable
+          <span style="color: var(--gold);" lang="ja">金継ぎ</span> Stable · Kintsugi
         </h3>
         <p class="install__card-meta">main · v6.16.4.11.2 · promoted 2026-04-24</p>
-        <div class="install__code" id="stableCode">git clone https://github.com/Gekinzen/zen-shell.git
-cd zen-shell
-git checkout main
-./install.sh
+        <div class="install__code" id="stableCode">git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git
+cd zen_barebone_alpha_development
+git checkout v6.16.4.11.2
+./install.sh --bootstrap
 <button class="install__copy" data-copy-target="stableCode">Copy</button></div>
         <div class="install__card-foot">
           <span>Tagged · Verified · Ready</span>
-          <a href="https://github.com/Gekinzen/zen-shell/releases/tag/v6.16.4.11.2" class="cta cta--ghost" rel="noopener" style="padding: 0.55rem 1rem; font-size: 0.82rem;">
-            <span class="cta__icon" style="font-size: 15px;">download</span>
+          <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/releases/tag/v6.16.4.11.2" class="cta cta--ghost" rel="noopener" style="padding: 0.55rem 1rem; font-size: 0.82rem;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;">
+              <path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
             <span>Release</span>
           </a>
         </div>
@@ -1232,19 +1809,22 @@ git checkout main
 
       <div class="install__card install__card--alpha">
         <h3 class="install__card-title">
-          <span style="color: var(--alpha-tone);">●</span> Alpha
+          <span style="color: var(--alpha-tone);" lang="ja">光</span> Alpha · Hikari (upcoming)
         </h3>
-        <p class="install__card-meta">alpha-v6.16.4.11.2 · next cycle kicks off soon</p>
-        <div class="install__code" id="alphaCode">git clone https://github.com/Gekinzen/zen-shell.git
-cd zen-shell
-git checkout alpha-v6.16.4.11.2
-./install.sh
+        <p class="install__card-meta">v6.16.4.12 · Profile Export / Import</p>
+        <div class="install__code" id="alphaCode">git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git
+cd zen_barebone_alpha_development
+# Track alpha once branch opens
+git checkout alpha-v6.16.4.12
+./install.sh --bootstrap
 <button class="install__copy" data-copy-target="alphaCode">Copy</button></div>
         <div class="install__card-foot">
           <span>Bleeding edge · Active development</span>
-          <a href="https://github.com/Gekinzen/zen-shell/tree/alpha-v6.16.4.11.2" class="cta cta--ghost" rel="noopener" style="padding: 0.55rem 1rem; font-size: 0.82rem;">
-            <span class="cta__icon" style="font-size: 15px;">code</span>
-            <span>Browse</span>
+          <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/branches" class="cta cta--ghost" rel="noopener" style="padding: 0.55rem 1rem; font-size: 0.82rem;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;">
+              <path d="M9 7l-5 5 5 5M15 7l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <span>Branches</span>
           </a>
         </div>
       </div>
@@ -1253,55 +1833,159 @@ git checkout alpha-v6.16.4.11.2
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     DEPRECATED ARCHIVE — older version history
+     ARCHIVE — full history timeline with pictures
      ═══════════════════════════════════════════════════════════════════ -->
 <section class="archive" id="archive">
   <div class="shell">
     <div class="archive__head">
-      <span class="section-label">Archive</span>
-      <h2 class="section-title">Deprecated versions.</h2>
+      <span class="section-label">Project archive</span>
+      <h2 class="section-title">From sprout to lacquered bowl.</h2>
       <p class="archive__intro">
-        These releases are no longer maintained. Everything they shipped
-        has been preserved and forwarded into v6.16.4.11.2 — wala tayong
-        nabawasan. Listed for historical reference only.
+        Zen Shell began as <em>Zen Barebone Alpha</em> — a bare Waybar + Python concept on Hyprland 0.52.
+        What you use today is the third full architecture. Every era preserved here for reference.
       </p>
-      <span class="archive__warn">
-        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;"></span>
-        No new patches — migrate to v6.16.4.11.2
-      </span>
     </div>
 
-    <div class="archive__list">
-      <div class="archive__item">
-        <p class="archive__item-ver">v6.16.2.3.6</p>
-        <p class="archive__item-label">Deprecated · last of 2.3.x</p>
-        <p class="archive__item-desc">Duplicate-bar fix, clock wheel, island mode persistence, avatar upload hardening, DMI device info, wallpaper repo browse.</p>
+    <!-- Genesis · v0.91 -->
+    <div class="era era--archive">
+      <div class="era__header">
+        <span class="era__version">Alpha v0.91</span>
+        <span class="era__label era__label--archive">Genesis · Wakaba (若葉)</span>
       </div>
-      <div class="archive__item">
-        <p class="archive__item-ver">v6.16.2.3.5</p>
-        <p class="archive__item-label">Deprecated</p>
-        <p class="archive__item-desc">Mouse sensitivity UI, Hyprland version tooltip in sys-info popover.</p>
+      <h3 class="era__title"><em>Wakaba</em> — the first sprout.</h3>
+      <p class="era__desc">
+        The earliest concept build. Bare Waybar configuration, a handful of Python helpers,
+        rofi for launching, Hyprland running the show. No unified theme system yet — each
+        component styled independently. Proof-of-concept that became the seed of everything after.
+      </p>
+      <span class="era__highlight">Hyprland 0.52 · Waybar · Python + rofi</span>
+    </div>
+
+    <!-- Legacy · v2.x -->
+    <div class="era era--archive">
+      <div class="era__header">
+        <span class="era__version">Alpha v2.x (v2.1.3)</span>
+        <span class="era__label era__label--archive">Legacy · Koke (苔)</span>
       </div>
-      <div class="archive__item">
-        <p class="archive__item-ver">v6.16.2.3.1 → .3.4</p>
-        <p class="archive__item-label">Deprecated</p>
-        <p class="archive__item-desc">Music rope click-through, settings click-through, OpacityMask avatar, default wallpaper download.</p>
+      <h3 class="era__title"><em>Koke</em> — moss grows steady.</h3>
+      <p class="era__desc">
+        The full Python / GTK4 / Libadwaita era. "Zen Barebone Alpha" — a complete desktop ecosystem
+        with a custom GTK control center (Hypr Control Center), custom dock module, unified theme engine
+        covering Waybar / Rofi / Kitty / SwayNC / GTK4 widgets, desktop widgets (clock, weather, system
+        monitor), smart start menu, welcome screen on first boot. Everything was Python + GTK4, talking
+        to Hyprland via hyprctl. This was the bowl that existed before Kintsugi broke and re-lacquered it.
+      </p>
+
+      <div class="era__gallery">
+        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" alt="Zen Barebone Alpha main demo" loading="lazy" />
+          <div class="era__shot-cap">Main demo</div>
+        </a>
+        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" alt="Theme switching" loading="lazy" />
+          <div class="era__shot-cap">Theme switching</div>
+        </a>
+        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" alt="Wallpaper picker" loading="lazy" />
+          <div class="era__shot-cap">Wallpaper picker</div>
+        </a>
+        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" alt="Panel modes" loading="lazy" />
+          <div class="era__shot-cap">Panel modes</div>
+        </a>
+        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" alt="Desktop looks" loading="lazy" />
+          <div class="era__shot-cap">Desktop looks</div>
+        </a>
+        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" alt="Dock / taskbar" loading="lazy" />
+          <div class="era__shot-cap">Dock · taskbar</div>
+        </a>
+        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" alt="Hypr Control Center" loading="lazy" />
+          <div class="era__shot-cap">Control Center</div>
+        </a>
+        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" alt="Animation editor" loading="lazy" />
+          <div class="era__shot-cap">Animation editor</div>
+        </a>
+        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" alt="Appearance settings" loading="lazy" />
+          <div class="era__shot-cap">Appearance settings</div>
+        </a>
       </div>
-      <div class="archive__item">
-        <p class="archive__item-ver">v6.16.3.x series</p>
-        <p class="archive__item-label">Superseded</p>
-        <p class="archive__item-desc">Panel / Power / Notifications / Lid handling shipped during this cycle. Carried into v6.16.4.x intact.</p>
+
+      <span class="era__highlight">Hyprland 0.52 · GTK4 / Libadwaita · 13+ themes · Custom dock</span>
+    </div>
+
+    <!-- Legacy · v6.10 QML foundations -->
+    <div class="era era--legacy">
+      <div class="era__header">
+        <span class="era__version">v6.10 – v6.14</span>
+        <span class="era__label era__label--legacy">Rewrite · Yugen (幽玄)</span>
       </div>
-      <div class="archive__item">
-        <p class="archive__item-ver">v6.15.x series</p>
-        <p class="archive__item-label">Historical</p>
-        <p class="archive__item-desc">The GTK4 / Python / Waybar rewrite. Replaced piece by piece through v6.15.1 → v6.15.15 before the unified v6.16 architecture.</p>
+      <h3 class="era__title"><em>Yugen</em> — subtle, profound grace.</h3>
+      <p class="era__desc">
+        The QML rewrite cycle. GTK4 gradually replaced with Quickshell-native QML.
+        <strong>v6.10</strong> shipped the new foundations. <strong>v6.14</strong> added theme switching, panel modes,
+        control center. This era marked the architectural shift that unlocked everything after —
+        the foundational grace beneath all subsequent polish.
+      </p>
+      <span class="era__highlight">Hyprland 0.53+ · Quickshell QML · JSON bridge to GTK</span>
+    </div>
+
+    <!-- Legacy · v6.15 -->
+    <div class="era era--legacy">
+      <div class="era__header">
+        <span class="era__version">v6.15.x series</span>
+        <span class="era__label era__label--legacy">Unified · Ensō (円相)</span>
       </div>
-      <div class="archive__item">
-        <p class="archive__item-ver">Pre-v6.15</p>
-        <p class="archive__item-label">Archaeological</p>
-        <p class="archive__item-desc">Original GTK4 + Python shell. Replaced fully by Quickshell-native v5 architecture. Not recommended for any use today.</p>
+      <h3 class="era__title"><em>Ensō</em> — the circle closes.</h3>
+      <p class="era__desc">
+        v6.15.1 through v6.15.15 — full Quickshell-native stack. Bar, Start Menu, Control Panel,
+        Settings UI with HMSection/HMRow components, Theme engine, Wallpaper manager, audio-reactive
+        music strings (cava + playerctl), screenshot rope overlay, avatar system, island mode, system tray.
+        Everything spoke one language for the first time. The scattered modules closed into one circle.
+      </p>
+      <span class="era__highlight">Hyprland 0.53+ · 15-drop evolution · Music strings · Screenshot ropes</span>
+    </div>
+
+    <!-- Modern · v6.16 -->
+    <div class="era era--modern">
+      <div class="era__header">
+        <span class="era__version">v6.16.x through v6.16.3.x</span>
+        <span class="era__label era__label--modern">Refinement · Ma · Shibui · Sabi</span>
       </div>
+      <h3 class="era__title">The architecture matures.</h3>
+      <p class="era__desc">
+        <strong>v6.16 Ensō base</strong> — battery, power profiles, volume OSD, GPU switcher.
+        <strong>v6.16.1 Ma (間)</strong> — cascade Control Panel, two-column layouts.
+        <strong>v6.16.2.3 Shibui (渋い)</strong> — click-through masks, OpacityMask avatar, default wallpaper, mouse sensitivity, bulletproof single-instance installer.
+        <strong>v6.16.3 Sabi (寂)</strong> — Material power icons, lid-close patch, PowerBadge, Start Menu logo picker,
+        Lock screen overhaul (font sync + weather mood + gender-aware care messages), Widget Scale slider,
+        Idle/Sleep/Lid unified UX.
+      </p>
+      <span class="era__highlight">Hyprland 0.54+ · 3-subseries refinement · 30+ tagged releases</span>
+    </div>
+
+    <!-- Modern · v6.16.4 · Kintsugi (current) -->
+    <div class="era era--modern">
+      <div class="era__header">
+        <span class="era__version">v6.16.4.x · v6.16.4.11.2</span>
+        <span class="era__label era__label--modern">Current · Kintsugi (金継ぎ)</span>
+      </div>
+      <h3 class="era__title"><em>Kintsugi</em> — gold in the seams.</h3>
+      <p class="era__desc">
+        The current release. <strong>v6.16.4</strong> shipped the Panic Recovery keybind
+        (SUPER+SHIFT+CTRL+Esc — works through frozen hyprlock) and hardened resume pipeline.
+        <strong>v6.16.4.1</strong> hotfixed the panic script. The 4.x cycle then ran for 11 alpha iterations
+        over 2 days — widget scale awareness, gaps preservation, Start Menu breathing, terminal auto-detect,
+        Dark Mode toggle, WiFi Connect rewrite, and <em>four attempts</em> at the color picker before
+        Quickshell's PopupWindow primitive finally stuck. <strong>v6.16.4.11.2</strong> — palette relocation,
+        Material-style dropdown with WCAG luminance contrast, PaletteBox component.
+        This is the bowl lacquered in gold.
+      </p>
+      <span class="era__highlight">Hyprland 0.54+ · Quickshell 0.2.1+ · PopupWindow · WCAG contrast</span>
     </div>
   </div>
 </section>
@@ -1311,13 +1995,16 @@ git checkout alpha-v6.16.4.11.2
      ═══════════════════════════════════════════════════════════════════ -->
 <footer class="foot">
   <div class="shell foot__row">
-    <span>Zen Shell · Crafted in Antipolo · Shipped as an <a href="https://obsidevs.com" style="color: var(--sage-deep);">OBSIDEVS</a> project</span>
+    <span>Zen Shell · Crafted in Antipolo, Philippines · MIT License</span>
     <div class="foot__links">
       <a href="#showcase">Showcase</a>
+      <a href="#demos">Demos</a>
       <a href="#timeline">Timeline</a>
+      <a href="#codenames">Codenames</a>
       <a href="#install">Install</a>
       <a href="#archive">Archive</a>
-      <a href="https://github.com/Gekinzen/zen-shell" rel="noopener">GitHub</a>
+      <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" rel="noopener">GitHub</a>
+      <a href="https://buymeacoffee.com/zenpy" rel="noopener">Buy a coffee</a>
     </div>
   </div>
 </footer>
@@ -1329,7 +2016,8 @@ git checkout alpha-v6.16.4.11.2
 (function() {
   const root = document.documentElement;
   const btn = document.getElementById('themeToggle');
-  const icon = document.getElementById('themeIcon');
+  const moon = document.getElementById('themeIconMoon');
+  const sun = document.getElementById('themeIconSun');
   const label = document.getElementById('themeLabel');
 
   const saved = localStorage.getItem('zs-theme');
@@ -1346,40 +2034,30 @@ git checkout alpha-v6.16.4.11.2
   function applyTheme(mode) {
     if (mode === 'dark') {
       root.classList.add('dark');
-      icon.textContent = 'light_mode';
+      moon.style.display = 'none';
+      sun.style.display = '';
       label.textContent = 'Light';
     } else {
       root.classList.remove('dark');
-      icon.textContent = 'dark_mode';
+      moon.style.display = '';
+      sun.style.display = 'none';
       label.textContent = 'Dark';
     }
   }
 })();
 
 /* ═══════════════════════════════════════════════════════════════════
-   GitHub repo counters — pulled from public API
-   No backend, no auth, no tracking. Just the public numbers.
-   ═══════════════════════════════════════════════════════════════════
-   Endpoints used:
-     https://api.github.com/repos/Gekinzen/zen-shell
-       → stargazers_count, forks_count, subscribers_count
-     https://api.github.com/repos/Gekinzen/zen-shell/releases
-       → length of the array = release count
-
-   Cached for 5 minutes in localStorage to avoid burning the 60-req/hr
-   unauthenticated rate limit. If the API fails or you're rate limited,
-   we fall back to "—" and keep it quiet.
+   GitHub repo counters — pulled from public API (5-min cache)
    ═══════════════════════════════════════════════════════════════════ */
 (function() {
-  const REPO = 'Gekinzen/zen-shell';  // change if repo ever moves
+  const REPO = 'Gekinzen/zen_barebone_alpha_development';
   const CACHE_KEY = 'zs-gh-stats';
-  const CACHE_TTL = 5 * 60 * 1000;  // 5 minutes
+  const CACHE_TTL = 5 * 60 * 1000;
 
   function setCounter(id, value) {
     const el = document.getElementById(id);
     if (!el) return;
     el.classList.remove('loading');
-    // preserve the icon <span> if present
     const icon = el.querySelector('.counter__icon');
     el.textContent = value.toLocaleString();
     if (icon) el.appendChild(icon);
@@ -1410,10 +2088,7 @@ git checkout alpha-v6.16.4.11.2
 
   async function fetchStats() {
     const cached = readCache();
-    if (cached) {
-      render(cached);
-      return;
-    }
+    if (cached) { render(cached); return; }
 
     try {
       const [repoRes, relRes] = await Promise.all([
@@ -1440,8 +2115,6 @@ git checkout alpha-v6.16.4.11.2
       writeCache(stats);
       render(stats);
     } catch (err) {
-      // API failed or rate-limited — leave placeholders in place.
-      // The em dash with the icon is fine as a quiet fallback state.
       console.warn('[zenshell] GitHub stats unavailable:', err.message);
     }
   }
@@ -1461,7 +2134,6 @@ git checkout alpha-v6.16.4.11.2
       const block = document.getElementById(targetId);
       if (!block) return;
 
-      // Extract text but strip the "Copy" button content
       const clone = block.cloneNode(true);
       const btnInside = clone.querySelector('.install__copy');
       if (btnInside) btnInside.remove();

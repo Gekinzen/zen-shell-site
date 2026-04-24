@@ -188,6 +188,57 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
 .rb-sep-major{color:var(--border-hover);font-weight:200;font-size:0.95rem;user-select:none;opacity:0.6}
 
 .install-section{padding:6rem 0}
+
+/* Alpha heads-up card */
+.alpha-section{padding:5rem 0}
+.alpha-card{background:linear-gradient(180deg,rgba(251,146,60,0.04) 0%,transparent 100%),var(--bg1);border:1px solid rgba(251,146,60,0.2);border-radius:18px;padding:clamp(2rem,4vw,3rem);position:relative;overflow:hidden}
+.alpha-card::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:0.5}
+.alpha-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--orange);padding:4px 12px;background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.25);border-radius:99px;margin-bottom:1.25rem}
+.alpha-eyebrow .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
+.alpha-card h3{font-family:var(--font-display);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:200;letter-spacing:var(--tracking-tightest);color:#fff;line-height:var(--leading-tight);margin-bottom:0.85rem}
+.alpha-card h3 strong{font-weight:600}
+.alpha-card .alpha-lead{font-size:var(--fs-lead);color:var(--muted);font-weight:300;letter-spacing:var(--tracking-tight);max-width:680px;margin-bottom:2rem;line-height:var(--leading-normal)}
+.alpha-card .alpha-lead em{font-style:italic;color:var(--text);font-weight:400}
+.alpha-hotfix-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.alpha-hotfix{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.1rem;transition:border-color 0.2s}
+.alpha-hotfix:hover{border-color:rgba(251,146,60,0.3)}
+.alpha-hotfix-ver{font-family:var(--font-mono);font-size:0.75rem;color:var(--orange);margin-bottom:0.4rem;font-weight:500}
+.alpha-hotfix h4{font-family:var(--font-display);font-size:0.95rem;font-weight:500;color:#fff;margin-bottom:0.5rem;letter-spacing:var(--tracking-tight)}
+.alpha-hotfix p{font-size:0.8rem;color:var(--muted);line-height:1.55}
+.alpha-install{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem;font-family:var(--font-mono);font-size:0.82rem;line-height:1.7;color:var(--text)}
+.alpha-install .c-comment{color:var(--muted2)}
+.alpha-install .c-cmd{color:var(--accent)}
+.alpha-install .c-flag{color:var(--orange)}
+
+/* Phase 5 Updates Manager preview */
+.updates-section{padding:5rem 0}
+.updates-card{background:linear-gradient(180deg,rgba(96,165,250,0.03) 0%,transparent 100%),var(--bg1);border:1px solid var(--border);border-radius:18px;padding:clamp(2rem,4vw,3rem);position:relative;overflow:hidden}
+.updates-card h3{font-family:var(--font-display);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:200;letter-spacing:var(--tracking-tightest);color:#fff;line-height:var(--leading-tight);margin-bottom:0.85rem}
+.updates-card h3 strong{font-weight:600}
+.updates-card .updates-lead{font-size:var(--fs-lead);color:var(--muted);font-weight:300;max-width:680px;margin-bottom:2rem;line-height:var(--leading-normal)}
+.updates-mockup{background:#050505;border:1px solid var(--border);border-radius:12px;padding:1.5rem;font-family:var(--font-mono);color:var(--text);overflow-x:auto}
+.updates-mockup-title{display:flex;align-items:center;gap:0.5rem;padding-bottom:0.9rem;border-bottom:1px solid var(--border);margin-bottom:1rem;font-size:0.85rem;color:var(--muted)}
+.updates-mockup-title .material-symbols-outlined{color:var(--accent);font-size:18px}
+.updates-row{display:flex;align-items:center;justify-content:space-between;padding:0.65rem 0;border-bottom:1px dashed rgba(255,255,255,0.04);font-size:0.8rem}
+.updates-row:last-child{border-bottom:none}
+.updates-channel-pick{display:flex;gap:0.75rem;flex-wrap:wrap;margin:0.75rem 0 1.25rem}
+.channel-pill{padding:4px 12px;border-radius:99px;font-size:0.72rem;font-family:var(--font-mono);background:var(--bg2);border:1px solid var(--border);color:var(--muted);letter-spacing:0.05em}
+.channel-pill.active{background:rgba(52,211,153,0.1);border-color:rgba(52,211,153,0.35);color:var(--green)}
+.updates-available{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;margin:0.75rem 0}
+.update-entry{display:flex;gap:0.9rem;padding:0.7rem 0;border-bottom:1px dashed rgba(255,255,255,0.05)}
+.update-entry:last-child{border-bottom:none}
+.update-entry-icon{width:8px;height:8px;border-radius:50%;background:var(--green);margin-top:0.4rem;flex-shrink:0;box-shadow:0 0 8px rgba(52,211,153,0.4)}
+.update-entry-body{flex:1}
+.update-entry-ver{font-family:var(--font-mono);font-size:0.8rem;color:var(--orange);margin-bottom:0.2rem}
+.update-entry-ver .date{color:var(--muted2);margin-left:0.6rem}
+.update-entry-desc{font-size:0.78rem;color:var(--muted);line-height:1.5}
+.update-entry-actions{display:flex;gap:0.5rem;margin-top:0.45rem}
+.update-mini-btn{padding:2px 10px;font-size:0.68rem;border-radius:5px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-body)}
+.update-mini-btn.primary{background:linear-gradient(135deg,#3b82f6,#8b5cf6);border:none;color:#fff}
+.updates-footer-actions{display:flex;gap:0.6rem;margin-top:1.25rem;flex-wrap:wrap}
+.updates-mock-btn{padding:0.5rem 1.1rem;font-size:0.8rem;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:500}
+.updates-mock-btn.primary{background:linear-gradient(135deg,#3b82f6,#8b5cf6);border:none;color:#fff}
+.updates-caption{margin-top:1.5rem;padding-top:1.25rem;border-top:1px dashed var(--border);font-size:0.85rem;color:var(--muted);font-style:italic;line-height:var(--leading-normal)}
 .code-block{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .code-header{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.25rem;border-bottom:1px solid var(--border)}
 .code-dots{display:flex;gap:6px}
@@ -238,6 +289,8 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
   .roadmap-grid{grid-template-columns:1fr}
   .roadmap-card{padding:1.75rem 1.25rem}
   .kb-grid{grid-template-columns:1fr;gap:0.5rem}
+  .alpha-hotfix-grid{grid-template-columns:1fr;gap:0.75rem}
+  .updates-channel-pick{gap:0.4rem}
   .archive-grid{grid-template-columns:1fr;gap:0.75rem}
   .archive-note{padding:1rem 1.25rem;font-size:0.78rem}
   .cta-actions{flex-direction:column;width:100%;gap:0.75rem}
@@ -257,10 +310,11 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
     <span class="material-symbols-outlined">blur_on</span>
     <span>Zen</span> Shell
   </a>
-  <span class="nav-badge">v6.16.4.1 stable</span>
+  <span class="nav-badge">v6.16.4.1 stable · v6.16.4.5 alpha</span>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="#whats-new">What's New</a></li>
+    <li><a href="#alpha">Alpha</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#install">Install</a></li>
     <li><a href="#archive">Archive</a></li>
@@ -281,6 +335,13 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
     <span class="rb-sep">·</span>
     <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/v6.16.4.1" class="rb-link" target="_blank">main</a>
     <span class="rb-tag hint">official release</span>
+  </div>
+  <span class="rb-sep rb-sep-major">|</span>
+  <div class="rb-item">
+    <span class="rb-tag" style="background:rgba(251,146,60,0.12);border:1px solid rgba(251,146,60,0.3);color:var(--orange)">Alpha</span>
+    <span class="rb-item-text">v6.16.4.5</span>
+    <span class="rb-sep">·</span>
+    <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/alpha-v6.16.4.5" class="rb-link" target="_blank" style="color:var(--orange)!important">alpha-v6.16.4.5</a>
   </div>
   <span class="rb-sep rb-sep-major">|</span>
   <div class="rb-item">
@@ -321,6 +382,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
 
   <div class="hero-badges">
     <span class="badge green">v6.16.4.1 stable</span>
+    <span class="badge orange">v6.16.4.5 alpha</span>
     <span class="badge purple">v6.16.5 planned</span>
     <span class="badge red">Panic keybind</span>
     <span class="badge">Arch Linux</span>
@@ -510,6 +572,148 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
 
 <hr class="section-divider"/>
 
+<!-- ALPHA HEADS-UP — v6.16.4.5 -->
+<section class="alpha-section" id="alpha">
+  <div class="container">
+    <div class="alpha-card fade-up">
+      <span class="alpha-eyebrow">
+        <span class="pulse-dot"></span>
+        Alpha channel · active
+      </span>
+      <h3>Alpha: <strong>v6.16.4.5</strong><br/>Four hotfixes on top of stable.</h3>
+      <p class="alpha-lead">
+        Stable is still <em>v6.16.4.1</em> on <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);background:var(--accent-dim);padding:1px 7px;border-radius:5px">main</code>. The <code style="font-family:var(--font-mono);font-size:0.85rem;color:var(--orange);background:rgba(251,146,60,0.1);padding:1px 7px;border-radius:5px">alpha-v6.16.4.5</code> branch carries four rapid hotfixes — widget scale actually working at every scale, gaps preserved after DisplaysPage apply, Start Menu breathing room. Safe for daily use, promoting to stable after one more integration round.
+      </p>
+
+      <div class="alpha-hotfix-grid">
+        <div class="alpha-hotfix">
+          <div class="alpha-hotfix-ver">v6.16.4.5 · alpha head</div>
+          <h4>Start Menu breathing room</h4>
+          <p>Pinned tile 64→72px, label 58→66px. "Visual Stud…" instead of "Visual St…" — 2-3 more characters before ellipsis. Grid 5→4 columns to fit the 360px left pane.</p>
+        </div>
+        <div class="alpha-hotfix">
+          <div class="alpha-hotfix-ver">v6.16.4.4</div>
+          <h4>Gaps preserved after Displays</h4>
+          <p>hyprctl keyword monitor wipes runtime state — gaps/borders/rounding revert to hyprland.conf defaults. DisplaysPage now calls SettingsStateV2.applyToHyprland() after apply. Same pattern AnimationsPage used since v6.16.1.6.</p>
+        </div>
+        <div class="alpha-hotfix">
+          <div class="alpha-hotfix-ver">v6.16.4.3</div>
+          <h4>Widget scale actually applied</h4>
+          <p>v6.16.4.2 defined _padScale and never used it. 4.3 actually wires it to all 9 margins + adds content-aware Math.max sizing. Removed 3s polling Timer that caused oscillation.</p>
+        </div>
+        <div class="alpha-hotfix">
+          <div class="alpha-hotfix-ver">v6.16.4.2</div>
+          <h4>Display scale awareness</h4>
+          <p>3-tier resolution enumeration (hyprctl availableModes → native×fraction → 15 common standards). Monitor scale compensation. Widget reflow on scale change with clampX/Y bounds.</p>
+        </div>
+      </div>
+
+      <div class="alpha-install">
+<span class="c-comment"># Alpha: v6.16.4.5 · safe for daily use</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">alpha-v6.16.4.5</span>
+<span class="c-cmd">./install.sh</span>
+
+<span class="c-comment"># Rollback to stable any time:</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>   <span class="c-comment"># v6.16.4.1</span>
+<span class="c-cmd">./install.sh</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider"/>
+
+<!-- PHASE 5 PREVIEW — Updates Manager -->
+<section class="updates-section" id="updates-manager">
+  <div class="container">
+    <div class="updates-card fade-up">
+      <div style="display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--accent2);padding:4px 12px;background:var(--accent2-dim);border:1px solid rgba(167,139,250,0.2);border-radius:99px;margin-bottom:1.25rem">
+        <span class="material-symbols-outlined" style="font-size:14px">schedule</span>
+        Phase 5 · updates manager preview
+      </div>
+      <h3>No more <strong>git checkout alpha-…</strong><br/>from the terminal.</h3>
+      <p class="updates-lead">
+        The v6.16.4.x hotfix cascade (.2 → .3 → .4 → .5 in a single day) is exactly why Phase 5 exists. When it ships, users pick their channel, apply updates, and rollback — all from inside the shell. Here's what v6.16.4.5 will look like when the manager sees it:
+      </p>
+
+      <div class="updates-mockup">
+        <div class="updates-mockup-title">
+          <span class="material-symbols-outlined">system_update</span>
+          <span>Zen Shell — System Updates</span>
+        </div>
+
+        <div class="updates-row">
+          <span style="color:var(--muted)">Channel:</span>
+          <div class="updates-channel-pick" style="margin:0">
+            <span class="channel-pill">Official</span>
+            <span class="channel-pill">Beta</span>
+            <span class="channel-pill active">● Alpha</span>
+          </div>
+        </div>
+
+        <div class="updates-row">
+          <span style="color:var(--muted)">Installed:</span>
+          <span style="color:var(--green)">v6.16.4.1 · main ✓ current</span>
+        </div>
+
+        <div style="font-size:0.8rem;color:var(--muted);margin:1rem 0 0.5rem">Available on Alpha channel:</div>
+        <div class="updates-available">
+          <div class="update-entry">
+            <div class="update-entry-icon"></div>
+            <div class="update-entry-body">
+              <div class="update-entry-ver">alpha-v6.16.4.5 <span class="date">2026-04-24</span></div>
+              <div class="update-entry-desc">Start Menu pinned tile breathing room (72px tiles, 66px label width). Bundles 4.2-4.4 hotfixes.</div>
+              <div class="update-entry-actions">
+                <button class="update-mini-btn primary">Download</button>
+                <button class="update-mini-btn">Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="update-entry">
+            <div class="update-entry-icon"></div>
+            <div class="update-entry-body">
+              <div class="update-entry-ver">alpha-v6.16.4.4 <span class="date">2026-04-24</span></div>
+              <div class="update-entry-desc">Gaps/borders preserved after DisplaysPage apply. Hyprland runtime-state wipe fix.</div>
+              <div class="update-entry-actions">
+                <button class="update-mini-btn">Download</button>
+                <button class="update-mini-btn">Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="update-entry">
+            <div class="update-entry-icon"></div>
+            <div class="update-entry-body">
+              <div class="update-entry-ver">alpha-v6.16.4.3 <span class="date">2026-04-24</span></div>
+              <div class="update-entry-desc">Widget scale actually applied + oscillation removed. 4.2 was incomplete.</div>
+              <div class="update-entry-actions">
+                <button class="update-mini-btn">Download</button>
+                <button class="update-mini-btn">Skip version</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="updates-row" style="margin-top:1rem">
+          <span style="color:var(--muted)">Rollback available:</span>
+          <span style="color:var(--text);font-size:0.78rem">v6.16.4.1 · v6.16.3.4.2 · v6.16.3.8 · v6.16.3.7 ...</span>
+        </div>
+
+        <div class="updates-footer-actions">
+          <button class="updates-mock-btn primary">Apply Update</button>
+          <button class="updates-mock-btn">Skip this version</button>
+          <button class="updates-mock-btn">Cancel</button>
+        </div>
+      </div>
+
+      <p class="updates-caption">
+        Each installed version stored in <code style="font-family:var(--font-mono);font-size:0.8rem;color:var(--accent);background:var(--accent-dim);padding:1px 6px;border-radius:4px">~/.local/share/zen-shell/versions/&lt;version&gt;/</code> so rollback is one click. SwayNC notification on every new release in the user's chosen channel. Skip-version toggle per hotfix. Target ship: Phase 5, sometime after v6.16.6.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider"/>
+
 <section class="roadmap-section" id="roadmap">
   <div class="container">
     <div class="roadmap-card fade-up">
@@ -548,16 +752,17 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
             v6.16.4 → v6.16.4.1
             <span class="phase-status stable">Current stable</span>
           </div>
-          <div class="phase-title">Laptop reliability · panic keybind</div>
+          <div class="phase-title">Laptop reliability · panic keybind · stable on main</div>
           <ul class="phase-list">
             <li><strong>SUPER+SHIFT+CTRL+Esc</strong> escape hatch</li>
             <li>9-step recovery, works through frozen hyprlock</li>
-            <li>Hardened zen-resume-handler.sh (5s retry, DRM fallback)</li>
-            <li>Zombie hyprlock detection via layer query</li>
-            <li>Pre-suspend health check</li>
-            <li>.4.1: hyprctl reload → forcerendererreload (preserves config)</li>
+            <li>.4.1: forcerendererreload preserves monitor config</li>
             <li>.4.1: removed SIGUSR2 (was killing Quickshell)</li>
             <li>.4.1: removed workspace bounce (music widget loop)</li>
+            <li style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px dashed var(--border)"><strong style="color:var(--orange)">Alpha on branch</strong> — v6.16.4.2 → v6.16.4.5 shipped on <code style="font-family:var(--font-mono);font-size:0.72rem;color:var(--orange);background:rgba(251,146,60,0.08);padding:0 5px;border-radius:3px">alpha-v6.16.4.5</code></li>
+            <li>Widget scale actually working at every scale</li>
+            <li>Gaps preserved after DisplaysPage apply</li>
+            <li>Start Menu pinned tile breathing room</li>
           </ul>
         </div>
 
@@ -571,13 +776,13 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
             <li><strong>v6.16.5</strong> — Global configreloaded IPC listener (kills per-page reload boilerplate)</li>
             <li><strong>v6.16.6</strong> — Wallpaper repo browser + fit / stretch / custom display modes</li>
             <li><strong>Phase 4</strong> — Hyprland dark mode + GTK3/4 sync · hyprbars + minimize · float/tile assignment GUI · auto-clean memory</li>
-            <li><strong>Phase 5</strong> — Updates manager (Official / Beta / Alpha channels · rollback to stored versions)</li>
+            <li><strong>Phase 5</strong> — <a href="#updates-manager" style="color:var(--accent2);text-decoration:none">Updates manager</a> (Official / Beta / Alpha channels · rollback to stored versions)</li>
           </ul>
         </div>
       </div>
 
       <p class="roadmap-note">
-        Naming: release branches use <code>beta-v12.6.16.X</code> or <code>alpha-v6.16.X</code>. When a phase reaches stable, it promotes to <code>main</code> and gets a <code>v6.16.X</code> tag. Wala tayong binawasan — every previous release stays reachable via its tag.
+        Naming: alpha branches carry the <code>alpha-v6.16.X</code> prefix (currently <code>alpha-v6.16.4.5</code>). When a phase reaches stable, it promotes to <code>main</code> and gets a <code>v6.16.X</code> tag. Wala tayong binawasan — every previous release stays reachable via its tag.
       </p>
     </div>
   </div>
@@ -594,7 +799,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
     </div>
 
     <div class="fade-up">
-      <div class="code-block">
+      <div class="code-block" style="margin-bottom:1rem">
         <div class="code-header">
           <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
           <span class="code-lang">bash · main branch · v6.16.4.1 stable</span>
@@ -623,6 +828,22 @@ footer{border-top:1px solid var(--border);padding:2.5rem 2rem;position:relative;
 <span class="c-comment"># Test it (safe — no damage)</span>
 <span class="c-cmd">~/.local/bin/zen-panic.sh</span>
 <span class="c-cmd">cat</span> <span class="c-flag">~/.cache/zen-shell/panic.log</span> | <span class="c-cmd">tail</span> <span class="c-flag">-30</span></pre>
+        </div>
+      </div>
+
+      <div class="code-block" style="border-color:rgba(251,146,60,0.2)">
+        <div class="code-header" style="border-bottom-color:rgba(251,146,60,0.15)">
+          <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+          <span class="code-lang" style="color:var(--orange)">bash · alpha-v6.16.4.5 branch · daily-use safe</span>
+        </div>
+        <div class="code-body">
+<pre><span class="c-comment"># Alpha: bundles hotfixes .2 → .5 on top of stable .1</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">alpha-v6.16.4.5</span>
+<span class="c-cmd">./install.sh</span>
+
+<span class="c-comment"># Rollback to stable any time:</span>
+<span class="c-cmd">git checkout</span> <span class="c-flag">main</span>
+<span class="c-cmd">./install.sh</span></pre>
         </div>
       </div>
     </div>

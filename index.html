@@ -6,2248 +6,400 @@
   <meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#14140f" media="(prefers-color-scheme: dark)" />
   <meta name="color-scheme" content="light dark" />
-
   <title>Zen Shell — Kintsugi · v6.16.4.11.2</title>
   <meta name="description" content="Zen Shell is a QML-native desktop environment for Hyprland on Arch / CachyOS. Panel, control center, wallpaper engine, theme system — all driven by Quickshell." />
-
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Zen Shell — Kintsugi · v6.16.4.11.2" />
   <meta property="og:description" content="QML-native desktop environment for Hyprland. Panel, control center, wallpaper, themes. All Quickshell." />
   <meta property="og:url" content="https://gekinzen.github.io/zen-shell-site/" />
   <meta property="og:image" content="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/hero_desktop.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-
   <link rel="canonical" href="https://gekinzen.github.io/zen-shell-site/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://api.github.com" />
   <link rel="preconnect" href="https://raw.githubusercontent.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..900;1,7..72,300..900&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+JP:wght@300;500;700&display=swap"
-    rel="stylesheet"
-  />
-  <!-- All icons are inline SVG — no icon font dependency. -->
-
+  <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..900;1,7..72,300..900&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+JP:wght@300;500;700&display=swap" rel="stylesheet" />
   <style>
-    /* =================================================================
-       Design tokens
-       ================================================================= */
     :root {
-      --ink:          #2a2a2a;
-      --ink-soft:     #3a3a3a;
-      --paper:        #ffffff;
-      --bone:         #fafaf7;
-      --bone-deep:    #f4f2eb;
-      --mute:         #666666;
-      --hairline:     #e5e3dd;
-      --sage:         #7A9068;
-      --sage-deep:    #5f7450;
-      --alpha-tone:   #c68a4a;
-      --alpha-deep:   #a66f38;
-      --stable-tone:  #5f7450;
-      --gold:         #b8924e;
-      --gold-soft:    #d4a85f;
+      --ink:#2a2a2a;--ink-soft:#3a3a3a;--paper:#ffffff;--bone:#fafaf7;--bone-deep:#f4f2eb;
+      --mute:#666666;--hairline:#e5e3dd;--sage:#7A9068;--sage-deep:#5f7450;
+      --alpha-tone:#c68a4a;--alpha-deep:#a66f38;--stable-tone:#5f7450;
+      --gold:#b8924e;--gold-soft:#d4a85f;
+      --serif:'Literata','Iowan Old Style','Palatino Linotype',Georgia,serif;
+      --serif-jp:'Noto Serif JP','Literata',serif;
+      --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+      --shell-max:1280px;--gutter:clamp(1.25rem,4vw,4rem);
+      --easing:cubic-bezier(0.16,1,0.3,1);--tx:420ms var(--easing);
+    }
+    :root.dark{--ink:#ededed;--ink-soft:#c9c9c9;--paper:#1c1c17;--bone:#14140f;--bone-deep:#0e0e0a;--mute:#8a8a85;--hairline:#2a2a24;--sage:#98b283;--sage-deep:#bccda7;--alpha-tone:#d89a60;--alpha-deep:#e8ae78;--stable-tone:#98b283;--gold:#d4a85f;--gold-soft:#e6be77;}
+    *,*::before,*::after{box-sizing:border-box;}
+    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:clip;}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*,*::before,*::after{animation-duration:0.001ms!important;transition-duration:0.001ms!important;}}
+    body{margin:0;background:var(--bone);color:var(--ink);font-family:var(--serif);font-weight:400;font-size:17px;line-height:1.6;font-feature-settings:"kern","liga","calt";-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;transition:background var(--tx),color var(--tx);overflow-x:hidden;}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0.035;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");}
+    :root.dark body::before{mix-blend-mode:screen;opacity:0.05;}
+    img,svg{display:block;max-width:100%;}a{color:inherit;text-decoration:none;}
+    ::selection{background:var(--sage);color:var(--paper);}
+    :focus-visible{outline:2px solid var(--sage);outline-offset:3px;border-radius:2px;}
+    .shell{max-width:var(--shell-max);margin-inline:auto;padding-inline:var(--gutter);position:relative;}
+    .section-label{font-family:var(--serif);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mute);font-weight:500;}
+    .section-title{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,4vw,3rem);line-height:1.1;letter-spacing:-0.02em;margin:0.5rem 0 0 0;}
+    .nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bone) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--hairline);}
+    .nav__inner{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;gap:1rem;}
+    .brand{font-family:var(--serif);font-size:1.15rem;font-weight:500;letter-spacing:-0.01em;display:flex;align-items:center;gap:0.65rem;flex-shrink:0;}
+    .brand__mark{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:color-mix(in srgb,var(--sage) 18%,transparent);color:var(--sage-deep);transition:background 200ms var(--easing),transform 200ms var(--easing);flex-shrink:0;}
+    :root.dark .brand__mark{color:var(--sage);}
+    .brand:hover .brand__mark{background:color-mix(in srgb,var(--sage) 30%,transparent);transform:rotate(-8deg);}
+    .brand__mark svg{width:20px;height:20px;fill:currentColor;transition:transform 200ms var(--easing);}
+    .nav__links{display:flex;gap:2rem;font-size:0.9rem;letter-spacing:0.02em;color:var(--ink-soft);}
+    .nav__links a{position:relative;padding:0.3rem 0;}.nav__links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform 220ms var(--easing);}.nav__links a:hover::after{transform:scaleX(1);}
+    .theme-toggle{display:inline-flex;align-items:center;gap:0.55rem;padding:0.35rem 0.75rem;border:1px solid var(--hairline);border-radius:999px;background:transparent;color:var(--ink);font-family:var(--serif);font-size:0.82rem;cursor:pointer;transition:border-color 200ms var(--easing),background 200ms var(--easing);flex-shrink:0;}
+    .theme-toggle:hover{border-color:var(--sage);background:color-mix(in srgb,var(--sage) 8%,transparent);}
+    .theme-toggle svg{width:18px;height:18px;fill:currentColor;}.theme-toggle__label{letter-spacing:0.02em;}
+    @media(max-width:820px){.nav__links{display:none;}.theme-toggle__label{display:none;}}
+    .hero{padding:clamp(3rem,8vh,6rem) 0 clamp(4rem,10vh,8rem);border-bottom:1px solid var(--hairline);}
+    .codename-badge{display:inline-flex;align-items:center;gap:0.75rem;padding:0.5rem 1rem 0.5rem 0.65rem;border:1px solid color-mix(in srgb,var(--gold) 30%,var(--hairline));border-radius:999px;background:color-mix(in srgb,var(--gold) 6%,transparent);margin-bottom:1.75rem;max-width:100%;flex-wrap:wrap;}
+    .codename-badge__kanji{font-family:var(--serif-jp);font-weight:500;font-size:1.15rem;color:var(--gold);line-height:1;}
+    .codename-badge__divider{width:1px;height:16px;background:var(--hairline);}
+    .codename-badge__name{font-family:var(--serif);font-size:0.88rem;font-style:italic;color:var(--ink);letter-spacing:0.01em;}
+    .codename-badge__version{font-family:var(--mono);font-size:0.78rem;color:var(--mute);letter-spacing:0.02em;}
+    .hero__headline{font-family:var(--serif);font-weight:300;font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:1.05;letter-spacing:-0.025em;margin:0;max-width:18ch;}
+    .hero__headline em{font-style:italic;color:var(--sage-deep);}:root.dark .hero__headline em{color:var(--sage);}
+    .hero__lede{max-width:60ch;margin:2rem 0 0;font-size:1.08rem;color:var(--ink-soft);line-height:1.6;}
+    .hero__codename-meaning{margin-top:1.5rem;padding:1rem 1.25rem;border-left:2px solid var(--gold);background:color-mix(in srgb,var(--gold) 5%,transparent);font-style:italic;color:var(--ink-soft);font-size:0.95rem;line-height:1.55;max-width:60ch;overflow-wrap:break-word;word-break:break-word;}
+    .hero__codename-meaning strong{font-style:normal;font-weight:500;color:var(--gold);}
+    .hero__pills{margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:0.5rem;}
+    .pill{display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.9rem;border:1px solid var(--hairline);border-radius:999px;font-size:0.82rem;font-family:var(--mono);letter-spacing:0.02em;color:var(--mute);}
+    .pill__dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0;}
+    .pill--stable{color:var(--stable-tone);border-color:color-mix(in srgb,var(--stable-tone) 30%,var(--hairline));}
+    .pill--alpha{color:var(--alpha-tone);border-color:color-mix(in srgb,var(--alpha-tone) 30%,var(--hairline));}
+    .hero__cta{margin-top:3rem;display:flex;flex-wrap:wrap;gap:1rem;}
+    .cta{display:inline-flex;align-items:center;gap:0.65rem;padding:0.95rem 1.5rem;border-radius:999px;font-family:var(--serif);font-size:0.95rem;letter-spacing:0.01em;transition:transform 200ms var(--easing),background 200ms var(--easing),color 200ms var(--easing);cursor:pointer;border:1px solid transparent;}
+    .cta--primary{background:var(--ink);color:var(--paper);}.cta--primary:hover{transform:translateY(-1px);background:var(--sage-deep);}
+    :root.dark .cta--primary{background:var(--sage);color:var(--bone);}:root.dark .cta--primary:hover{background:var(--sage-deep);}
+    .cta--ghost{border-color:var(--hairline);color:var(--ink);}.cta--ghost:hover{border-color:var(--sage);color:var(--sage-deep);}
+    :root.dark .cta--ghost:hover{color:var(--sage);}.cta svg{width:18px;height:18px;fill:currentColor;flex-shrink:0;}
+    .hero-image{margin-top:4rem;width:100%;border-radius:6px;overflow:hidden;border:1px solid var(--hairline);box-shadow:0 24px 60px -30px color-mix(in srgb,var(--ink) 40%,transparent);background:var(--bone-deep);}
+    .hero-image img{width:100%;height:auto;display:block;}
+    .counters{background:var(--ink);color:var(--paper);padding:5rem 0;position:relative;overflow:hidden;transition:background var(--tx);}
+    :root.dark .counters{background:var(--bone-deep);}
+    .counters::before{content:"";position:absolute;inset:0;background-image:linear-gradient(to right,rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;}
+    :root.dark .counters::before{background-image:linear-gradient(to right,rgba(0,0,0,0.15) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,0,0,0.15) 1px,transparent 1px);}
+    .counters__head{position:relative;margin-bottom:3rem;max-width:64ch;}
+    .counters .section-label{color:rgba(255,255,255,0.55);}:root.dark .counters .section-label{color:var(--mute);}
+    .counters__title{font-family:var(--serif);font-weight:300;font-size:clamp(1.75rem,3.5vw,2.5rem);line-height:1.15;margin:0.5rem 0 0;color:var(--paper);}
+    :root.dark .counters__title{color:var(--ink);}
+    .counters__note{margin:0.8rem 0 0;font-size:0.9rem;color:rgba(255,255,255,0.55);font-style:italic;}:root.dark .counters__note{color:var(--mute);}
+    .counters__grid{position:relative;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.12);}
+    :root.dark .counters__grid{border-top-color:var(--hairline);}
+    .counter{padding:2rem 0 0;border-right:1px solid rgba(255,255,255,0.08);position:relative;}
+    :root.dark .counter{border-right-color:var(--hairline);}.counter:last-child{border-right:0;}
+    .counter__num{font-size:clamp(2.5rem,5vw,3.75rem);font-weight:300;line-height:1;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;color:var(--paper);display:inline-flex;align-items:baseline;transition:opacity 300ms var(--easing);}
+    :root.dark .counter__num{color:var(--ink);}.counter__num.loading{opacity:0.3;}
+    .counter__icon{width:0.55em;height:0.55em;margin-left:0.3em;fill:var(--sage);vertical-align:baseline;display:inline-block;}
+    .counter__label{display:block;margin-top:1.25rem;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55);}:root.dark .counter__label{color:var(--mute);}
+    .counter__sub{display:block;margin-top:0.5rem;font-size:0.8rem;color:rgba(255,255,255,0.45);font-style:italic;}:root.dark .counter__sub{color:var(--mute);}
+    @media(max-width:860px){.counters__grid{grid-template-columns:repeat(2,1fr);}.counter{padding:1.5rem 1.25rem 1.5rem 0;border-bottom:1px solid rgba(255,255,255,0.08);}:root.dark .counter{border-bottom-color:var(--hairline);}.counter:nth-child(even){border-right:0;padding-right:0;}.counter:nth-last-child(-n+2){border-bottom:0;}}
+    .showcase{padding:6rem 0;border-bottom:1px solid var(--hairline);}
+    .showcase__head{max-width:720px;margin-bottom:3.5rem;}.showcase__intro{color:var(--mute);margin:1rem 0 0;font-size:1.05rem;}
+    .showcase__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.75rem;}
+    @media(max-width:780px){.showcase__grid{grid-template-columns:1fr;}}
+    .shot{position:relative;overflow:hidden;border-radius:4px;border:1px solid var(--hairline);background:var(--bone-deep);transition:transform 300ms var(--easing),border-color 300ms var(--easing);}
+    .shot:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--sage) 40%,var(--hairline));}
+    .shot__frame{aspect-ratio:16/10;width:100%;background:var(--bone-deep);position:relative;overflow:hidden;}
+    .shot__frame img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;position:relative;z-index:1;}
+    .shot__caption{padding:1rem 1.25rem 1.25rem;display:flex;flex-direction:column;gap:0.35rem;}
+    .shot__caption-title{font-family:var(--serif);font-size:0.95rem;font-weight:500;color:var(--ink);}
+    .shot__caption-sub{font-family:var(--mono);font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mute);}
+    .shot__caption-hint{font-family:var(--serif);font-style:italic;font-size:0.85rem;color:var(--mute);margin-top:0.35rem;line-height:1.45;overflow-wrap:break-word;word-break:break-word;}
+    .shot__caption-hint code{font-family:var(--mono);font-size:0.85em;overflow-wrap:break-word;word-break:break-all;}
+    .shot__badge{position:absolute;top:0.75rem;left:0.75rem;z-index:2;padding:0.3rem 0.65rem;border-radius:999px;background:color-mix(in srgb,var(--bone) 88%,transparent);backdrop-filter:blur(6px);font-family:var(--mono);font-size:9.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--hairline);}
+    .shot__badge--new{color:var(--sage-deep);border-color:color-mix(in srgb,var(--sage) 50%,var(--hairline));}:root.dark .shot__badge--new{color:var(--sage);}
+    .kintsugi-showcase{overflow:hidden;}.kintsugi-showcase .shot__badge{background:color-mix(in srgb,var(--bone) 92%,transparent);color:var(--gold);border-color:color-mix(in srgb,var(--gold) 50%,var(--hairline));}
+    .kintsugi-showcase__frame{display:grid;grid-template-columns:1fr 1fr;aspect-ratio:21/9;width:100%;position:relative;overflow:hidden;}
+    @media(max-width:720px){.kintsugi-showcase__frame{grid-template-columns:1fr;aspect-ratio:auto;}}
+    .kintsugi-showcase__half{padding:2rem 2.25rem;display:flex;flex-direction:column;justify-content:center;gap:0.4rem;min-height:220px;}
+    .kintsugi-showcase__half--light{background:#fafaf7;color:#2a2a2a;}.kintsugi-showcase__half--dark{background:#14140f;color:#ededed;}
+    .kintsugi-showcase__kanji{font-family:var(--serif-jp);font-size:1.6rem;font-weight:500;color:#b8924e;line-height:1;margin-bottom:0.15rem;}
+    .kintsugi-showcase__name{font-family:var(--serif);font-size:1.1rem;font-weight:500;font-style:italic;color:#2a2a2a;}
+    .kintsugi-showcase__swatches{display:flex;gap:5px;margin-top:0.65rem;flex-wrap:wrap;}
+    .kintsugi-showcase__swatches span{width:24px;height:24px;border-radius:4px;display:block;flex-shrink:0;}
+    .kintsugi-showcase__tags{font-family:var(--mono);font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:#666;margin-top:0.4rem;}
+    .demos{padding:6rem 0;border-bottom:1px solid var(--hairline);background:var(--bone-deep);}
+    .demos__head{max-width:720px;margin-bottom:3rem;}.demos__intro{color:var(--mute);margin:1rem 0 0;font-size:1.05rem;}
+    .demo-featured{margin-bottom:1.5rem;border-radius:6px;overflow:hidden;border:1px solid var(--hairline);background:var(--paper);transition:transform 300ms var(--easing);display:block;position:relative;}
+    .demo-featured:hover{transform:translateY(-2px);}
+    .demo-featured__thumb{position:relative;aspect-ratio:16/9;}.demo-featured__thumb img{width:100%;height:100%;object-fit:cover;}
+    .demo-featured__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:color-mix(in srgb,var(--ink) 70%,transparent);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.9);transition:transform 200ms var(--easing);}
+    .demo-featured:hover .demo-featured__play{transform:translate(-50%,-50%) scale(1.1);}
+    .demo-featured__play::before{content:"";width:0;height:0;border-left:22px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent;margin-left:5px;}
+    .demo-featured__cap{padding:1.25rem 1.5rem;text-align:center;}
+    .demo-featured__cap-label{font-family:var(--mono);font-size:10.5px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mute);}
+    .demo-featured__cap-title{font-family:var(--serif);font-size:1.25rem;font-weight:500;margin:0.35rem 0 0.4rem;}
+    .demo-featured__cap-desc{font-family:var(--serif);font-size:0.92rem;font-style:italic;color:var(--mute);}
+    .demos__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+    @media(max-width:980px){.demos__grid{grid-template-columns:repeat(2,1fr);}}@media(max-width:620px){.demos__grid{grid-template-columns:1fr;}}
+    .demo-card{display:block;border:1px solid var(--hairline);border-radius:4px;overflow:hidden;background:var(--paper);transition:transform 300ms var(--easing),border-color 300ms var(--easing);}
+    .demo-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--sage) 40%,var(--hairline));}
+    .demo-card__thumb{aspect-ratio:16/9;position:relative;overflow:hidden;}.demo-card__thumb img{width:100%;height:100%;object-fit:cover;}
+    .demo-card__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:color-mix(in srgb,var(--ink) 70%,transparent);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,0.9);}
+    .demo-card__play::before{content:"";width:0;height:0;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;}
+    .demo-card__cap{padding:1rem 1.25rem 1.25rem;text-align:center;}
+    .demo-card__cap-label{font-family:var(--mono);font-size:9.5px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mute);}
+    .demo-card__cap-title{font-family:var(--serif);font-size:1rem;font-weight:500;margin:0.3rem 0 0.25rem;}
+    .demo-card__cap-desc{font-family:var(--serif);font-size:0.82rem;font-style:italic;color:var(--mute);}
+    .timeline{padding:6rem 0;border-bottom:1px solid var(--hairline);}
+    .timeline__head{max-width:720px;margin-bottom:3.5rem;}.timeline__intro{color:var(--mute);margin:1rem 0 0;font-size:1.05rem;}
+    .chart{position:relative;width:100%;padding:2.5rem 0 3rem;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;}
+    .chart__inner{min-width:1100px;position:relative;height:280px;}
+    .chart__axis{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--hairline);}
+    .chart__axis-label{position:absolute;left:0;top:calc(50% + 8px);font-family:var(--mono);font-size:10.5px;letter-spacing:0.12em;color:var(--mute);text-transform:uppercase;}
+    .chart__node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:0.35rem;cursor:default;}
+    .chart__node-dot{width:14px;height:14px;border-radius:50%;background:var(--hairline);border:2px solid var(--bone);box-shadow:0 0 0 1px var(--hairline);transition:transform 200ms var(--easing);}
+    .chart__node:hover .chart__node-dot{transform:scale(1.35);}
+    .chart__node--stable .chart__node-dot{background:var(--stable-tone);box-shadow:0 0 0 1px var(--stable-tone);}
+    .chart__node--alpha .chart__node-dot{background:var(--alpha-tone);box-shadow:0 0 0 1px var(--alpha-tone);}
+    .chart__node--current .chart__node-dot{width:20px;height:20px;background:var(--gold);box-shadow:0 0 0 2px var(--gold),0 0 0 8px color-mix(in srgb,var(--gold) 25%,transparent);}
+    :root.dark .chart__node--current .chart__node-dot{background:var(--gold);box-shadow:0 0 0 2px var(--gold),0 0 0 8px color-mix(in srgb,var(--gold) 30%,transparent);}
+    .chart__node-label{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;color:var(--ink-soft);white-space:nowrap;}
+    .chart__node-bullet{font-family:var(--serif);font-size:11.5px;font-style:italic;color:var(--mute);max-width:120px;text-align:center;line-height:1.35;}
+    .chart__node-current-mark{font-family:var(--serif-jp);font-size:12px;color:var(--gold);font-weight:500;margin-top:2px;}
+    .chart__node--above{top:calc(50% - 80px);}.chart__node--above .chart__node-label{order:3;}.chart__node--above .chart__node-bullet{order:2;}.chart__node--above .chart__node-dot{order:1;margin-bottom:-4px;}
+    .chart__node--below{top:calc(50% + 80px);}.chart__node--below .chart__node-label{order:1;margin-bottom:-4px;}.chart__node--below .chart__node-dot{order:2;}.chart__node--below .chart__node-bullet{order:3;}
+    .chart__legend{margin-top:2rem;display:flex;gap:2rem;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--mute);text-transform:uppercase;}
+    .chart__legend-item{display:inline-flex;align-items:center;gap:0.55rem;}.chart__legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+    .chart__legend-dot--stable{background:var(--stable-tone);}.chart__legend-dot--alpha{background:var(--alpha-tone);}
+    .chart__legend-dot--current{background:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 30%,transparent);}
+    .codenames{padding:6rem 0;background:var(--bone-deep);border-bottom:1px solid var(--hairline);}
+    .codenames__head{max-width:720px;margin-bottom:3rem;}.codenames__intro{color:var(--mute);margin:1rem 0 0;font-size:1.05rem;}
+    .codenames__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+    @media(max-width:880px){.codenames__grid{grid-template-columns:repeat(2,1fr);}}@media(max-width:560px){.codenames__grid{grid-template-columns:1fr;}}
+    .codename-card{background:var(--paper);border:1px solid var(--hairline);border-radius:4px;padding:1.5rem;position:relative;transition:border-color 200ms var(--easing);overflow:hidden;}
+    .codename-card:hover{border-color:color-mix(in srgb,var(--gold) 40%,var(--hairline));}
+    .codename-card--current{border-color:color-mix(in srgb,var(--gold) 60%,var(--hairline));background:color-mix(in srgb,var(--gold) 4%,var(--paper));}
+    .codename-card__kanji{font-family:var(--serif-jp);font-weight:500;font-size:2.5rem;color:var(--gold);line-height:1;margin-bottom:0.5rem;}
+    .codename-card__name{font-family:var(--serif);font-size:1.1rem;font-weight:500;font-style:italic;margin-bottom:0.25rem;}
+    .codename-card__meaning{font-family:var(--serif);font-size:0.85rem;font-style:italic;color:var(--mute);margin-bottom:1rem;line-height:1.45;}
+    .codename-card__versions{font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;color:var(--ink-soft);padding-top:0.9rem;border-top:1px solid var(--hairline);overflow-wrap:break-word;}
+    .codename-card__status{position:absolute;top:0.85rem;right:0.85rem;font-family:var(--mono);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mute);padding:0.2rem 0.5rem;border-radius:999px;border:1px solid var(--hairline);}
+    .codename-card__status--current{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 60%,var(--hairline));background:color-mix(in srgb,var(--gold) 10%,transparent);}
+    .codename-card__status--next{color:var(--alpha-tone);border-color:color-mix(in srgb,var(--alpha-tone) 50%,var(--hairline));}
+    .install{padding:6rem 0;border-bottom:1px solid var(--hairline);}
+    .install__head{max-width:720px;margin-bottom:3rem;}.install__intro{color:var(--mute);margin:1rem 0 0;font-size:1.05rem;}
+    .install__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;}
+    @media(max-width:780px){.install__grid{grid-template-columns:1fr;}}
+    .install__card{background:var(--paper);border:1px solid var(--hairline);padding:1.5rem;border-radius:3px;overflow:hidden;}
+    .install__card--alpha{border-color:color-mix(in srgb,var(--alpha-tone) 35%,var(--hairline));background:color-mix(in srgb,var(--alpha-tone) 4%,var(--paper));}
+    .install__card-title{display:flex;align-items:center;gap:0.6rem;font-family:var(--serif);font-size:1.15rem;font-weight:500;margin:0 0 0.35rem;flex-wrap:wrap;}
+    .install__card-meta{font-family:var(--mono);font-size:11px;letter-spacing:0.05em;color:var(--mute);text-transform:uppercase;margin:0 0 1.25rem;overflow-wrap:break-word;word-break:break-word;}
+    .install__code{background:var(--bone-deep);border:1px solid var(--hairline);border-radius:3px;padding:1rem 1.15rem;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink);overflow-x:auto;white-space:pre;margin:0 0 1rem;position:relative;}
+    .install__copy{position:absolute;top:0.55rem;right:0.65rem;background:var(--paper);border:1px solid var(--hairline);border-radius:2px;padding:0.25rem 0.55rem;font-family:var(--serif);font-size:11px;letter-spacing:0.06em;color:var(--ink-soft);cursor:pointer;transition:border-color 150ms var(--easing);}
+    .install__copy:hover{border-color:var(--sage);color:var(--sage-deep);}:root.dark .install__copy:hover{color:var(--sage);}
+    .install__copy.copied{color:var(--sage-deep);border-color:var(--sage-deep);}
+    .install__card-foot{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;color:var(--mute);text-transform:uppercase;flex-wrap:wrap;}
+    .archive{padding:6rem 0;background:var(--bone-deep);border-bottom:1px solid var(--hairline);}
+    .archive__head{max-width:720px;margin-bottom:3.5rem;}.archive__intro{color:var(--mute);margin:1rem 0 0;font-size:1.05rem;}
+    .era{position:relative;padding-left:2.5rem;margin-bottom:4rem;}
+    .era::before{content:"";position:absolute;left:8px;top:18px;bottom:-3rem;width:1px;background:var(--hairline);}.era:last-child::before{display:none;}
+    .era::after{content:"";position:absolute;left:0;top:10px;width:17px;height:17px;border-radius:50%;background:var(--paper);border:2px solid var(--hairline);}
+    .era--archive::after{background:var(--alpha-tone);border-color:var(--alpha-tone);}
+    .era--legacy::after{background:var(--mute);border-color:var(--mute);}
+    .era--modern::after{background:var(--sage-deep);border-color:var(--sage-deep);}
+    .era__header{display:flex;align-items:baseline;gap:1rem;margin-bottom:0.5rem;flex-wrap:wrap;}
+    .era__version{font-family:var(--mono);font-size:13px;letter-spacing:0.05em;color:var(--ink);font-weight:500;}
+    .era__label{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mute);padding:0.2rem 0.55rem;border:1px solid var(--hairline);border-radius:999px;}
+    .era__label--archive{color:var(--alpha-tone);border-color:color-mix(in srgb,var(--alpha-tone) 40%,var(--hairline));}
+    .era__label--legacy{color:var(--mute);}
+    .era__label--modern{color:var(--sage-deep);border-color:color-mix(in srgb,var(--sage) 40%,var(--hairline));}:root.dark .era__label--modern{color:var(--sage);}
+    .era__title{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,3vw,2rem);line-height:1.2;letter-spacing:-0.02em;margin:0 0 0.5rem;}
+    .era__title em{font-style:italic;color:var(--gold);}
+    .era__desc{font-family:var(--serif);font-size:0.95rem;color:var(--mute);line-height:1.6;max-width:70ch;margin:0 0 1.5rem;}
+    .era__gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;}
+    @media(max-width:780px){.era__gallery{grid-template-columns:repeat(2,1fr);}}@media(max-width:480px){.era__gallery{grid-template-columns:1fr;}}
+    .era__shot{position:relative;overflow:hidden;border-radius:3px;border:1px solid var(--hairline);background:var(--bone);aspect-ratio:16/10;transition:transform 200ms var(--easing);}
+    .era__shot:hover{transform:translateY(-2px);}.era__shot img{width:100%;height:100%;object-fit:cover;}
+    .era__shot-cap{position:absolute;bottom:0;left:0;right:0;padding:0.65rem 0.85rem;background:linear-gradient(to top,rgba(0,0,0,0.75),transparent);font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#fff;}
+    .era__highlight{display:inline-block;margin-top:0.75rem;padding:0.3rem 0.75rem;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);border:1px solid var(--hairline);border-radius:999px;background:var(--paper);overflow-wrap:break-word;word-break:break-word;}
+    .foot{padding:3rem 0 4rem;font-size:0.85rem;color:var(--mute);}
+    .foot__row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+    .foot__links{display:flex;gap:1.5rem;flex-wrap:wrap;}.foot__links a:hover{color:var(--sage-deep);}:root.dark .foot__links a:hover{color:var(--sage);}
 
-      --serif:    'Literata', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-      --serif-jp: 'Noto Serif JP', 'Literata', serif;
-      --mono:     'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-
-      --shell-max: 1280px;
-      --gutter:    clamp(1.25rem, 4vw, 4rem);
-      --easing:    cubic-bezier(0.16, 1, 0.3, 1);
-      --tx:        420ms var(--easing);
-    }
-
-    :root.dark {
-      --ink:          #ededed;
-      --ink-soft:     #c9c9c9;
-      --paper:        #1c1c17;
-      --bone:         #14140f;
-      --bone-deep:    #0e0e0a;
-      --mute:         #8a8a85;
-      --hairline:     #2a2a24;
-      --sage:         #98b283;
-      --sage-deep:    #bccda7;
-      --alpha-tone:   #d89a60;
-      --alpha-deep:   #e8ae78;
-      --stable-tone:  #98b283;
-      --gold:         #d4a85f;
-      --gold-soft:    #e6be77;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: 0.001ms !important;
-        transition-duration: 0.001ms !important;
-      }
-    }
-
-    body {
-      margin: 0;
-      background: var(--bone);
-      color: var(--ink);
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: 17px;
-      line-height: 1.6;
-      font-feature-settings: "kern", "liga", "calt";
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-      transition: background var(--tx), color var(--tx);
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.035;
-      mix-blend-mode: multiply;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-    }
-    :root.dark body::before { mix-blend-mode: screen; opacity: 0.05; }
-
-    img, svg { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-    ::selection { background: var(--sage); color: var(--paper); }
-
-    :focus-visible {
-      outline: 2px solid var(--sage);
-      outline-offset: 3px;
-      border-radius: 2px;
-    }
-
-    .shell {
-      max-width: var(--shell-max);
-      margin-inline: auto;
-      padding-inline: var(--gutter);
-      position: relative;
-    }
-
-    .zs-icon {
-      display: inline-block;
-      width: 1em;
-      height: 1em;
-      vertical-align: -0.15em;
-      fill: currentColor;
-      flex-shrink: 0;
-    }
-
-    .section-label {
-      font-family: var(--serif);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--mute);
-      font-weight: 500;
-    }
-
-    .section-title {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin: 0.5rem 0 0 0;
-    }
-
-    /* =================================================================
-       Nav — with grass icon brand
-       ================================================================= */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: color-mix(in srgb, var(--bone) 85%, transparent);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .nav__inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      gap: 1.5rem;
-    }
-    .brand {
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-    }
-    .brand__mark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--sage) 18%, transparent);
-      color: var(--sage-deep);
-      transition: background 200ms var(--easing), transform 200ms var(--easing);
-    }
-    :root.dark .brand__mark { color: var(--sage); }
-    .brand:hover .brand__mark {
-      background: color-mix(in srgb, var(--sage) 30%, transparent);
-      transform: rotate(-8deg);
-    }
-    .brand__mark svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-      transition: transform 200ms var(--easing);
-    }
-    .nav__links {
-      display: flex;
-      gap: 2rem;
-      font-size: 0.9rem;
-      letter-spacing: 0.02em;
-      color: var(--ink-soft);
-    }
-    .nav__links a { position: relative; padding: 0.3rem 0; }
-    .nav__links a::after {
-      content: "";
-      position: absolute; left: 0; right: 0; bottom: -2px;
-      height: 1px; background: var(--sage);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 220ms var(--easing);
-    }
-    .nav__links a:hover::after { transform: scaleX(1); }
-
-    .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.35rem 0.75rem;
-      border: 1px solid var(--hairline);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--ink);
-      font-family: var(--serif);
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: border-color 200ms var(--easing), background 200ms var(--easing);
-    }
-    .theme-toggle:hover {
-      border-color: var(--sage);
-      background: color-mix(in srgb, var(--sage) 8%, transparent);
-    }
-    .theme-toggle svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-    }
-    .theme-toggle__label { letter-spacing: 0.02em; }
-
-    @media (max-width: 820px) {
-      .nav__links { display: none; }
-      .theme-toggle__label { display: none; }
-    }
-
-    /* =================================================================
-       Hero
-       ================================================================= */
-    .hero {
-      padding: clamp(3rem, 8vh, 6rem) 0 clamp(4rem, 10vh, 8rem);
-      border-bottom: 1px solid var(--hairline);
+    /* ═══════════════════════════════════════════════════════════════
+       MOBILE — 480px and below
+       ═══════════════════════════════════════════════════════════════ */
+    @media(max-width:480px){
+      :root{--gutter:1rem;}
+      .codename-badge{gap:0.4rem 0.6rem;padding:0.45rem 0.85rem;}.codename-badge__divider{display:none;}
+      .hero__codename-meaning{padding:0.85rem 1rem;font-size:0.88rem;}
+      .hero__cta{gap:0.75rem;}.cta{padding:0.85rem 1.25rem;font-size:0.88rem;width:100%;justify-content:center;}
+      .hero__pills{gap:0.4rem;}.pill{font-size:0.75rem;padding:0.35rem 0.7rem;}
+      .counters__grid{grid-template-columns:repeat(2,1fr);}.counter__num{font-size:clamp(2rem,10vw,2.5rem);}.counter{padding:1.5rem 0.75rem 1.5rem 0;}
+      .kintsugi-showcase__half{padding:1.5rem 1.25rem;min-height:auto;}.kintsugi-showcase__kanji{font-size:1.3rem;}.kintsugi-showcase__name{font-size:0.95rem;}
+      .install__code{white-space:pre-wrap;word-break:break-all;font-size:11px;padding:0.85rem 1rem;}.install__card{padding:1.25rem;}.install__card-title{font-size:1rem;}
+      .era{padding-left:2rem;}.codename-card{padding:1.25rem;}.codename-card__kanji{font-size:2rem;}
+      .foot__row{flex-direction:column;align-items:flex-start;gap:1rem;font-size:0.78rem;}.foot__links{gap:1rem;}
+      .demo-featured__cap{padding:1rem;}.demo-featured__cap-title{font-size:1.05rem;}.demo-featured__cap-desc{font-size:0.82rem;}
+      .demo-featured__play{width:60px;height:60px;}.demo-featured__play::before{border-left-width:16px;border-top-width:10px;border-bottom-width:10px;margin-left:3px;}
+      .shot__caption{padding:0.85rem 1rem 1rem;}.chart__legend{gap:1rem;font-size:10px;}
+      .section-title{font-size:clamp(1.6rem,6vw,2.5rem);}
+      .showcase,.demos,.codenames,.install,.archive,.timeline{padding:4rem 0;}
     }
 
-    .codename-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.5rem 1rem 0.5rem 0.65rem;
-      border: 1px solid color-mix(in srgb, var(--gold) 30%, var(--hairline));
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--gold) 6%, transparent);
-      margin-bottom: 1.75rem;
+    /* ═══════════════════════════════════════════════════════════════
+       MOBILE — 360px and below (iPhone SE)
+       ═══════════════════════════════════════════════════════════════ */
+    @media(max-width:360px){
+      :root{--gutter:0.85rem;}
+      .brand{font-size:1rem;gap:0.5rem;}.brand__mark{width:28px;height:28px;}.brand__mark svg{width:17px;height:17px;}
+      .theme-toggle{padding:0.3rem 0.6rem;}
+      .hero__headline{font-size:clamp(1.8rem,7vw,2.5rem);}.hero__lede{font-size:0.95rem;}
+      .counters__grid{grid-template-columns:1fr;}.counter{border-right:0!important;padding-right:0!important;border-bottom:1px solid rgba(255,255,255,0.08);}:root.dark .counter{border-bottom-color:var(--hairline);}.counter:last-child{border-bottom:0;}
+      .codename-badge__version{font-size:0.7rem;}.codename-badge__name{font-size:0.82rem;}.codename-badge__kanji{font-size:1rem;}
+      .install__code{font-size:10px;}.install__card-title{font-size:0.92rem;}.era__highlight{font-size:9px;}
     }
-    .codename-badge__kanji {
-      font-family: var(--serif-jp);
-      font-weight: 500;
-      font-size: 1.15rem;
-      color: var(--gold);
-      line-height: 1;
-    }
-    .codename-badge__divider {
-      width: 1px;
-      height: 16px;
-      background: var(--hairline);
-    }
-    .codename-badge__name {
-      font-family: var(--serif);
-      font-size: 0.88rem;
-      font-style: italic;
-      color: var(--ink);
-      letter-spacing: 0.01em;
-    }
-    .codename-badge__version {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--mute);
-      letter-spacing: 0.02em;
-    }
-
-    .hero__headline {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.025em;
-      margin: 0;
-      max-width: 18ch;
-    }
-    .hero__headline em {
-      font-style: italic;
-      color: var(--sage-deep);
-    }
-    :root.dark .hero__headline em { color: var(--sage); }
-
-    .hero__lede {
-      max-width: 60ch;
-      margin: 2rem 0 0;
-      font-size: 1.08rem;
-      color: var(--ink-soft);
-      line-height: 1.6;
-    }
-
-    .hero__codename-meaning {
-      margin-top: 1.5rem;
-      padding: 1rem 1.25rem;
-      border-left: 2px solid var(--gold);
-      background: color-mix(in srgb, var(--gold) 5%, transparent);
-      font-style: italic;
-      color: var(--ink-soft);
-      font-size: 0.95rem;
-      line-height: 1.55;
-      max-width: 60ch;
-    }
-    .hero__codename-meaning strong {
-      font-style: normal;
-      font-weight: 500;
-      color: var(--gold);
-    }
-
-    .hero__pills {
-      margin-top: 2.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.4rem 0.9rem;
-      border: 1px solid var(--hairline);
-      border-radius: 999px;
-      font-size: 0.82rem;
-      font-family: var(--mono);
-      letter-spacing: 0.02em;
-      color: var(--mute);
-    }
-    .pill__dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-    .pill--stable { color: var(--stable-tone); border-color: color-mix(in srgb, var(--stable-tone) 30%, var(--hairline)); }
-    .pill--alpha  { color: var(--alpha-tone);  border-color: color-mix(in srgb, var(--alpha-tone) 30%, var(--hairline)); }
-
-    .hero__cta {
-      margin-top: 3rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.65rem;
-      padding: 0.95rem 1.5rem;
-      border-radius: 999px;
-      font-family: var(--serif);
-      font-size: 0.95rem;
-      letter-spacing: 0.01em;
-      transition: transform 200ms var(--easing), background 200ms var(--easing), color 200ms var(--easing);
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-    .cta--primary { background: var(--ink); color: var(--paper); }
-    .cta--primary:hover { transform: translateY(-1px); background: var(--sage-deep); }
-    :root.dark .cta--primary { background: var(--sage); color: var(--bone); }
-    :root.dark .cta--primary:hover { background: var(--sage-deep); }
-
-    .cta--ghost { border-color: var(--hairline); color: var(--ink); }
-    .cta--ghost:hover { border-color: var(--sage); color: var(--sage-deep); }
-    :root.dark .cta--ghost:hover { color: var(--sage); }
-    .cta svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-      flex-shrink: 0;
-    }
-
-    .hero-image {
-      margin-top: 4rem;
-      width: 100%;
-      max-width: 960px;
-      margin-inline: auto;
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid var(--hairline);
-      box-shadow: 0 24px 60px -30px color-mix(in srgb, var(--ink) 40%, transparent);
-      background: var(--bone-deep);
-    }
-    .hero-image img { width: 100%; height: auto; display: block; }
-
-    /* =================================================================
-       GitHub counters
-       ================================================================= */
-    .counters {
-      background: var(--ink);
-      color: var(--paper);
-      padding: 5rem 0;
-      position: relative;
-      overflow: hidden;
-      transition: background var(--tx);
-    }
-    :root.dark .counters { background: var(--bone-deep); }
-    .counters::before {
-      content: "";
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 64px 64px;
-      pointer-events: none;
-    }
-    :root.dark .counters::before {
-      background-image:
-        linear-gradient(to right, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
-    }
-    .counters__head { position: relative; margin-bottom: 3rem; max-width: 64ch; }
-    .counters .section-label { color: rgba(255, 255, 255, 0.55); }
-    :root.dark .counters .section-label { color: var(--mute); }
-    .counters__title {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-      line-height: 1.15;
-      margin: 0.5rem 0 0;
-      color: var(--paper);
-    }
-    :root.dark .counters__title { color: var(--ink); }
-    .counters__note {
-      margin: 0.8rem 0 0;
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.55);
-      font-style: italic;
-    }
-    :root.dark .counters__note { color: var(--mute); }
-    .counters__grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-    }
-    :root.dark .counters__grid { border-top-color: var(--hairline); }
-    .counter {
-      padding: 2rem 0 0;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      position: relative;
-    }
-    :root.dark .counter { border-right-color: var(--hairline); }
-    .counter:last-child { border-right: 0; }
-    .counter__num {
-      font-size: clamp(2.5rem, 5vw, 3.75rem);
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      font-variant-numeric: tabular-nums;
-      color: var(--paper);
-      display: inline-flex;
-      align-items: baseline;
-      transition: opacity 300ms var(--easing);
-    }
-    :root.dark .counter__num { color: var(--ink); }
-    .counter__num.loading { opacity: 0.3; }
-    .counter__icon {
-      width: 0.55em;
-      height: 0.55em;
-      margin-left: 0.3em;
-      fill: var(--sage);
-      vertical-align: baseline;
-      display: inline-block;
-    }
-    .counter__label {
-      display: block;
-      margin-top: 1.25rem;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.55);
-    }
-    :root.dark .counter__label { color: var(--mute); }
-    .counter__sub {
-      display: block;
-      margin-top: 0.5rem;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.45);
-      font-style: italic;
-    }
-    :root.dark .counter__sub { color: var(--mute); }
-    @media (max-width: 860px) {
-      .counters__grid { grid-template-columns: repeat(2, 1fr); }
-      .counter {
-        padding: 1.5rem 1.25rem 1.5rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      :root.dark .counter { border-bottom-color: var(--hairline); }
-      .counter:nth-child(even) { border-right: 0; padding-right: 0; }
-      .counter:nth-last-child(-n+2) { border-bottom: 0; }
-    }
-
-    /* =================================================================
-       Showcase — using real GitHub image URLs
-       ================================================================= */
-    .showcase {
-      padding: 6rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .showcase__head { max-width: 720px; margin-bottom: 3.5rem; }
-    .showcase__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
-    .showcase__grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.75rem;
-    }
-    @media (max-width: 780px) { .showcase__grid { grid-template-columns: 1fr; } }
-
-    .shot {
-      position: relative;
-      overflow: hidden;
-      border-radius: 4px;
-      border: 1px solid var(--hairline);
-      background: var(--bone-deep);
-      transition: transform 300ms var(--easing), border-color 300ms var(--easing);
-    }
-    .shot:hover {
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--sage) 40%, var(--hairline));
-    }
-    .shot__frame {
-      aspect-ratio: 16 / 10;
-      width: 100%;
-      background: var(--bone-deep);
-      position: relative;
-      overflow: hidden;
-    }
-    .shot__frame img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      position: relative;
-      z-index: 1;
-    }
-    .shot__caption {
-      padding: 1rem 1.25rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-    .shot__caption-title { font-family: var(--serif); font-size: 0.95rem; font-weight: 500; color: var(--ink); }
-    .shot__caption-sub {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-    .shot__caption-hint {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 0.85rem;
-      color: var(--mute);
-      margin-top: 0.35rem;
-      line-height: 1.45;
-    }
-    .shot__badge {
-      position: absolute;
-      top: 0.75rem; left: 0.75rem;
-      z-index: 2;
-      padding: 0.3rem 0.65rem;
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--bone) 88%, transparent);
-      backdrop-filter: blur(6px);
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      border: 1px solid var(--hairline);
-    }
-    .shot__badge--new {
-      color: var(--sage-deep);
-      border-color: color-mix(in srgb, var(--sage) 50%, var(--hairline));
-    }
-    :root.dark .shot__badge--new { color: var(--sage); }
-
-    /* ─── Kintsugi theme showcase (featured card) ────────────────────── */
-    .kintsugi-showcase { overflow: hidden; }
-    .kintsugi-showcase .shot__badge {
-      background: color-mix(in srgb, var(--bone) 92%, transparent);
-      color: var(--gold);
-      border-color: color-mix(in srgb, var(--gold) 50%, var(--hairline));
-    }
-    .kintsugi-showcase__frame {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      aspect-ratio: 21 / 9;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-    @media (max-width: 720px) {
-      .kintsugi-showcase__frame {
-        grid-template-columns: 1fr;
-        aspect-ratio: auto;
-      }
-    }
-    .kintsugi-showcase__half {
-      padding: 2rem 2.25rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0.4rem;
-      min-height: 220px;
-    }
-    .kintsugi-showcase__half--light {
-      background: #fafaf7;
-      color: #2a2a2a;
-    }
-    .kintsugi-showcase__half--dark {
-      background: #14140f;
-      color: #ededed;
-    }
-    .kintsugi-showcase__kanji {
-      font-family: var(--serif-jp);
-      font-size: 1.6rem;
-      font-weight: 500;
-      color: #b8924e;
-      line-height: 1;
-      margin-bottom: 0.15rem;
-    }
-    .kintsugi-showcase__name {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 500;
-      font-style: italic;
-      color: #2a2a2a;
-    }
-    .kintsugi-showcase__swatches {
-      display: flex;
-      gap: 5px;
-      margin-top: 0.65rem;
-    }
-    .kintsugi-showcase__swatches span {
-      width: 24px;
-      height: 24px;
-      border-radius: 4px;
-      display: block;
-    }
-    .kintsugi-showcase__tags {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #666;
-      margin-top: 0.4rem;
-    }
-
-    /* =================================================================
-       Demos section (YouTube thumbnails)
-       ================================================================= */
-    .demos {
-      padding: 6rem 0;
-      border-bottom: 1px solid var(--hairline);
-      background: var(--bone-deep);
-    }
-    .demos__head { max-width: 720px; margin-bottom: 3rem; }
-    .demos__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
-    .demo-featured {
-      margin-bottom: 1.5rem;
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid var(--hairline);
-      background: var(--paper);
-      transition: transform 300ms var(--easing);
-      display: block;
-      position: relative;
-    }
-    .demo-featured:hover { transform: translateY(-2px); }
-    .demo-featured__thumb { position: relative; aspect-ratio: 16 / 9; }
-    .demo-featured__thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .demo-featured__play {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80px; height: 80px;
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--ink) 70%, transparent);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid rgba(255, 255, 255, 0.9);
-      transition: transform 200ms var(--easing);
-    }
-    .demo-featured:hover .demo-featured__play {
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-    .demo-featured__play::before {
-      content: "";
-      width: 0; height: 0;
-      border-left: 22px solid #fff;
-      border-top: 13px solid transparent;
-      border-bottom: 13px solid transparent;
-      margin-left: 5px;
-    }
-    .demo-featured__cap { padding: 1.25rem 1.5rem; text-align: center; }
-    .demo-featured__cap-label {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-    .demo-featured__cap-title {
-      font-family: var(--serif);
-      font-size: 1.25rem;
-      font-weight: 500;
-      margin: 0.35rem 0 0.4rem;
-    }
-    .demo-featured__cap-desc {
-      font-family: var(--serif);
-      font-size: 0.92rem;
-      font-style: italic;
-      color: var(--mute);
-    }
-    .demos__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-    @media (max-width: 980px) { .demos__grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 620px) { .demos__grid { grid-template-columns: 1fr; } }
-    .demo-card {
-      display: block;
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      overflow: hidden;
-      background: var(--paper);
-      transition: transform 300ms var(--easing), border-color 300ms var(--easing);
-    }
-    .demo-card:hover {
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--sage) 40%, var(--hairline));
-    }
-    .demo-card__thumb { aspect-ratio: 16 / 9; position: relative; overflow: hidden; }
-    .demo-card__thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .demo-card__play {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--ink) 70%, transparent);
-      backdrop-filter: blur(6px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1.5px solid rgba(255, 255, 255, 0.9);
-    }
-    .demo-card__play::before {
-      content: "";
-      width: 0; height: 0;
-      border-left: 16px solid #fff;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-      margin-left: 4px;
-    }
-    .demo-card__cap { padding: 1rem 1.25rem 1.25rem; text-align: center; }
-    .demo-card__cap-label {
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-    .demo-card__cap-title {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 500;
-      margin: 0.3rem 0 0.25rem;
-    }
-    .demo-card__cap-desc {
-      font-family: var(--serif);
-      font-size: 0.82rem;
-      font-style: italic;
-      color: var(--mute);
-    }
-
-    /* =================================================================
-       Timeline chart
-       ================================================================= */
-    .timeline {
-      padding: 6rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .timeline__head { max-width: 720px; margin-bottom: 3.5rem; }
-    .timeline__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
-
-    .chart {
-      position: relative;
-      width: 100%;
-      padding: 2.5rem 0 3rem;
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .chart__inner {
-      min-width: 1100px;
-      position: relative;
-      height: 280px;
-    }
-    .chart__axis {
-      position: absolute;
-      left: 0; right: 0;
-      top: 50%;
-      height: 1px;
-      background: var(--hairline);
-    }
-    .chart__axis-label {
-      position: absolute;
-      left: 0;
-      top: calc(50% + 8px);
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.12em;
-      color: var(--mute);
-      text-transform: uppercase;
-    }
-    .chart__node {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.35rem;
-      cursor: default;
-    }
-    .chart__node-dot {
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: var(--hairline);
-      border: 2px solid var(--bone);
-      box-shadow: 0 0 0 1px var(--hairline);
-      transition: transform 200ms var(--easing);
-    }
-    .chart__node:hover .chart__node-dot { transform: scale(1.35); }
-    .chart__node--stable .chart__node-dot {
-      background: var(--stable-tone);
-      box-shadow: 0 0 0 1px var(--stable-tone);
-    }
-    .chart__node--alpha .chart__node-dot {
-      background: var(--alpha-tone);
-      box-shadow: 0 0 0 1px var(--alpha-tone);
-    }
-    .chart__node--current .chart__node-dot {
-      width: 20px; height: 20px;
-      background: var(--gold);
-      box-shadow: 0 0 0 2px var(--gold), 0 0 0 8px color-mix(in srgb, var(--gold) 25%, transparent);
-    }
-    :root.dark .chart__node--current .chart__node-dot {
-      background: var(--gold);
-      box-shadow: 0 0 0 2px var(--gold), 0 0 0 8px color-mix(in srgb, var(--gold) 30%, transparent);
-    }
-    .chart__node-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      color: var(--ink-soft);
-      white-space: nowrap;
-    }
-    .chart__node-bullet {
-      font-family: var(--serif);
-      font-size: 11.5px;
-      font-style: italic;
-      color: var(--mute);
-      max-width: 120px;
-      text-align: center;
-      line-height: 1.35;
-    }
-    .chart__node-current-mark {
-      font-family: var(--serif-jp);
-      font-size: 12px;
-      color: var(--gold);
-      font-weight: 500;
-      margin-top: 2px;
-    }
-    .chart__node--above { top: calc(50% - 80px); }
-    .chart__node--above .chart__node-label { order: 3; }
-    .chart__node--above .chart__node-bullet { order: 2; }
-    .chart__node--above .chart__node-dot    { order: 1; margin-bottom: -4px; }
-    .chart__node--below { top: calc(50% + 80px); }
-    .chart__node--below .chart__node-label { order: 1; margin-bottom: -4px; }
-    .chart__node--below .chart__node-dot   { order: 2; }
-    .chart__node--below .chart__node-bullet { order: 3; }
-
-    .chart__legend {
-      margin-top: 2rem;
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--mute);
-      text-transform: uppercase;
-    }
-    .chart__legend-item { display: inline-flex; align-items: center; gap: 0.55rem; }
-    .chart__legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .chart__legend-dot--stable { background: var(--stable-tone); }
-    .chart__legend-dot--alpha  { background: var(--alpha-tone); }
-    .chart__legend-dot--current {
-      background: var(--gold);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 30%, transparent);
-    }
-
-    /* =================================================================
-       Codename gallery
-       ================================================================= */
-    .codenames {
-      padding: 6rem 0;
-      background: var(--bone-deep);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .codenames__head { max-width: 720px; margin-bottom: 3rem; }
-    .codenames__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
-    .codenames__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
-    @media (max-width: 880px) { .codenames__grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 560px) { .codenames__grid { grid-template-columns: 1fr; } }
-
-    .codename-card {
-      background: var(--paper);
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      padding: 1.5rem;
-      position: relative;
-      transition: border-color 200ms var(--easing);
-    }
-    .codename-card:hover { border-color: color-mix(in srgb, var(--gold) 40%, var(--hairline)); }
-    .codename-card--current {
-      border-color: color-mix(in srgb, var(--gold) 60%, var(--hairline));
-      background: color-mix(in srgb, var(--gold) 4%, var(--paper));
-    }
-    .codename-card__kanji {
-      font-family: var(--serif-jp);
-      font-weight: 500;
-      font-size: 2.5rem;
-      color: var(--gold);
-      line-height: 1;
-      margin-bottom: 0.5rem;
-    }
-    .codename-card__name {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 500;
-      font-style: italic;
-      margin-bottom: 0.25rem;
-    }
-    .codename-card__meaning {
-      font-family: var(--serif);
-      font-size: 0.85rem;
-      font-style: italic;
-      color: var(--mute);
-      margin-bottom: 1rem;
-      line-height: 1.45;
-    }
-    .codename-card__versions {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.06em;
-      color: var(--ink-soft);
-      padding-top: 0.9rem;
-      border-top: 1px solid var(--hairline);
-    }
-    .codename-card__status {
-      position: absolute;
-      top: 0.85rem; right: 0.85rem;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--mute);
-      padding: 0.2rem 0.5rem;
-      border-radius: 999px;
-      border: 1px solid var(--hairline);
-    }
-    .codename-card__status--current {
-      color: var(--gold);
-      border-color: color-mix(in srgb, var(--gold) 60%, var(--hairline));
-      background: color-mix(in srgb, var(--gold) 10%, transparent);
-    }
-    .codename-card__status--next {
-      color: var(--alpha-tone);
-      border-color: color-mix(in srgb, var(--alpha-tone) 50%, var(--hairline));
-    }
-
-    /* =================================================================
-       Install blocks
-       ================================================================= */
-    .install {
-      padding: 6rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .install__head { max-width: 720px; margin-bottom: 3rem; }
-    .install__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
-    .install__grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
-    }
-    @media (max-width: 780px) { .install__grid { grid-template-columns: 1fr; } }
-    .install__card {
-      background: var(--paper);
-      border: 1px solid var(--hairline);
-      padding: 1.5rem;
-      border-radius: 3px;
-    }
-    .install__card--alpha {
-      border-color: color-mix(in srgb, var(--alpha-tone) 35%, var(--hairline));
-      background: color-mix(in srgb, var(--alpha-tone) 4%, var(--paper));
-    }
-    .install__card-title {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      font-weight: 500;
-      margin: 0 0 0.35rem;
-    }
-    .install__card-meta {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.05em;
-      color: var(--mute);
-      text-transform: uppercase;
-      margin: 0 0 1.25rem;
-    }
-    .install__code {
-      background: var(--bone-deep);
-      border: 1px solid var(--hairline);
-      border-radius: 3px;
-      padding: 1rem 1.15rem;
-      font-family: var(--mono);
-      font-size: 12.5px;
-      line-height: 1.6;
-      color: var(--ink);
-      overflow-x: auto;
-      white-space: pre;
-      margin: 0 0 1rem;
-      position: relative;
-    }
-    .install__copy {
-      position: absolute;
-      top: 0.55rem; right: 0.65rem;
-      background: var(--paper);
-      border: 1px solid var(--hairline);
-      border-radius: 2px;
-      padding: 0.25rem 0.55rem;
-      font-family: var(--serif);
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      color: var(--ink-soft);
-      cursor: pointer;
-      transition: border-color 150ms var(--easing);
-    }
-    .install__copy:hover { border-color: var(--sage); color: var(--sage-deep); }
-    :root.dark .install__copy:hover { color: var(--sage); }
-    .install__copy.copied { color: var(--sage-deep); border-color: var(--sage-deep); }
-    .install__card-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      color: var(--mute);
-      text-transform: uppercase;
-    }
-
-    /* =================================================================
-       Archive — full history timeline with pictures
-       ================================================================= */
-    .archive {
-      padding: 6rem 0;
-      background: var(--bone-deep);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .archive__head { max-width: 720px; margin-bottom: 3.5rem; }
-    .archive__intro { color: var(--mute); margin: 1rem 0 0; font-size: 1.05rem; }
-
-    .era {
-      position: relative;
-      padding-left: 2.5rem;
-      margin-bottom: 4rem;
-    }
-    .era::before {
-      content: "";
-      position: absolute;
-      left: 8px; top: 18px; bottom: -3rem;
-      width: 1px;
-      background: var(--hairline);
-    }
-    .era:last-child::before { display: none; }
-    .era::after {
-      content: "";
-      position: absolute;
-      left: 0; top: 10px;
-      width: 17px; height: 17px;
-      border-radius: 50%;
-      background: var(--paper);
-      border: 2px solid var(--hairline);
-    }
-    .era--archive::after {
-      background: var(--alpha-tone);
-      border-color: var(--alpha-tone);
-    }
-    .era--legacy::after {
-      background: var(--mute);
-      border-color: var(--mute);
-    }
-    .era--modern::after {
-      background: var(--sage-deep);
-      border-color: var(--sage-deep);
-    }
-
-    .era__header {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .era__version {
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.05em;
-      color: var(--ink);
-      font-weight: 500;
-    }
-    .era__label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--mute);
-      padding: 0.2rem 0.55rem;
-      border: 1px solid var(--hairline);
-      border-radius: 999px;
-    }
-    .era__label--archive { color: var(--alpha-tone); border-color: color-mix(in srgb, var(--alpha-tone) 40%, var(--hairline)); }
-    .era__label--legacy  { color: var(--mute); }
-    .era__label--modern  { color: var(--sage-deep); border-color: color-mix(in srgb, var(--sage) 40%, var(--hairline)); }
-    :root.dark .era__label--modern { color: var(--sage); }
-    .era__title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      margin: 0 0 0.5rem;
-    }
-    .era__title em {
-      font-style: italic;
-      color: var(--gold);
-    }
-    .era__desc {
-      font-family: var(--serif);
-      font-size: 0.95rem;
-      color: var(--mute);
-      line-height: 1.6;
-      max-width: 70ch;
-      margin: 0 0 1.5rem;
-    }
-
-    .era__gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.85rem;
-    }
-    @media (max-width: 780px) { .era__gallery { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 480px) { .era__gallery { grid-template-columns: 1fr; } }
-
-    .era__shot {
-      position: relative;
-      overflow: hidden;
-      border-radius: 3px;
-      border: 1px solid var(--hairline);
-      background: var(--bone);
-      aspect-ratio: 16 / 10;
-      transition: transform 200ms var(--easing);
-    }
-    .era__shot:hover { transform: translateY(-2px); }
-    .era__shot img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
-    .era__shot-cap {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 0.65rem 0.85rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #fff;
-    }
-
-    .era__highlight {
-      display: inline-block;
-      margin-top: 0.75rem;
-      padding: 0.3rem 0.75rem;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--mute);
-      border: 1px solid var(--hairline);
-      border-radius: 999px;
-      background: var(--paper);
-    }
-
-    /* =================================================================
-       Footer
-       ================================================================= */
-    .foot {
-      padding: 3rem 0 4rem;
-      font-size: 0.85rem;
-      color: var(--mute);
-    }
-    .foot__row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
-    .foot__links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    .foot__links a:hover { color: var(--sage-deep); }
-    :root.dark .foot__links a:hover { color: var(--sage); }
   </style>
 </head>
 <body>
+<nav class="nav"><div class="shell nav__inner">
+<a href="#" class="brand"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20c-.7-2.5-1-5-1-8.5 0-1.5 0-3 .3-4.5.2 2.7.5 5.5 1.2 8.5.9-2.2 1.3-5 1.3-8.5-.8 2.8-.8 5.8-1.8 13z"/><path d="M5.5 20c-.5-2-.8-4-.5-6.8.3-.2.5.3.8.9 1.1 2 1.9 4 2.3 5.9-.7-.3-1.5-.6-2.6 0z" opacity="0.75"/><path d="M18.5 20c.5-2 .8-4 .5-6.8-.3-.2-.5.3-.8.9-1.1 2-1.9 4-2.3 5.9.7-.3 1.5-.6 2.6 0z" opacity="0.75"/><path d="M3 20.5h18v1H3z" opacity="0.35"/></svg></span><span>Zen Shell</span></a>
+<div class="nav__links"><a href="#showcase">Showcase</a><a href="#demos">Demos</a><a href="#timeline">Timeline</a><a href="#codenames">Codenames</a><a href="#install">Install</a><a href="#archive">Archive</a><a href="https://github.com/Gekinzen/zen_barebone_alpha_development" rel="noopener">GitHub</a></div>
+<button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode"><svg id="themeIconMoon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg><svg id="themeIconSun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:none;"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg><span class="theme-toggle__label" id="themeLabel">Dark</span></button>
+</div></nav>
 
-<nav class="nav">
-  <div class="shell nav__inner">
-    <a href="#" class="brand">
-      <span class="brand__mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 20c-.7-2.5-1-5-1-8.5 0-1.5 0-3 .3-4.5.2 2.7.5 5.5 1.2 8.5.9-2.2 1.3-5 1.3-8.5-.8 2.8-.8 5.8-1.8 13z"/>
-          <path d="M5.5 20c-.5-2-.8-4-.5-6.8.3-.2.5.3.8.9 1.1 2 1.9 4 2.3 5.9-.7-.3-1.5-.6-2.6 0z" opacity="0.75"/>
-          <path d="M18.5 20c.5-2 .8-4 .5-6.8-.3-.2-.5.3-.8.9-1.1 2-1.9 4-2.3 5.9.7-.3 1.5-.6 2.6 0z" opacity="0.75"/>
-          <path d="M3 20.5h18v1H3z" opacity="0.35"/>
-        </svg>
-      </span>
-      <span>Zen Shell</span>
-    </a>
-    <div class="nav__links">
-      <a href="#showcase">Showcase</a>
-      <a href="#demos">Demos</a>
-      <a href="#timeline">Timeline</a>
-      <a href="#codenames">Codenames</a>
-      <a href="#install">Install</a>
-      <a href="#archive">Archive</a>
-      <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" rel="noopener">GitHub</a>
-    </div>
-    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
-      <svg id="themeIconMoon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
-      </svg>
-      <svg id="themeIconSun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:none;">
-        <circle cx="12" cy="12" r="4.5"/>
-        <path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
-      </svg>
-      <span class="theme-toggle__label" id="themeLabel">Dark</span>
-    </button>
-  </div>
-</nav>
+<section class="hero"><div class="shell">
+<div class="codename-badge"><span class="codename-badge__kanji" lang="ja">金継ぎ</span><span class="codename-badge__divider"></span><span class="codename-badge__name">Kintsugi</span><span class="codename-badge__version">v6.16.4.11.2 · stable</span></div>
+<h1 class="hero__headline">A QML-native desktop <em>environment</em> for Hyprland.</h1>
+<p class="hero__lede">Zen Shell replaces GTK4, Python, and Waybar with a unified Quickshell architecture. Panel, control center, wallpaper engine, themes, widgets — all one process, one language, one design system. Built for Arch and CachyOS. Extensively tested on AMD Ryzen + Radeon. Runs on Hyprland 0.54+.</p>
+<p class="hero__codename-meaning"><strong>Kintsugi (金継ぎ)</strong> — the Japanese art of repairing broken pottery with gold. The seams aren't hidden; they're illuminated. This release took eleven iterations to land — the color picker alone needed four attempts. What you get is the bowl, lacquered in gold.</p>
+<div class="hero__pills"><span class="pill pill--stable"><span class="pill__dot"></span>Stable · v6.16.4.11.2</span><span class="pill pill--alpha"><span class="pill__dot"></span>Alpha · Hikari (v4.12)</span><span class="pill">Hyprland ≥ 0.54</span><span class="pill">Arch / CachyOS</span></div>
+<div class="hero__cta">
+<a href="https://github.com/Gekinzen/zen_barebone_alpha_development/releases/latest" class="cta cta--primary" rel="noopener"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span>Download Latest</span></a>
+<a href="#timeline" class="cta cta--ghost"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="19" cy="12" r="2" fill="currentColor"/><path d="M7 12h3M14 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Release History</span></a>
+</div>
+<div class="hero-image"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/hero_desktop.jpg" alt="Zen Shell desktop preview — Kintsugi v6.16.4.11.2" loading="eager" /></div>
+</div></section>
 
-<!-- ═══════════════════════════════════════════════════════════════════
-     HERO
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="hero">
-  <div class="shell">
-    <div class="codename-badge">
-      <span class="codename-badge__kanji" lang="ja">金継ぎ</span>
-      <span class="codename-badge__divider"></span>
-      <span class="codename-badge__name">Kintsugi</span>
-      <span class="codename-badge__version">v6.16.4.11.2 · stable</span>
-    </div>
+<section class="showcase" id="showcase"><div class="shell">
+<div class="showcase__head"><span class="section-label">Showcase</span><h2 class="section-title">Zen Shell, in practice.</h2><p class="showcase__intro">The current UI as shipped in Kintsugi (v6.16.4.11.2). Panel, Start Menu, Settings, Control Panel, Wallpaper browser, Theme engine.</p></div>
+<div class="showcase__grid">
+<a class="shot kintsugi-showcase" href="#install" style="grid-column:1/-1;"><div class="kintsugi-showcase__frame"><span class="shot__badge shot__badge--new" style="z-index:5;">New · Kintsugi Themes</span><div class="kintsugi-showcase__half kintsugi-showcase__half--light"><div class="kintsugi-showcase__kanji" lang="ja">金継ぎ</div><div class="kintsugi-showcase__name">Kintsugi Light</div><div class="kintsugi-showcase__swatches"><span style="background:#fafaf7;border:1px solid #e5e3dd;"></span><span style="background:#f4f2eb;border:1px solid #e5e3dd;"></span><span style="background:#5f7450;"></span><span style="background:#b8924e;"></span><span style="background:#c68a4a;"></span><span style="background:#a4413c;"></span></div><div class="kintsugi-showcase__tags">Bone · Sage · Gold</div></div><div class="kintsugi-showcase__half kintsugi-showcase__half--dark"><div class="kintsugi-showcase__kanji" lang="ja" style="color:#d4a85f;">金継ぎ</div><div class="kintsugi-showcase__name" style="color:#ededed;">Kintsugi Dark</div><div class="kintsugi-showcase__swatches"><span style="background:#14140f;border:1px solid #2a2a24;"></span><span style="background:#1c1c17;border:1px solid #2a2a24;"></span><span style="background:#98b283;"></span><span style="background:#d4a85f;"></span><span style="background:#d89a60;"></span><span style="background:#d07a6a;"></span></div><div class="kintsugi-showcase__tags" style="color:#8a8a85;">Ink · Sage · Lacquered gold</div></div></div><div class="shot__caption"><span class="shot__caption-title">New themes — Kintsugi Light + Dark</span><span class="shot__caption-sub">17 + 2 = 19 built-in · matches this website's palette</span><span class="shot__caption-hint">The website's design tokens shipped back to the shell. Drop <code>kintsugi-light.json</code> and <code>kintsugi-dark.json</code> into <code>themes-builtin/</code> and the desktop pixel-matches the site.</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_01_wallpaper_picker.gif" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge">Super+W</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_01_wallpaper_picker.gif" alt="Wallpaper picker" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Wallpaper engine</span><span class="shot__caption-sub">Folder scan · slideshow · online repo browser</span><span class="shot__caption-hint">Full wallpaper picker with folder scanning, slideshow scheduling, transition effects, and the online repo browser.</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_02_animations_dropdown.gif" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge shot__badge--new">New · v4.11.2</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_02_animations_dropdown.gif" alt="Animation presets" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Animation presets</span><span class="shot__caption-sub">21 community presets · Material ZenComboBox</span><span class="shot__caption-hint">Rotating chevron, accent dots, left accent bar on highlight. Text color picked via WCAG 2.0 luminance.</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_03_themes_palette.gif" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge shot__badge--new">New · v4.11.2</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_03_themes_palette.gif" alt="Themes page" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Themes page</span><span class="shot__caption-sub">PaletteBox · 19 themes · live preview</span><span class="shot__caption-hint">Theme palette relocated from General. 60×60 PaletteBoxes open the PopupWindow picker with live hex typing.</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_04_panel_drag_drop.gif" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge">Panel</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_04_panel_drag_drop.gif" alt="Panel drag-drop" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Panel · Bar modes</span><span class="shot__caption-sub">Drag-drop zones · fullwidth ↔ island</span><span class="shot__caption-hint">Drag modules between Left / Center / Right zones — state persists to panel-state.json.</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_05_control_panel.gif" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge">Super+C</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_05_control_panel.gif" alt="Control Panel" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Control Panel + Dark Mode</span><span class="shot__caption-sub">Quick toggles · Power Profile · Dark Mode sync</span><span class="shot__caption-hint">Volume, WiFi/BT/Ethernet, Ryzen + Radeon telemetry, Power Profile, Gaming Boost. Dark Mode toggle syncs GTK3/4/libadwaita.</span></div></a>
+</div></div></section>
 
-    <h1 class="hero__headline">
-      A QML-native desktop <em>environment</em> for Hyprland.
-    </h1>
-    <p class="hero__lede">
-      Zen Shell replaces GTK4, Python, and Waybar with a unified Quickshell architecture.
-      Panel, control center, wallpaper engine, themes, widgets — all one process, one language, one design system.
-      Built for Arch and CachyOS. Extensively tested on AMD Ryzen + Radeon. Runs on Hyprland 0.54+.
-    </p>
+<section class="showcase" id="showcase-prev" style="background:var(--bone-deep);"><div class="shell">
+<div class="showcase__head"><span class="section-label">Previous showcases</span><h2 class="section-title">Earlier captures · v6.15.3 era.</h2><p class="showcase__intro">Static shots and clips from the Ensō series (v6.15.x). Preserved here so the evolution stays visible.</p></div>
+<div class="showcase__grid">
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge">v6.15.3 · Desktop</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Desktop" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Desktop (Ensō)</span><span class="shot__caption-sub">Panel · widgets · wallpaper</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge">v6.15.3 · Overview</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" alt="Workspace" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Workspace</span><span class="shot__caption-sub">Island mode · control panel · themes</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample3.png" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge">v6.15.3 · Settings</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample3.png" alt="Settings" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Settings page</span><span class="shot__caption-sub">14 pages · live preview</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_01_adaptive_theming.gif" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge">v6.15.3 · Adaptive</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_01_adaptive_theming.gif" alt="Adaptive theming" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Adaptive theming</span><span class="shot__caption-sub">Unified palette · live rerender</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_02_settings_tour.gif" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge">v6.15.3 · Settings Tour</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_02_settings_tour.gif" alt="Settings tour" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Settings tour</span><span class="shot__caption-sub">14 pages · live preview · no restart</span></div></a>
+<a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_03_screenshot_module_ultrawide.gif" target="_blank" rel="noopener"><div class="shot__frame"><span class="shot__badge">v6.15.3 · Super+Shift+S</span><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_03_screenshot_module_ultrawide.gif" alt="Screenshot ropes" loading="lazy" /></div><div class="shot__caption"><span class="shot__caption-title">Screenshot Ropes</span><span class="shot__caption-sub">Region capture · physics overlay · wl-copy</span></div></a>
+</div></div></section>
 
-    <p class="hero__codename-meaning">
-      <strong>Kintsugi (金継ぎ)</strong> — the Japanese art of repairing broken pottery with gold.
-      The seams aren't hidden; they're illuminated. This release took eleven iterations to land —
-      the color picker alone needed four attempts. What you get is the bowl, lacquered in gold.
-    </p>
+<section class="demos" id="demos"><div class="shell">
+<div class="demos__head"><span class="section-label">Video demos</span><h2 class="section-title">The full tour.</h2><p class="demos__intro">Latest Kintsugi showcase on top, followed by historical tours. Click any to watch on YouTube.</p></div>
+<a class="demo-featured" href="https://www.youtube.com/watch?v=nS2L9dIQbF4" target="_blank" rel="noopener"><div class="demo-featured__thumb"><img src="https://img.youtube.com/vi/nS2L9dIQbF4/maxresdefault.jpg" alt="Kintsugi Showcase" loading="lazy" /><div class="demo-featured__play" aria-hidden="true"></div></div><div class="demo-featured__cap"><div class="demo-featured__cap-label">🟢 Latest · v6.16.4.11.2 · Kintsugi (金継ぎ)</div><div class="demo-featured__cap-title">Zen Shell Kintsugi — Release Showcase</div><div class="demo-featured__cap-desc">Panel, wallpaper engine, Material ZenComboBox, Themes with PaletteBox, Control Panel Dark Mode sync, WiFi picker.</div></div></a>
+<div class="demos__grid">
+<a class="demo-card" href="https://www.youtube.com/watch?v=dNwGRBhA97g" target="_blank" rel="noopener"><div class="demo-card__thumb"><img src="https://img.youtube.com/vi/dNwGRBhA97g/maxresdefault.jpg" alt="Full Tour" loading="lazy" /><div class="demo-card__play" aria-hidden="true"></div></div><div class="demo-card__cap"><div class="demo-card__cap-label">Full tour · v6.15.x (Ensō)</div><div class="demo-card__cap-title">Zen Shell — Full Tour</div><div class="demo-card__cap-desc">Strings music module, screenshot ropes, settings, complete desktop experience.</div></div></a>
+<a class="demo-card" href="https://www.youtube.com/watch?v=YQxrh5_naMQ" target="_blank" rel="noopener"><div class="demo-card__thumb"><img src="https://img.youtube.com/vi/YQxrh5_naMQ/maxresdefault.jpg" alt="v6.14" loading="lazy" /><div class="demo-card__play" aria-hidden="true"></div></div><div class="demo-card__cap"><div class="demo-card__cap-label">v6.14 · Yugen</div><div class="demo-card__cap-title">Zen Shell v6.14</div><div class="demo-card__cap-desc">Theme switching, panel modes, control center in the QML-rewrite era.</div></div></a>
+<a class="demo-card" href="https://www.youtube.com/watch?v=ao89J3DEqiA" target="_blank" rel="noopener"><div class="demo-card__thumb"><img src="https://img.youtube.com/vi/ao89J3DEqiA/maxresdefault.jpg" alt="v6.10" loading="lazy" /><div class="demo-card__play" aria-hidden="true"></div></div><div class="demo-card__cap"><div class="demo-card__cap-label">v6.10 · Yugen foundations</div><div class="demo-card__cap-title">Zen Shell v6.10</div><div class="demo-card__cap-desc">The fresh QML rewrite — where the new stack began.</div></div></a>
+</div></div></section>
 
-    <div class="hero__pills">
-      <span class="pill pill--stable"><span class="pill__dot"></span>Stable · v6.16.4.11.2</span>
-      <span class="pill pill--alpha"><span class="pill__dot"></span>Alpha · Hikari (v4.12)</span>
-      <span class="pill">Hyprland ≥ 0.54</span>
-      <span class="pill">Arch / CachyOS</span>
-    </div>
+<section class="counters"><div class="shell">
+<div class="counters__head"><span class="section-label">Repository pulse</span><h2 class="counters__title">Zen Shell on GitHub.</h2><p class="counters__note">Live from the public GitHub API. Cached 5 minutes.</p></div>
+<div class="counters__grid">
+<div class="counter"><div class="counter__num loading" id="counterStars">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><span class="counter__label">Stars</span><span class="counter__sub">People tracking the repo</span></div>
+<div class="counter"><div class="counter__num loading" id="counterForks">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="5" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="19" r="2.5"/><path d="M6 7.5v2.5c0 2 1.5 3 3 3h6c1.5 0 3-1 3-3v-2.5M12 13v3.5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><span class="counter__label">Forks</span><span class="counter__sub">Running their own variants</span></div>
+<div class="counter"><div class="counter__num loading" id="counterWatchers">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div><span class="counter__label">Watchers</span><span class="counter__sub">Subscribed to every push</span></div>
+<div class="counter"><div class="counter__num loading" id="counterReleases">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l-9 5v10l9 5 9-5V7l-9-5zm0 2.3l6.5 3.6L12 11.5 5.5 7.9 12 4.3zM5 9.5l6 3.3v7.4l-6-3.3V9.5zm8 10.7v-7.4l6-3.3v7.4l-6 3.3z"/></svg></div><span class="counter__label">Releases</span><span class="counter__sub">Tagged versions shipped</span></div>
+</div></div></section>
 
-    <div class="hero__cta">
-      <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/releases/latest" class="cta cta--primary" rel="noopener">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-        <span>Download Latest</span>
-      </a>
-      <a href="#timeline" class="cta cta--ghost">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="5" cy="12" r="2" fill="currentColor"/>
-          <circle cx="12" cy="12" r="2" fill="currentColor"/>
-          <circle cx="19" cy="12" r="2" fill="currentColor"/>
-          <path d="M7 12h3M14 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <span>Release History</span>
-      </a>
-    </div>
+<section class="timeline" id="timeline"><div class="shell">
+<div class="timeline__head"><span class="section-label">Release history</span><h2 class="section-title">Kintsugi cycle — eleven drops, two days.</h2><p class="timeline__intro">Amber markers are alpha iterations inside the 4.x cycle. Gold marker is the current stable — v6.16.4.11.2 "Kintsugi", promoted to main on 2026-04-24.</p></div>
+<div class="chart" role="img" aria-label="Version timeline"><div class="chart__inner"><div class="chart__axis"></div><div class="chart__axis-label">2026 ← Kintsugi alpha cycle</div>
+<div class="chart__node chart__node--stable chart__node--below" style="left:3%"><span class="chart__node-label">v4.1</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Panic hotfix<br>prior stable</span></div>
+<div class="chart__node chart__node--alpha chart__node--above" style="left:11%"><span class="chart__node-label">v4.2</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Widget scale<br>(incomplete)</span></div>
+<div class="chart__node chart__node--alpha chart__node--below" style="left:19%"><span class="chart__node-label">v4.3</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Scale fix<br>oscillation kill</span></div>
+<div class="chart__node chart__node--alpha chart__node--above" style="left:27%"><span class="chart__node-label">v4.4</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Gaps preserved<br>after Displays</span></div>
+<div class="chart__node chart__node--alpha chart__node--below" style="left:35%"><span class="chart__node-label">v4.5</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Start Menu<br>breathing room</span></div>
+<div class="chart__node chart__node--alpha chart__node--above" style="left:42%"><span class="chart__node-label">v4.6</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Wallpaper cols<br>+ Picker v1</span></div>
+<div class="chart__node chart__node--alpha chart__node--below" style="left:50%"><span class="chart__node-label">v4.7</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Super+T<br>+ Dark Mode</span></div>
+<div class="chart__node chart__node--alpha chart__node--above" style="left:57%"><span class="chart__node-label">v4.8</span><span class="chart__node-dot"></span><span class="chart__node-bullet">WiFi log<br>+ Picker v2</span></div>
+<div class="chart__node chart__node--alpha chart__node--below" style="left:65%"><span class="chart__node-label">v4.9</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Window bounds<br>(still buggy)</span></div>
+<div class="chart__node chart__node--alpha chart__node--above" style="left:73%"><span class="chart__node-label">v4.10</span><span class="chart__node-dot"></span><span class="chart__node-bullet">PopupWindow<br>rewrite · live hex</span></div>
+<div class="chart__node chart__node--alpha chart__node--below" style="left:81%"><span class="chart__node-label">v4.11</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Custom Themes<br>management</span></div>
+<div class="chart__node chart__node--current chart__node--above" style="left:93%"><span class="chart__node-label">v4.11.2 · STABLE</span><span class="chart__node-dot"></span><span class="chart__node-bullet">Palette relocation<br>Material dropdown</span><span class="chart__node-current-mark" lang="ja">金継ぎ · Kintsugi</span></div>
+</div></div>
+<div class="chart__legend"><span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--stable"></span>Prior stable</span><span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--alpha"></span>Alpha iteration</span><span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--current"></span>Current stable · Kintsugi</span></div>
+</div></section>
 
-    <div class="hero-image">
-      <img
-        src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/hero_desktop.jpg"
-        alt="Zen Shell desktop preview — Kintsugi v6.16.4.11.2"
-        loading="eager"
-      />
-    </div>
-  </div>
-</section>
+<section class="codenames" id="codenames"><div class="shell">
+<div class="codenames__head"><span class="section-label">Release codenames</span><h2 class="section-title">Japanese zen concepts.</h2><p class="codenames__intro">Each release era gets a codename from Japanese zen vocabulary — aesthetics, states of mind, seasonal phenomena.</p></div>
+<div class="codenames__grid">
+<div class="codename-card"><span class="codename-card__status">Genesis</span><div class="codename-card__kanji" lang="ja">若葉</div><div class="codename-card__name">Wakaba</div><div class="codename-card__meaning">Young leaf — the first sprout. Earliest concept build with bare Waybar + Python.</div><div class="codename-card__versions">Alpha v0.91</div></div>
+<div class="codename-card"><span class="codename-card__status">Legacy</span><div class="codename-card__kanji" lang="ja">苔</div><div class="codename-card__name">Koke</div><div class="codename-card__meaning">Moss — steady growth. GTK4 / Libadwaita control center era, custom dock, theme engine.</div><div class="codename-card__versions">Alpha v2.x (v2.1.3)</div></div>
+<div class="codename-card"><span class="codename-card__status">Historical</span><div class="codename-card__kanji" lang="ja">幽玄</div><div class="codename-card__name">Yugen</div><div class="codename-card__meaning">Subtle profound grace — the GTK4 → Quickshell rewrite.</div><div class="codename-card__versions">v6.15.x</div></div>
+<div class="codename-card"><span class="codename-card__status">Historical</span><div class="codename-card__kanji" lang="ja">円相</div><div class="codename-card__name">Ensō</div><div class="codename-card__meaning">The zen circle — unified 6.16 architecture closed the loop.</div><div class="codename-card__versions">v6.16.x base</div></div>
+<div class="codename-card"><span class="codename-card__status">Historical</span><div class="codename-card__kanji" lang="ja">間</div><div class="codename-card__name">Ma</div><div class="codename-card__meaning">The space between — cascade Control Panel, two-column layouts.</div><div class="codename-card__versions">v6.16.1.x</div></div>
+<div class="codename-card"><span class="codename-card__status">Historical</span><div class="codename-card__kanji" lang="ja">渋い</div><div class="codename-card__name">Shibui</div><div class="codename-card__meaning">Understated refinement — click-through fixes, OpacityMask avatar.</div><div class="codename-card__versions">v6.16.2.3.x</div></div>
+<div class="codename-card"><span class="codename-card__status">Historical</span><div class="codename-card__kanji" lang="ja">寂</div><div class="codename-card__name">Sabi</div><div class="codename-card__meaning">Beauty of age &amp; patina — Lock screen, PowerBadge, weather mood.</div><div class="codename-card__versions">v6.16.3.x</div></div>
+<div class="codename-card codename-card--current"><span class="codename-card__status codename-card__status--current">Current</span><div class="codename-card__kanji" lang="ja">金継ぎ</div><div class="codename-card__name">Kintsugi</div><div class="codename-card__meaning">Golden-repair — panic keybind, laptop reliability, color picker that took 4 tries.</div><div class="codename-card__versions">v6.16.4.x · v6.16.4.11.2</div></div>
+<div class="codename-card"><span class="codename-card__status codename-card__status--next">Next Alpha</span><div class="codename-card__kanji" lang="ja">光</div><div class="codename-card__name">Hikari</div><div class="codename-card__meaning">Light · clarity — Profile Export/Import.</div><div class="codename-card__versions">v6.16.4.12 (planned)</div></div>
+<div class="codename-card"><span class="codename-card__status codename-card__status--next">Future</span><div class="codename-card__kanji" lang="ja">道</div><div class="codename-card__name">Michi</div><div class="codename-card__meaning">The way · the path — in-app Updates Manager.</div><div class="codename-card__versions">v6.16.5 (planned)</div></div>
+</div></div></section>
 
-<!-- ═══════════════════════════════════════════════════════════════════
-     SHOWCASE
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="showcase" id="showcase">
-  <div class="shell">
-    <div class="showcase__head">
-      <span class="section-label">Showcase</span>
-      <h2 class="section-title">Zen Shell, in practice.</h2>
-      <p class="showcase__intro">
-        The current UI as shipped in Kintsugi (v6.16.4.11.2). Panel, Start Menu, Settings,
-        Control Panel, Wallpaper browser, Theme engine.
-      </p>
-    </div>
-
-    <div class="showcase__grid">
-      <!-- Featured: Kintsugi themes (new) — spans full width -->
-      <a class="shot kintsugi-showcase" href="#install" style="grid-column: 1 / -1;">
-        <div class="kintsugi-showcase__frame">
-          <span class="shot__badge shot__badge--new" style="z-index: 5;">New · Kintsugi Themes</span>
-
-          <div class="kintsugi-showcase__half kintsugi-showcase__half--light">
-            <div class="kintsugi-showcase__kanji" lang="ja">金継ぎ</div>
-            <div class="kintsugi-showcase__name">Kintsugi Light</div>
-            <div class="kintsugi-showcase__swatches">
-              <span style="background: #fafaf7; border: 1px solid #e5e3dd;"></span>
-              <span style="background: #f4f2eb; border: 1px solid #e5e3dd;"></span>
-              <span style="background: #5f7450;"></span>
-              <span style="background: #b8924e;"></span>
-              <span style="background: #c68a4a;"></span>
-              <span style="background: #a4413c;"></span>
-            </div>
-            <div class="kintsugi-showcase__tags">Bone · Sage · Gold</div>
-          </div>
-
-          <div class="kintsugi-showcase__half kintsugi-showcase__half--dark">
-            <div class="kintsugi-showcase__kanji" lang="ja" style="color: #d4a85f;">金継ぎ</div>
-            <div class="kintsugi-showcase__name" style="color: #ededed;">Kintsugi Dark</div>
-            <div class="kintsugi-showcase__swatches">
-              <span style="background: #14140f; border: 1px solid #2a2a24;"></span>
-              <span style="background: #1c1c17; border: 1px solid #2a2a24;"></span>
-              <span style="background: #98b283;"></span>
-              <span style="background: #d4a85f;"></span>
-              <span style="background: #d89a60;"></span>
-              <span style="background: #d07a6a;"></span>
-            </div>
-            <div class="kintsugi-showcase__tags" style="color: #8a8a85;">Ink · Sage · Lacquered gold</div>
-          </div>
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">New themes — Kintsugi Light + Dark</span>
-          <span class="shot__caption-sub">17 + 2 = 19 built-in · matches this website's palette</span>
-          <span class="shot__caption-hint">The website's design tokens shipped back to the shell. Drop <code style="font-family: var(--mono); font-size: 0.85em;">kintsugi-light.json</code> and <code style="font-family: var(--mono); font-size: 0.85em;">kintsugi-dark.json</code> into <code style="font-family: var(--mono); font-size: 0.85em;">themes-builtin/</code> and the desktop pixel-matches the site.</span>
-        </div>
-      </a>
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_01_wallpaper_picker.gif" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">Super+W</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_01_wallpaper_picker.gif" alt="Wallpaper picker with folder scanning and slideshow" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Wallpaper engine</span>
-          <span class="shot__caption-sub">Folder scan · slideshow · online repo browser</span>
-          <span class="shot__caption-hint">Full wallpaper picker with folder scanning, slideshow scheduling, transition effects, and the online Gekinzen/images-demo repo browser.</span>
-        </div>
-      </a>
-
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_02_animations_dropdown.gif" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge shot__badge--new">New · v4.11.2</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_02_animations_dropdown.gif" alt="Material ZenComboBox with 21 animation presets and WCAG auto-contrast" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Animation presets</span>
-          <span class="shot__caption-sub">21 community presets · Material ZenComboBox</span>
-          <span class="shot__caption-hint">Rotating chevron, accent dots, left accent bar on highlight. Text color picked via WCAG 2.0 luminance — readable on every theme.</span>
-        </div>
-      </a>
-
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_03_themes_palette.gif" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge shot__badge--new">New · v4.11.2</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_03_themes_palette.gif" alt="Themes page with PaletteBox and palette preview" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Themes page</span>
-          <span class="shot__caption-sub">PaletteBox · 19 themes · live preview</span>
-          <span class="shot__caption-hint">Theme palette relocated from General. 60×60 PaletteBoxes open the PopupWindow picker with live hex typing. 19 built-in themes including Kintsugi Light + Dark.</span>
-        </div>
-      </a>
-
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_04_panel_drag_drop.gif" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">Panel</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_04_panel_drag_drop.gif" alt="Panel drag-drop zones with fullwidth to island mode transition" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Panel · Bar modes</span>
-          <span class="shot__caption-sub">Drag-drop zones · fullwidth ↔ island</span>
-          <span class="shot__caption-hint">Drag modules between Left / Center / Right zones — state persists to panel-state.json. Fullwidth ↔ Island mode toggle with gate against revert-on-reboot.</span>
-        </div>
-      </a>
-
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_05_control_panel.gif" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">Super+C</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_16_4_11_2_demo_2026/gif_05_control_panel.gif" alt="Control Panel with Dark Mode toggle syncing GTK and libadwaita" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Control Panel + Dark Mode</span>
-          <span class="shot__caption-sub">Quick toggles · Power Profile · Dark Mode sync</span>
-          <span class="shot__caption-hint">Volume, WiFi/BT/Ethernet, Ryzen + Radeon telemetry, Power Profile, Gaming Boost. Dark Mode toggle syncs GTK3/4/libadwaita via gsettings.</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     PREVIOUS SHOWCASES — v6.15.3 demo assets preserved
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="showcase" id="showcase-prev" style="background: var(--bone-deep);">
-  <div class="shell">
-    <div class="showcase__head">
-      <span class="section-label">Previous showcases</span>
-      <h2 class="section-title">Earlier captures · v6.15.3 era.</h2>
-      <p class="showcase__intro">
-        Static shots and adaptive-theming / settings-tour / screenshot-ropes clips from the Ensō series (v6.15.x). Preserved here so the evolution stays visible as new releases ship.
-      </p>
-    </div>
-
-    <div class="showcase__grid">
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">v6.15.3 · Desktop</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample1.png" alt="Zen Shell v6.15.3 desktop with panel and widgets" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Desktop (Ensō)</span>
-          <span class="shot__caption-sub">Panel · widgets · wallpaper</span>
-          <span class="shot__caption-hint">The original full-desktop composition from v6.15.3 — status bar, clock hover popup, music strings, desktop widgets.</span>
-        </div>
-      </a>
-
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">v6.15.3 · Overview</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample2.png" alt="Zen Shell v6.15.3 workspace overview" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Workspace</span>
-          <span class="shot__caption-sub">Island mode · control panel · themes</span>
-          <span class="shot__caption-hint">Island mode bar + Control Panel with quick toggles. Active theme palette visible across surfaces.</span>
-        </div>
-      </a>
-
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample3.png" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">v6.15.3 · Settings</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/sample3.png" alt="Settings page from v6.15.3" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Settings page</span>
-          <span class="shot__caption-sub">14 pages · live preview</span>
-          <span class="shot__caption-hint">Pre-relocation settings layout before the v4.11.2 Themes page refactor.</span>
-        </div>
-      </a>
-
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_01_adaptive_theming.gif" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">v6.15.3 · Adaptive</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_01_adaptive_theming.gif" alt="Adaptive theming across all surfaces" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Adaptive theming</span>
-          <span class="shot__caption-sub">Unified palette · live rerender</span>
-          <span class="shot__caption-hint">One palette. Every surface — bar, settings, control panel, notifications, terminal, launcher — stays in sync.</span>
-        </div>
-      </a>
-
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_02_settings_tour.gif" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">v6.15.3 · Settings Tour</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_02_settings_tour.gif" alt="Settings tour across 14 pages" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Settings tour</span>
-          <span class="shot__caption-sub">14 pages · live preview · no restart</span>
-          <span class="shot__caption-hint">Fourteen pages of live-preview configuration. No config files. No restart.</span>
-        </div>
-      </a>
-
-      <a class="shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_03_screenshot_module_ultrawide.gif" target="_blank" rel="noopener">
-        <div class="shot__frame">
-          <span class="shot__badge">v6.15.3 · Super+Shift+S</span>
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_6_15_3_demo_2026/zen_shell_03_screenshot_module_ultrawide.gif" alt="Screenshot module with physics-draped ropes" loading="lazy" />
-        </div>
-        <div class="shot__caption">
-          <span class="shot__caption-title">Screenshot Ropes</span>
-          <span class="shot__caption-sub">Region capture · physics overlay · wl-copy</span>
-          <span class="shot__caption-hint">Region selection with physics-draped rope ornaments. Clipboard-backed paste, reliable on the first try.</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     DEMOS — YouTube
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="demos" id="demos">
-  <div class="shell">
-    <div class="demos__head">
-      <span class="section-label">Video demos</span>
-      <h2 class="section-title">The full tour.</h2>
-      <p class="demos__intro">
-        Latest Kintsugi showcase on top, followed by historical tours across the v6.10 → v6.14 cycle. Click any to watch on YouTube.
-      </p>
-    </div>
-
-    <a class="demo-featured" href="https://www.youtube.com/watch?v=nS2L9dIQbF4" target="_blank" rel="noopener">
-      <div class="demo-featured__thumb">
-        <img src="https://img.youtube.com/vi/nS2L9dIQbF4/maxresdefault.jpg" alt="Zen Shell v6.16.4.11.2 Kintsugi — Release Showcase" loading="lazy" />
-        <div class="demo-featured__play" aria-hidden="true"></div>
-      </div>
-      <div class="demo-featured__cap">
-        <div class="demo-featured__cap-label">🟢 Latest · v6.16.4.11.2 · Kintsugi (金継ぎ)</div>
-        <div class="demo-featured__cap-title">Zen Shell Kintsugi — Release Showcase</div>
-        <div class="demo-featured__cap-desc">Panel, wallpaper engine, Material ZenComboBox, Themes with PaletteBox, Control Panel Dark Mode sync, WiFi picker. New Kintsugi Light + Dark themes matching the signature sage / gold / bone / ink palette.</div>
-      </div>
-    </a>
-
-    <div class="demos__grid">
-      <a class="demo-card" href="https://www.youtube.com/watch?v=dNwGRBhA97g" target="_blank" rel="noopener">
-        <div class="demo-card__thumb">
-          <img src="https://img.youtube.com/vi/dNwGRBhA97g/maxresdefault.jpg" alt="Zen Shell — Full Tour" loading="lazy" />
-          <div class="demo-card__play" aria-hidden="true"></div>
-        </div>
-        <div class="demo-card__cap">
-          <div class="demo-card__cap-label">Full tour · v6.15.x (Ensō)</div>
-          <div class="demo-card__cap-title">Zen Shell — Full Tour</div>
-          <div class="demo-card__cap-desc">Strings music module, screenshot ropes, settings, complete desktop experience.</div>
-        </div>
-      </a>
-
-      <a class="demo-card" href="https://www.youtube.com/watch?v=YQxrh5_naMQ" target="_blank" rel="noopener">
-        <div class="demo-card__thumb">
-          <img src="https://img.youtube.com/vi/YQxrh5_naMQ/maxresdefault.jpg" alt="Zen Shell v6.14" loading="lazy" />
-          <div class="demo-card__play" aria-hidden="true"></div>
-        </div>
-        <div class="demo-card__cap">
-          <div class="demo-card__cap-label">v6.14 · Yugen</div>
-          <div class="demo-card__cap-title">Zen Shell v6.14</div>
-          <div class="demo-card__cap-desc">Theme switching, panel modes, control center in the QML-rewrite era.</div>
-        </div>
-      </a>
-
-      <a class="demo-card" href="https://www.youtube.com/watch?v=ao89J3DEqiA" target="_blank" rel="noopener">
-        <div class="demo-card__thumb">
-          <img src="https://img.youtube.com/vi/ao89J3DEqiA/maxresdefault.jpg" alt="Zen Shell v6.10 — QML Foundations" loading="lazy" />
-          <div class="demo-card__play" aria-hidden="true"></div>
-        </div>
-        <div class="demo-card__cap">
-          <div class="demo-card__cap-label">v6.10 · Yugen foundations</div>
-          <div class="demo-card__cap-title">Zen Shell v6.10</div>
-          <div class="demo-card__cap-desc">The fresh QML rewrite — where the new stack began.</div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     GITHUB COUNTERS
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="counters">
-  <div class="shell">
-    <div class="counters__head">
-      <span class="section-label">Repository pulse</span>
-      <h2 class="counters__title">Zen Shell on GitHub.</h2>
-      <p class="counters__note">Live from the public GitHub API. Cached 5 minutes.</p>
-    </div>
-    <div class="counters__grid">
-      <div class="counter">
-        <div class="counter__num loading" id="counterStars">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-        <span class="counter__label">Stars</span>
-        <span class="counter__sub">People tracking the repo</span>
-      </div>
-      <div class="counter">
-        <div class="counter__num loading" id="counterForks">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="5" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="19" r="2.5"/><path d="M6 7.5v2.5c0 2 1.5 3 3 3h6c1.5 0 3-1 3-3v-2.5M12 13v3.5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
-        <span class="counter__label">Forks</span>
-        <span class="counter__sub">Running their own variants</span>
-      </div>
-      <div class="counter">
-        <div class="counter__num loading" id="counterWatchers">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
-        <span class="counter__label">Watchers</span>
-        <span class="counter__sub">Subscribed to every push</span>
-      </div>
-      <div class="counter">
-        <div class="counter__num loading" id="counterReleases">—<svg class="counter__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l-9 5v10l9 5 9-5V7l-9-5zm0 2.3l6.5 3.6L12 11.5 5.5 7.9 12 4.3zM5 9.5l6 3.3v7.4l-6-3.3V9.5zm8 10.7v-7.4l6-3.3v7.4l-6 3.3z"/></svg></div>
-        <span class="counter__label">Releases</span>
-        <span class="counter__sub">Tagged versions shipped</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     TIMELINE
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="timeline" id="timeline">
-  <div class="shell">
-    <div class="timeline__head">
-      <span class="section-label">Release history</span>
-      <h2 class="section-title">Kintsugi cycle — eleven drops, two days.</h2>
-      <p class="timeline__intro">
-        Amber markers are alpha iterations inside the 4.x cycle. Gold marker is the current stable —
-        v6.16.4.11.2 "Kintsugi", promoted to main on 2026-04-24. All prior nodes roll into the stable release.
-      </p>
-    </div>
-
-    <div class="chart" role="img" aria-label="Version timeline v6.16.4.1 to v6.16.4.11.2 Kintsugi">
-      <div class="chart__inner">
-        <div class="chart__axis"></div>
-        <div class="chart__axis-label">2026 ← Kintsugi alpha cycle</div>
-
-        <div class="chart__node chart__node--stable chart__node--below" style="left: 3%">
-          <span class="chart__node-label">v4.1</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Panic hotfix<br>prior stable</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 11%">
-          <span class="chart__node-label">v4.2</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Widget scale<br>(incomplete)</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 19%">
-          <span class="chart__node-label">v4.3</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Scale fix<br>oscillation kill</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 27%">
-          <span class="chart__node-label">v4.4</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Gaps preserved<br>after Displays</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 35%">
-          <span class="chart__node-label">v4.5</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Start Menu<br>breathing room</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 42%">
-          <span class="chart__node-label">v4.6</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Wallpaper cols<br>+ Picker v1</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 50%">
-          <span class="chart__node-label">v4.7</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Super+T<br>+ Dark Mode</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 57%">
-          <span class="chart__node-label">v4.8</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">WiFi log<br>+ Picker v2</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 65%">
-          <span class="chart__node-label">v4.9</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Window bounds<br>(still buggy)</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--above" style="left: 73%">
-          <span class="chart__node-label">v4.10</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">PopupWindow<br>rewrite · live hex</span>
-        </div>
-        <div class="chart__node chart__node--alpha chart__node--below" style="left: 81%">
-          <span class="chart__node-label">v4.11</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Custom Themes<br>management</span>
-        </div>
-        <div class="chart__node chart__node--current chart__node--above" style="left: 93%">
-          <span class="chart__node-label">v4.11.2 · STABLE</span>
-          <span class="chart__node-dot"></span>
-          <span class="chart__node-bullet">Palette relocation<br>Material dropdown</span>
-          <span class="chart__node-current-mark" lang="ja">金継ぎ · Kintsugi</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="chart__legend">
-      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--stable"></span>Prior stable</span>
-      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--alpha"></span>Alpha iteration</span>
-      <span class="chart__legend-item"><span class="chart__legend-dot chart__legend-dot--current"></span>Current stable · Kintsugi</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     CODENAMES
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="codenames" id="codenames">
-  <div class="shell">
-    <div class="codenames__head">
-      <span class="section-label">Release codenames</span>
-      <h2 class="section-title">Japanese zen concepts.</h2>
-      <p class="codenames__intro">
-        Each release era gets a codename from Japanese zen vocabulary — aesthetics, states of mind,
-        seasonal phenomena. Fits the project. Also makes "which release was that again?" much
-        easier to answer than "v6.16.4.11.2".
-      </p>
-    </div>
-
-    <div class="codenames__grid">
-      <div class="codename-card">
-        <span class="codename-card__status">Genesis</span>
-        <div class="codename-card__kanji" lang="ja">若葉</div>
-        <div class="codename-card__name">Wakaba</div>
-        <div class="codename-card__meaning">Young leaf — the first sprout. Earliest concept build with bare Waybar + Python.</div>
-        <div class="codename-card__versions">Alpha v0.91</div>
-      </div>
-
-      <div class="codename-card">
-        <span class="codename-card__status">Legacy</span>
-        <div class="codename-card__kanji" lang="ja">苔</div>
-        <div class="codename-card__name">Koke</div>
-        <div class="codename-card__meaning">Moss — steady growth. GTK4 / Libadwaita control center era, custom dock, theme engine.</div>
-        <div class="codename-card__versions">Alpha v2.x (v2.1.3)</div>
-      </div>
-
-      <div class="codename-card">
-        <span class="codename-card__status">Historical</span>
-        <div class="codename-card__kanji" lang="ja">幽玄</div>
-        <div class="codename-card__name">Yugen</div>
-        <div class="codename-card__meaning">Subtle profound grace — the GTK4 → Quickshell rewrite. Foundational architectural shift.</div>
-        <div class="codename-card__versions">v6.15.x</div>
-      </div>
-
-      <div class="codename-card">
-        <span class="codename-card__status">Historical</span>
-        <div class="codename-card__kanji" lang="ja">円相</div>
-        <div class="codename-card__name">Ensō</div>
-        <div class="codename-card__meaning">The zen circle — unified 6.16 architecture closed the loop from scattered modules into one design system.</div>
-        <div class="codename-card__versions">v6.16.x base</div>
-      </div>
-
-      <div class="codename-card">
-        <span class="codename-card__status">Historical</span>
-        <div class="codename-card__kanji" lang="ja">間</div>
-        <div class="codename-card__name">Ma</div>
-        <div class="codename-card__meaning">The space between — cascade Control Panel, two-column layouts. About negative space and layout rhythm.</div>
-        <div class="codename-card__versions">v6.16.1.x</div>
-      </div>
-
-      <div class="codename-card">
-        <span class="codename-card__status">Historical</span>
-        <div class="codename-card__kanji" lang="ja">渋い</div>
-        <div class="codename-card__name">Shibui</div>
-        <div class="codename-card__meaning">Understated refinement — click-through fixes, OpacityMask avatar. Invisible polish that just works.</div>
-        <div class="codename-card__versions">v6.16.2.3.x</div>
-      </div>
-
-      <div class="codename-card">
-        <span class="codename-card__status">Historical</span>
-        <div class="codename-card__kanji" lang="ja">寂</div>
-        <div class="codename-card__name">Sabi</div>
-        <div class="codename-card__meaning">Beauty of age &amp; patina — Lock screen, PowerBadge, weather mood. Warm ambient details.</div>
-        <div class="codename-card__versions">v6.16.3.x</div>
-      </div>
-
-      <div class="codename-card codename-card--current">
-        <span class="codename-card__status codename-card__status--current">Current</span>
-        <div class="codename-card__kanji" lang="ja">金継ぎ</div>
-        <div class="codename-card__name">Kintsugi</div>
-        <div class="codename-card__meaning">Golden-repair of broken pottery — panic keybind, laptop reliability, color picker that took 4 tries. Golden repair for cracks that used to break the session.</div>
-        <div class="codename-card__versions">v6.16.4.x · v6.16.4.11.2</div>
-      </div>
-
-      <div class="codename-card">
-        <span class="codename-card__status codename-card__status--next">Next Alpha</span>
-        <div class="codename-card__kanji" lang="ja">光</div>
-        <div class="codename-card__name">Hikari</div>
-        <div class="codename-card__meaning">Light · clarity — Profile Export/Import. Making your setup portable, shareable, illuminated for friends.</div>
-        <div class="codename-card__versions">v6.16.4.12 (planned)</div>
-      </div>
-
-      <div class="codename-card">
-        <span class="codename-card__status codename-card__status--next">Future</span>
-        <div class="codename-card__kanji" lang="ja">道</div>
-        <div class="codename-card__name">Michi</div>
-        <div class="codename-card__meaning">The way · the path — in-app Updates Manager. Channel picker, rollback, the path forward.</div>
-        <div class="codename-card__versions">v6.16.5 (planned)</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     INSTALL
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="install" id="install">
-  <div class="shell">
-    <div class="install__head">
-      <span class="section-label">Installation</span>
-      <h2 class="section-title">Pick your channel.</h2>
-      <p class="install__intro">
-        The alpha branch has caught up with stable — both currently point to v6.16.4.11.2 Kintsugi.
-        The alpha slot opens next for Hikari (v4.12).
-      </p>
-    </div>
-
-    <div class="install__grid">
-      <div class="install__card">
-        <h3 class="install__card-title">
-          <span style="color: var(--gold);" lang="ja">金継ぎ</span> Stable · Kintsugi
-        </h3>
-        <p class="install__card-meta">main · v6.16.4.11.2 · promoted 2026-04-24</p>
-        <div class="install__code" id="stableCode">git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git
+<section class="install" id="install"><div class="shell">
+<div class="install__head"><span class="section-label">Installation</span><h2 class="section-title">Pick your channel.</h2><p class="install__intro">The alpha branch has caught up with stable — both currently point to v6.16.4.11.2 Kintsugi.</p></div>
+<div class="install__grid">
+<div class="install__card"><h3 class="install__card-title"><span style="color:var(--gold);" lang="ja">金継ぎ</span> Stable · Kintsugi</h3><p class="install__card-meta">main · v6.16.4.11.2 · promoted 2026-04-24</p><div class="install__code" id="stableCode">git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git
 cd zen_barebone_alpha_development
 git checkout v6.16.4.11.2
 ./install.sh --bootstrap
-<button class="install__copy" data-copy-target="stableCode">Copy</button></div>
-        <div class="install__card-foot">
-          <span>Tagged · Verified · Ready</span>
-          <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/releases/tag/v6.16.4.11.2" class="cta cta--ghost" rel="noopener" style="padding: 0.55rem 1rem; font-size: 0.82rem;">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;">
-              <path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-            <span>Release</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="install__card install__card--alpha">
-        <h3 class="install__card-title">
-          <span style="color: var(--alpha-tone);" lang="ja">光</span> Alpha · Hikari (upcoming)
-        </h3>
-        <p class="install__card-meta">v6.16.4.12 · Profile Export / Import</p>
-        <div class="install__code" id="alphaCode">git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git
+<button class="install__copy" data-copy-target="stableCode">Copy</button></div><div class="install__card-foot"><span>Tagged · Verified · Ready</span><a href="https://github.com/Gekinzen/zen_barebone_alpha_development/releases/tag/v6.16.4.11.2" class="cta cta--ghost" rel="noopener" style="padding:0.55rem 1rem;font-size:0.82rem;"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span>Release</span></a></div></div>
+<div class="install__card install__card--alpha"><h3 class="install__card-title"><span style="color:var(--alpha-tone);" lang="ja">光</span> Alpha · Hikari (upcoming)</h3><p class="install__card-meta">v6.16.4.12 · Profile Export / Import</p><div class="install__code" id="alphaCode">git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git
 cd zen_barebone_alpha_development
 # Track alpha once branch opens
 git checkout alpha-v6.16.4.12
 ./install.sh --bootstrap
-<button class="install__copy" data-copy-target="alphaCode">Copy</button></div>
-        <div class="install__card-foot">
-          <span>Bleeding edge · Active development</span>
-          <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/branches" class="cta cta--ghost" rel="noopener" style="padding: 0.55rem 1rem; font-size: 0.82rem;">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;">
-              <path d="M9 7l-5 5 5 5M15 7l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-            <span>Branches</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<button class="install__copy" data-copy-target="alphaCode">Copy</button></div><div class="install__card-foot"><span>Bleeding edge · Active development</span><a href="https://github.com/Gekinzen/zen_barebone_alpha_development/branches" class="cta cta--ghost" rel="noopener" style="padding:0.55rem 1rem;font-size:0.82rem;"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span>Branches</span></a></div></div>
+</div></div></section>
 
-<!-- ═══════════════════════════════════════════════════════════════════
-     ARCHIVE — full history timeline with pictures
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="archive" id="archive">
-  <div class="shell">
-    <div class="archive__head">
-      <span class="section-label">Project archive</span>
-      <h2 class="section-title">From sprout to lacquered bowl.</h2>
-      <p class="archive__intro">
-        Zen Shell began as <em>Zen Barebone Alpha</em> — a bare Waybar + Python concept on Hyprland 0.52.
-        What you use today is the third full architecture. Every era preserved here for reference.
-      </p>
-    </div>
+<section class="archive" id="archive"><div class="shell">
+<div class="archive__head"><span class="section-label">Project archive</span><h2 class="section-title">From sprout to lacquered bowl.</h2><p class="archive__intro">Zen Shell began as <em>Zen Barebone Alpha</em> — a bare Waybar + Python concept on Hyprland 0.52. Every era preserved here.</p></div>
+<div class="era era--archive"><div class="era__header"><span class="era__version">Alpha v0.91</span><span class="era__label era__label--archive">Genesis · Wakaba (若葉)</span></div><h3 class="era__title"><em>Wakaba</em> — the first sprout.</h3><p class="era__desc">The earliest concept build. Bare Waybar, Python helpers, rofi for launching.</p><span class="era__highlight">Hyprland 0.52 · Waybar · Python + rofi</span></div>
+<div class="era era--archive"><div class="era__header"><span class="era__version">Alpha v2.x (v2.1.3)</span><span class="era__label era__label--archive">Legacy · Koke (苔)</span></div><h3 class="era__title"><em>Koke</em> — moss grows steady.</h3><p class="era__desc">The full Python / GTK4 / Libadwaita era. Custom GTK control center, dock module, unified theme engine, desktop widgets, smart start menu.</p>
+<div class="era__gallery">
+<a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" alt="Main demo" loading="lazy" /><div class="era__shot-cap">Main demo</div></a>
+<a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" alt="Theming" loading="lazy" /><div class="era__shot-cap">Theme switching</div></a>
+<a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" alt="Wallpaper" loading="lazy" /><div class="era__shot-cap">Wallpaper picker</div></a>
+<a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" alt="Panel" loading="lazy" /><div class="era__shot-cap">Panel modes</div></a>
+<a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" alt="Desktop" loading="lazy" /><div class="era__shot-cap">Desktop looks</div></a>
+<a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" alt="Dock" loading="lazy" /><div class="era__shot-cap">Dock · taskbar</div></a>
+<a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" alt="Control Center" loading="lazy" /><div class="era__shot-cap">Control Center</div></a>
+<a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" alt="Animation" loading="lazy" /><div class="era__shot-cap">Animation editor</div></a>
+<a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" alt="Appearance" loading="lazy" /><div class="era__shot-cap">Appearance settings</div></a>
+</div><span class="era__highlight">Hyprland 0.52 · GTK4 / Libadwaita · 13+ themes · Custom dock</span></div>
+<div class="era era--legacy"><div class="era__header"><span class="era__version">v6.10 – v6.14</span><span class="era__label era__label--legacy">Rewrite · Yugen (幽玄)</span></div><h3 class="era__title"><em>Yugen</em> — subtle, profound grace.</h3><p class="era__desc">The QML rewrite cycle. GTK4 gradually replaced with Quickshell-native QML. v6.10 shipped foundations, v6.14 added theme switching and panel modes.</p><span class="era__highlight">Hyprland 0.53+ · Quickshell QML · JSON bridge to GTK</span></div>
+<div class="era era--legacy"><div class="era__header"><span class="era__version">v6.15.x series</span><span class="era__label era__label--legacy">Unified · Ensō (円相)</span></div><h3 class="era__title"><em>Ensō</em> — the circle closes.</h3><p class="era__desc">Full Quickshell-native stack. Bar, Start Menu, Control Panel, Settings, Theme engine, Wallpaper manager, music strings, screenshot ropes, avatar system, island mode, system tray.</p><span class="era__highlight">Hyprland 0.53+ · 15-drop evolution · Music strings · Screenshot ropes</span></div>
+<div class="era era--modern"><div class="era__header"><span class="era__version">v6.16.x through v6.16.3.x</span><span class="era__label era__label--modern">Refinement · Ma · Shibui · Sabi</span></div><h3 class="era__title">The architecture matures.</h3><p class="era__desc"><strong>v6.16 Ensō base</strong> — battery, power profiles, volume OSD, GPU switcher. <strong>v6.16.1 Ma</strong> — cascade Control Panel. <strong>v6.16.2.3 Shibui</strong> — click-through masks, OpacityMask avatar. <strong>v6.16.3 Sabi</strong> — Material power icons, Lock screen overhaul, Widget Scale.</p><span class="era__highlight">Hyprland 0.54+ · 3-subseries refinement · 30+ tagged releases</span></div>
+<div class="era era--modern"><div class="era__header"><span class="era__version">v6.16.4.x · v6.16.4.11.2</span><span class="era__label era__label--modern">Current · Kintsugi (金継ぎ)</span></div><h3 class="era__title"><em>Kintsugi</em> — gold in the seams.</h3><p class="era__desc">The current release. Panic Recovery keybind, 11 alpha iterations, widget scale awareness, Dark Mode toggle, WiFi Connect rewrite, color picker after 4 attempts, palette relocation, Material dropdown with WCAG luminance contrast, PaletteBox component.</p><span class="era__highlight">Hyprland 0.54+ · Quickshell 0.2.1+ · PopupWindow · WCAG contrast</span></div>
+</div></section>
 
-    <!-- Genesis · v0.91 -->
-    <div class="era era--archive">
-      <div class="era__header">
-        <span class="era__version">Alpha v0.91</span>
-        <span class="era__label era__label--archive">Genesis · Wakaba (若葉)</span>
-      </div>
-      <h3 class="era__title"><em>Wakaba</em> — the first sprout.</h3>
-      <p class="era__desc">
-        The earliest concept build. Bare Waybar configuration, a handful of Python helpers,
-        rofi for launching, Hyprland running the show. No unified theme system yet — each
-        component styled independently. Proof-of-concept that became the seed of everything after.
-      </p>
-      <span class="era__highlight">Hyprland 0.52 · Waybar · Python + rofi</span>
-    </div>
-
-    <!-- Legacy · v2.x -->
-    <div class="era era--archive">
-      <div class="era__header">
-        <span class="era__version">Alpha v2.x (v2.1.3)</span>
-        <span class="era__label era__label--archive">Legacy · Koke (苔)</span>
-      </div>
-      <h3 class="era__title"><em>Koke</em> — moss grows steady.</h3>
-      <p class="era__desc">
-        The full Python / GTK4 / Libadwaita era. "Zen Barebone Alpha" — a complete desktop ecosystem
-        with a custom GTK control center (Hypr Control Center), custom dock module, unified theme engine
-        covering Waybar / Rofi / Kitty / SwayNC / GTK4 widgets, desktop widgets (clock, weather, system
-        monitor), smart start menu, welcome screen on first boot. Everything was Python + GTK4, talking
-        to Hyprland via hyprctl. This was the bowl that existed before Kintsugi broke and re-lacquered it.
-      </p>
-
-      <div class="era__gallery">
-        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" target="_blank" rel="noopener">
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/main.gif" alt="Zen Barebone Alpha main demo" loading="lazy" />
-          <div class="era__shot-cap">Main demo</div>
-        </a>
-        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" target="_blank" rel="noopener">
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/theming.gif" alt="Theme switching" loading="lazy" />
-          <div class="era__shot-cap">Theme switching</div>
-        </a>
-        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" target="_blank" rel="noopener">
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/changewallpaper.gif" alt="Wallpaper picker" loading="lazy" />
-          <div class="era__shot-cap">Wallpaper picker</div>
-        </a>
-        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" target="_blank" rel="noopener">
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/paneldemo.gif" alt="Panel modes" loading="lazy" />
-          <div class="era__shot-cap">Panel modes</div>
-        </a>
-        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" target="_blank" rel="noopener">
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/desktoplooks.png" alt="Desktop looks" loading="lazy" />
-          <div class="era__shot-cap">Desktop looks</div>
-        </a>
-        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" target="_blank" rel="noopener">
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/dock.png" alt="Dock / taskbar" loading="lazy" />
-          <div class="era__shot-cap">Dock · taskbar</div>
-        </a>
-        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" target="_blank" rel="noopener">
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenter.png" alt="Hypr Control Center" loading="lazy" />
-          <div class="era__shot-cap">Control Center</div>
-        </a>
-        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" target="_blank" rel="noopener">
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprcontrolcenteranimation.png" alt="Animation editor" loading="lazy" />
-          <div class="era__shot-cap">Animation editor</div>
-        </a>
-        <a class="era__shot" href="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" target="_blank" rel="noopener">
-          <img src="https://raw.githubusercontent.com/Gekinzen/images-demo/main/zen_demo_old_archive_2025/hyprlandappearance.png" alt="Appearance settings" loading="lazy" />
-          <div class="era__shot-cap">Appearance settings</div>
-        </a>
-      </div>
-
-      <span class="era__highlight">Hyprland 0.52 · GTK4 / Libadwaita · 13+ themes · Custom dock</span>
-    </div>
-
-    <!-- Legacy · v6.10 QML foundations -->
-    <div class="era era--legacy">
-      <div class="era__header">
-        <span class="era__version">v6.10 – v6.14</span>
-        <span class="era__label era__label--legacy">Rewrite · Yugen (幽玄)</span>
-      </div>
-      <h3 class="era__title"><em>Yugen</em> — subtle, profound grace.</h3>
-      <p class="era__desc">
-        The QML rewrite cycle. GTK4 gradually replaced with Quickshell-native QML.
-        <strong>v6.10</strong> shipped the new foundations. <strong>v6.14</strong> added theme switching, panel modes,
-        control center. This era marked the architectural shift that unlocked everything after —
-        the foundational grace beneath all subsequent polish.
-      </p>
-      <span class="era__highlight">Hyprland 0.53+ · Quickshell QML · JSON bridge to GTK</span>
-    </div>
-
-    <!-- Legacy · v6.15 -->
-    <div class="era era--legacy">
-      <div class="era__header">
-        <span class="era__version">v6.15.x series</span>
-        <span class="era__label era__label--legacy">Unified · Ensō (円相)</span>
-      </div>
-      <h3 class="era__title"><em>Ensō</em> — the circle closes.</h3>
-      <p class="era__desc">
-        v6.15.1 through v6.15.15 — full Quickshell-native stack. Bar, Start Menu, Control Panel,
-        Settings UI with HMSection/HMRow components, Theme engine, Wallpaper manager, audio-reactive
-        music strings (cava + playerctl), screenshot rope overlay, avatar system, island mode, system tray.
-        Everything spoke one language for the first time. The scattered modules closed into one circle.
-      </p>
-      <span class="era__highlight">Hyprland 0.53+ · 15-drop evolution · Music strings · Screenshot ropes</span>
-    </div>
-
-    <!-- Modern · v6.16 -->
-    <div class="era era--modern">
-      <div class="era__header">
-        <span class="era__version">v6.16.x through v6.16.3.x</span>
-        <span class="era__label era__label--modern">Refinement · Ma · Shibui · Sabi</span>
-      </div>
-      <h3 class="era__title">The architecture matures.</h3>
-      <p class="era__desc">
-        <strong>v6.16 Ensō base</strong> — battery, power profiles, volume OSD, GPU switcher.
-        <strong>v6.16.1 Ma (間)</strong> — cascade Control Panel, two-column layouts.
-        <strong>v6.16.2.3 Shibui (渋い)</strong> — click-through masks, OpacityMask avatar, default wallpaper, mouse sensitivity, bulletproof single-instance installer.
-        <strong>v6.16.3 Sabi (寂)</strong> — Material power icons, lid-close patch, PowerBadge, Start Menu logo picker,
-        Lock screen overhaul (font sync + weather mood + gender-aware care messages), Widget Scale slider,
-        Idle/Sleep/Lid unified UX.
-      </p>
-      <span class="era__highlight">Hyprland 0.54+ · 3-subseries refinement · 30+ tagged releases</span>
-    </div>
-
-    <!-- Modern · v6.16.4 · Kintsugi (current) -->
-    <div class="era era--modern">
-      <div class="era__header">
-        <span class="era__version">v6.16.4.x · v6.16.4.11.2</span>
-        <span class="era__label era__label--modern">Current · Kintsugi (金継ぎ)</span>
-      </div>
-      <h3 class="era__title"><em>Kintsugi</em> — gold in the seams.</h3>
-      <p class="era__desc">
-        The current release. <strong>v6.16.4</strong> shipped the Panic Recovery keybind
-        (SUPER+SHIFT+CTRL+Esc — works through frozen hyprlock) and hardened resume pipeline.
-        <strong>v6.16.4.1</strong> hotfixed the panic script. The 4.x cycle then ran for 11 alpha iterations
-        over 2 days — widget scale awareness, gaps preservation, Start Menu breathing, terminal auto-detect,
-        Dark Mode toggle, WiFi Connect rewrite, and <em>four attempts</em> at the color picker before
-        Quickshell's PopupWindow primitive finally stuck. <strong>v6.16.4.11.2</strong> — palette relocation,
-        Material-style dropdown with WCAG luminance contrast, PaletteBox component.
-        This is the bowl lacquered in gold.
-      </p>
-      <span class="era__highlight">Hyprland 0.54+ · Quickshell 0.2.1+ · PopupWindow · WCAG contrast</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     FOOTER
-     ═══════════════════════════════════════════════════════════════════ -->
-<footer class="foot">
-  <div class="shell foot__row">
-    <span>Zen Shell · Crafted in Antipolo, Philippines · MIT License</span>
-    <div class="foot__links">
-      <a href="#showcase">Showcase</a>
-      <a href="#demos">Demos</a>
-      <a href="#timeline">Timeline</a>
-      <a href="#codenames">Codenames</a>
-      <a href="#install">Install</a>
-      <a href="#archive">Archive</a>
-      <a href="https://github.com/Gekinzen/zen_barebone_alpha_development" rel="noopener">GitHub</a>
-      <a href="https://buymeacoffee.com/zenpy" rel="noopener">Buy a coffee</a>
-    </div>
-  </div>
-</footer>
+<footer class="foot"><div class="shell foot__row">
+<span>Zen Shell · Crafted in Antipolo, Philippines · MIT License</span>
+<div class="foot__links"><a href="#showcase">Showcase</a><a href="#demos">Demos</a><a href="#timeline">Timeline</a><a href="#codenames">Codenames</a><a href="#install">Install</a><a href="#archive">Archive</a><a href="https://github.com/Gekinzen/zen_barebone_alpha_development" rel="noopener">GitHub</a><a href="https://buymeacoffee.com/zenpy" rel="noopener">Buy a coffee</a></div>
+</div></footer>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════════
-   Dark Mode — respects system, persists user choice
-   ═══════════════════════════════════════════════════════════════════ */
-(function() {
-  const root = document.documentElement;
-  const btn = document.getElementById('themeToggle');
-  const moon = document.getElementById('themeIconMoon');
-  const sun = document.getElementById('themeIconSun');
-  const label = document.getElementById('themeLabel');
-
-  const saved = localStorage.getItem('zs-theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const initial = saved || (prefersDark ? 'dark' : 'light');
-  applyTheme(initial);
-
-  btn.addEventListener('click', () => {
-    const next = root.classList.contains('dark') ? 'light' : 'dark';
-    applyTheme(next);
-    localStorage.setItem('zs-theme', next);
-  });
-
-  function applyTheme(mode) {
-    if (mode === 'dark') {
-      root.classList.add('dark');
-      moon.style.display = 'none';
-      sun.style.display = '';
-      label.textContent = 'Light';
-    } else {
-      root.classList.remove('dark');
-      moon.style.display = '';
-      sun.style.display = 'none';
-      label.textContent = 'Dark';
-    }
-  }
-})();
-
-/* ═══════════════════════════════════════════════════════════════════
-   GitHub repo counters — pulled from public API (5-min cache)
-   ═══════════════════════════════════════════════════════════════════ */
-(function() {
-  const REPO = 'Gekinzen/zen_barebone_alpha_development';
-  const CACHE_KEY = 'zs-gh-stats';
-  const CACHE_TTL = 5 * 60 * 1000;
-
-  function setCounter(id, value) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.remove('loading');
-    const icon = el.querySelector('.counter__icon');
-    el.textContent = value.toLocaleString();
-    if (icon) el.appendChild(icon);
-  }
-
-  function render(stats) {
-    setCounter('counterStars',    stats.stars);
-    setCounter('counterForks',    stats.forks);
-    setCounter('counterWatchers', stats.watchers);
-    setCounter('counterReleases', stats.releases);
-  }
-
-  function readCache() {
-    try {
-      const raw = localStorage.getItem(CACHE_KEY);
-      if (!raw) return null;
-      const obj = JSON.parse(raw);
-      if (Date.now() - obj.ts > CACHE_TTL) return null;
-      return obj.stats;
-    } catch (_) { return null; }
-  }
-
-  function writeCache(stats) {
-    try {
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), stats }));
-    } catch (_) {}
-  }
-
-  async function fetchStats() {
-    const cached = readCache();
-    if (cached) { render(cached); return; }
-
-    try {
-      const [repoRes, relRes] = await Promise.all([
-        fetch(`https://api.github.com/repos/${REPO}`, {
-          headers: { 'Accept': 'application/vnd.github+json' },
-        }),
-        fetch(`https://api.github.com/repos/${REPO}/releases?per_page=100`, {
-          headers: { 'Accept': 'application/vnd.github+json' },
-        }),
-      ]);
-
-      if (!repoRes.ok) throw new Error('repo ' + repoRes.status);
-      const repo = await repoRes.json();
-      let releases = [];
-      if (relRes.ok) releases = await relRes.json();
-
-      const stats = {
-        stars:    repo.stargazers_count   || 0,
-        forks:    repo.forks_count        || 0,
-        watchers: repo.subscribers_count  || 0,
-        releases: Array.isArray(releases) ? releases.length : 0,
-      };
-
-      writeCache(stats);
-      render(stats);
-    } catch (err) {
-      console.warn('[zenshell] GitHub stats unavailable:', err.message);
-    }
-  }
-
-  fetchStats();
-})();
-
-/* ═══════════════════════════════════════════════════════════════════
-   Copy-to-clipboard for install snippets
-   ═══════════════════════════════════════════════════════════════════ */
-(function() {
-  document.querySelectorAll('.install__copy').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const targetId = btn.getAttribute('data-copy-target');
-      const block = document.getElementById(targetId);
-      if (!block) return;
-
-      const clone = block.cloneNode(true);
-      const btnInside = clone.querySelector('.install__copy');
-      if (btnInside) btnInside.remove();
-      const text = clone.textContent.trim();
-
-      try {
-        await navigator.clipboard.writeText(text);
-        btn.classList.add('copied');
-        btn.textContent = 'Copied';
-        setTimeout(() => {
-          btn.classList.remove('copied');
-          btn.textContent = 'Copy';
-        }, 1800);
-      } catch (_) {
-        const range = document.createRange();
-        range.selectNodeContents(clone);
-        const sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-    });
-  });
-})();
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle'),m=document.getElementById('themeIconMoon'),s=document.getElementById('themeIconSun'),l=document.getElementById('themeLabel');var sv=localStorage.getItem('zs-theme'),pd=window.matchMedia('(prefers-color-scheme:dark)').matches,ini=sv||(pd?'dark':'light');at(ini);b.addEventListener('click',function(){var n=r.classList.contains('dark')?'light':'dark';at(n);localStorage.setItem('zs-theme',n);});function at(mo){if(mo==='dark'){r.classList.add('dark');m.style.display='none';s.style.display='';l.textContent='Light';}else{r.classList.remove('dark');m.style.display='';s.style.display='none';l.textContent='Dark';}}})();
+(function(){var R='Gekinzen/zen_barebone_alpha_development',CK='zs-gh-stats',CT=300000;function sc(id,v){var e=document.getElementById(id);if(!e)return;e.classList.remove('loading');var i=e.querySelector('.counter__icon');e.textContent=v.toLocaleString();if(i)e.appendChild(i);}function rn(s){sc('counterStars',s.stars);sc('counterForks',s.forks);sc('counterWatchers',s.watchers);sc('counterReleases',s.releases);}function rc(){try{var r=localStorage.getItem(CK);if(!r)return null;var o=JSON.parse(r);if(Date.now()-o.ts>CT)return null;return o.stats;}catch(e){return null;}}function wc(s){try{localStorage.setItem(CK,JSON.stringify({ts:Date.now(),stats:s}));}catch(e){}}async function fs(){var c=rc();if(c){rn(c);return;}try{var[rr,rl]=await Promise.all([fetch('https://api.github.com/repos/'+R,{headers:{'Accept':'application/vnd.github+json'}}),fetch('https://api.github.com/repos/'+R+'/releases?per_page=100',{headers:{'Accept':'application/vnd.github+json'}})]);if(!rr.ok)throw new Error('repo '+rr.status);var rp=await rr.json();var rs=[];if(rl.ok)rs=await rl.json();var st={stars:rp.stargazers_count||0,forks:rp.forks_count||0,watchers:rp.subscribers_count||0,releases:Array.isArray(rs)?rs.length:0};wc(st);rn(st);}catch(e){console.warn('[zenshell] GitHub stats unavailable:',e.message);}}fs();})();
+(function(){document.querySelectorAll('.install__copy').forEach(function(btn){btn.addEventListener('click',async function(e){e.preventDefault();e.stopPropagation();var tid=btn.getAttribute('data-copy-target');var bl=document.getElementById(tid);if(!bl)return;var cl=bl.cloneNode(true);var bi=cl.querySelector('.install__copy');if(bi)bi.remove();var tx=cl.textContent.trim();try{await navigator.clipboard.writeText(tx);btn.classList.add('copied');btn.textContent='Copied';setTimeout(function(){btn.classList.remove('copied');btn.textContent='Copy';},1800);}catch(e){var rg=document.createRange();rg.selectNodeContents(cl);var sl=window.getSelection();sl.removeAllRanges();sl.addRange(rg);}});});})();
 </script>
-
 </body>
 </html>

@@ -228,6 +228,19 @@
     .foot__links{display:flex;gap:1.5rem;flex-wrap:wrap;}.foot__links a:hover{color:var(--sage-deep);}:root.dark .foot__links a:hover{color:var(--sage);}
 
     /* ═══════════════════════════════════════════════════════════════
+       CONSTELLATION PARTICLES (per-section, theme-aware)
+       Lightweight canvas dots + connecting lines + cursor pull
+       ═══════════════════════════════════════════════════════════════ */
+    .section-particles{position:absolute;inset:0;pointer-events:none;z-index:0;}
+    @media(max-width:780px){.section-particles{opacity:0.7;}}
+    @media(max-width:480px){.section-particles{opacity:0.55;}}
+    @media(max-width:360px){.section-particles{display:none;}}
+    @media(prefers-reduced-motion:reduce){.section-particles{display:none;}}
+    /* Counters has its own ::before grid pattern at z-index 0 — particles need to be above bg but below grid */
+    .counters .section-particles{z-index:0;}
+    .counters::before{z-index:1;}
+
+    /* ═══════════════════════════════════════════════════════════════
        ZEN LEAVES PARTICLES (alternating sides per section)
        Falling momiji / ginkgo / sakura / bamboo leaves drifting down
        ═══════════════════════════════════════════════════════════════ */
@@ -401,6 +414,7 @@
 </div></nav>
 
 <section class="hero">
+<canvas class="section-particles" data-density="55" data-tone="mixed" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--right" data-count="14" data-tone="auto" aria-hidden="true"></div>
 <div class="shell">
 <div class="codename-badge"><span class="codename-badge__kanji" lang="ja">金継ぎ</span><span class="codename-badge__divider"></span><span class="codename-badge__name">Kintsugi</span><span class="codename-badge__version">v6.16.4.11.2 · stable</span></div>
@@ -416,6 +430,7 @@
 </div></section>
 
 <section class="showcase reveal" id="showcase">
+<canvas class="section-particles" data-density="22" data-tone="sage" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--left" data-count="8" data-tone="auto" aria-hidden="true"></div>
 <div class="shell">
 <div class="showcase__head"><span class="section-label">Showcase</span><h2 class="section-title">Zen Shell, in practice.</h2><p class="showcase__intro">The current UI as shipped in Kintsugi (v6.16.4.11.2). Panel, Start Menu, Settings, Control Panel, Wallpaper browser, Theme engine.</p></div>
@@ -429,6 +444,7 @@
 </div></div></section>
 
 <section class="showcase reveal" id="showcase-prev" style="background:var(--bone-deep);">
+<canvas class="section-particles" data-density="22" data-tone="mixed" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--right" data-count="8" data-tone="auto" aria-hidden="true"></div>
 <div class="shell">
 <div class="showcase__head"><span class="section-label">Previous showcases</span><h2 class="section-title">Earlier captures · v6.15.3 era.</h2><p class="showcase__intro">Static shots and clips from the Ensō series (v6.15.x). Preserved here so the evolution stays visible.</p></div>
@@ -442,6 +458,7 @@
 </div></div></section>
 
 <section class="demos reveal" id="demos">
+<canvas class="section-particles" data-density="24" data-tone="sage" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--left" data-count="8" data-tone="auto" aria-hidden="true"></div>
 <div class="shell">
 <div class="demos__head"><span class="section-label">Video demos</span><h2 class="section-title">The full tour.</h2><p class="demos__intro">Latest Kintsugi showcase on top, followed by historical tours. Click any to watch on YouTube.</p></div>
@@ -453,6 +470,7 @@
 </div></div></section>
 
 <section class="counters reveal">
+<canvas class="section-particles" data-density="28" data-tone="dark" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--right" data-count="9" data-tone="dark" aria-hidden="true"></div>
 <div class="shell">
 <div class="counters__head"><span class="section-label">Repository pulse</span><h2 class="counters__title">Zen Shell on GitHub.</h2><p class="counters__note">Live from the public GitHub API. Cached 5 minutes.</p></div>
@@ -464,6 +482,7 @@
 </div></div></section>
 
 <section class="timeline reveal" id="timeline">
+<canvas class="section-particles" data-density="22" data-tone="gold" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--left" data-count="7" data-tone="auto" aria-hidden="true"></div>
 <div class="shell">
 <div class="timeline__head"><span class="section-label">Release history</span><h2 class="section-title">Kintsugi cycle eleven drops, two days.</h2><p class="timeline__intro">Amber markers are alpha iterations inside the 4.x cycle. Gold marker is the current stable v6.16.4.11.2 "Kintsugi", promoted to main on 2026-04-24.</p></div>
@@ -485,6 +504,7 @@
 </div></section>
 
 <section class="codenames reveal" id="codenames">
+<canvas class="section-particles" data-density="24" data-tone="mixed" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--right" data-count="8" data-tone="auto" aria-hidden="true"></div>
 <div class="shell">
 <div class="codenames__head"><span class="section-label">Release codenames</span><h2 class="section-title">Japanese zen concepts.</h2><p class="codenames__intro">Each release era gets a codename from Japanese zen vocabulary aesthetics, states of mind, seasonal phenomena.</p></div>
@@ -502,6 +522,7 @@
 </div></div></section>
 
 <section class="install reveal" id="install">
+<canvas class="section-particles" data-density="20" data-tone="gold" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--left" data-count="7" data-tone="auto" aria-hidden="true"></div>
 <div class="shell">
 <div class="install__head"><span class="section-label">Installation</span><h2 class="section-title">Pick your channel.</h2><p class="install__intro">The alpha branch has caught up with stable both currently point to v6.16.4.11.2 Kintsugi.</p></div>
@@ -520,6 +541,7 @@ git checkout alpha-v6.16.4.12
 </div></div></section>
 
 <section class="archive reveal" id="archive">
+<canvas class="section-particles" data-density="32" data-tone="sage" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--right" data-count="11" data-tone="auto" aria-hidden="true"></div>
 <div class="shell">
 <div class="archive__head"><span class="section-label">Project archive</span><h2 class="section-title">From sprout to lacquered bowl.</h2><p class="archive__intro">Zen Shell began as <em>Zen Barebone Alpha</em> a bare Waybar + Python concept on Hyprland 0.52. Every era preserved here.</p></div>
@@ -724,6 +746,154 @@ git checkout alpha-v6.16.4.12
     });
   },{threshold:0.12,rootMargin:'0px 0px -60px 0px'});
   reveals.forEach(function(el){io.observe(el);});
+})();
+
+/* ─── Constellation particles (per-section, theme-aware) ─────── */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var canvases=document.querySelectorAll('.section-particles');
+  if(!canvases.length)return;
+  var DPR=Math.min(window.devicePixelRatio||1,2);
+  var fields=[];
+
+  function pickColors(tone,dark){
+    var P={
+      sage:dark?
+        ['rgba(152,178,131,0.6)','rgba(188,205,167,0.55)','rgba(122,144,104,0.55)']:
+        ['rgba(95,116,80,0.5)','rgba(122,144,104,0.45)','rgba(152,178,131,0.4)'],
+      gold:dark?
+        ['rgba(212,168,95,0.6)','rgba(230,190,119,0.55)','rgba(184,146,78,0.55)']:
+        ['rgba(184,146,78,0.5)','rgba(166,111,56,0.45)','rgba(198,138,74,0.4)'],
+      mixed:dark?
+        ['rgba(152,178,131,0.6)','rgba(212,168,95,0.6)','rgba(188,205,167,0.5)','rgba(230,190,119,0.5)']:
+        ['rgba(95,116,80,0.5)','rgba(184,146,78,0.5)','rgba(122,144,104,0.4)','rgba(198,138,74,0.4)'],
+      /* "dark" tone forces bright palette regardless of theme — for always-dark sections (counters) */
+      dark:['rgba(152,178,131,0.65)','rgba(212,168,95,0.65)','rgba(188,205,167,0.55)','rgba(230,190,119,0.55)']
+    };
+    var dots=P[tone]||P.mixed;
+    var lineBase,mouseBase;
+    if(tone==='dark'){lineBase='152,178,131';mouseBase='212,168,95';}
+    else if(tone==='gold'){lineBase=dark?'212,168,95':'184,146,78';mouseBase=dark?'230,190,119':'166,111,56';}
+    else{lineBase=dark?'152,178,131':'122,144,104';mouseBase=dark?'212,168,95':'184,146,78';}
+    return {dots:dots,line:lineBase,mouseLine:mouseBase};
+  }
+  function isDark(){return document.documentElement.classList.contains('dark');}
+
+  function createField(canvas){
+    var host=canvas.parentElement;
+    var ctx=canvas.getContext('2d');
+    var density=parseInt(canvas.dataset.density||'25',10);
+    var tone=canvas.dataset.tone||'mixed';
+    var W=0,H=0;
+    var particles=[];
+    var mouse={x:-1000,y:-1000};
+    var visible=false,running=false,rafId=null;
+    var palette=pickColors(tone,isDark());
+    var connectDist=110,connectDist2=connectDist*connectDist;
+    var mouseDist=140,mouseDist2=mouseDist*mouseDist;
+
+    function resize(){
+      var r=host.getBoundingClientRect();
+      W=r.width;H=r.height;
+      if(W===0||H===0)return;
+      canvas.width=W*DPR;canvas.height=H*DPR;
+      canvas.style.width=W+'px';canvas.style.height=H+'px';
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+      /* Scale connection radius slightly with viewport */
+      var scale=Math.min(1,Math.max(0.6,W/1200));
+      connectDist=110*scale;connectDist2=connectDist*connectDist;
+      mouseDist=140*scale;mouseDist2=mouseDist*mouseDist;
+    }
+    function spawn(){
+      /* Density auto-scales with area — given count is the cap */
+      var auto=Math.min(density,Math.floor((W*H)/26000));
+      var count=Math.max(6,auto);
+      particles=[];
+      for(var i=0;i<count;i++){
+        particles.push({
+          x:Math.random()*W,y:Math.random()*H,
+          vx:(Math.random()-0.5)*0.22,
+          vy:(Math.random()-0.5)*0.22,
+          r:Math.random()*1.3+0.4,
+          c:Math.floor(Math.random()*palette.dots.length)
+        });
+      }
+    }
+    function tick(){
+      if(!visible){running=false;return;}
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<particles.length;i++){
+        var p=particles[i];
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>W)p.vx*=-1;
+        if(p.y<0||p.y>H)p.vy*=-1;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=palette.dots[p.c];ctx.fill();
+      }
+      for(var i=0;i<particles.length;i++){
+        for(var j=i+1;j<particles.length;j++){
+          var a=particles[i],b=particles[j];
+          var dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy;
+          if(d2<connectDist2){
+            var op=(1-d2/connectDist2)*0.18;
+            ctx.beginPath();
+            ctx.strokeStyle='rgba('+palette.line+','+op+')';
+            ctx.lineWidth=0.6;
+            ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+          }
+        }
+        var dxm=particles[i].x-mouse.x,dym=particles[i].y-mouse.y,dm2=dxm*dxm+dym*dym;
+        if(dm2<mouseDist2){
+          var op2=(1-dm2/mouseDist2)*0.32;
+          ctx.beginPath();
+          ctx.strokeStyle='rgba('+palette.mouseLine+','+op2+')';
+          ctx.lineWidth=0.85;
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(mouse.x,mouse.y);ctx.stroke();
+        }
+      }
+      rafId=requestAnimationFrame(tick);
+    }
+    function start(){if(!running){running=true;tick();}}
+    function stop(){running=false;if(rafId){cancelAnimationFrame(rafId);rafId=null;}}
+    function repaint(){palette=pickColors(tone,isDark());}
+
+    host.addEventListener('mousemove',function(e){
+      var r=host.getBoundingClientRect();
+      mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;
+    },{passive:true});
+    host.addEventListener('mouseleave',function(){mouse.x=-1000;mouse.y=-1000;});
+
+    var io=new IntersectionObserver(function(entries){
+      visible=entries[0].isIntersecting;
+      if(visible)start();else stop();
+    },{threshold:0,rootMargin:'80px'});
+    io.observe(host);
+
+    resize();spawn();
+    return {resize:function(){resize();spawn();},repaint:repaint,stop:stop,start:start};
+  }
+
+  canvases.forEach(function(c){
+    /* Only init if parent has dimensions */
+    var f=createField(c);
+    if(f)fields.push(f);
+  });
+
+  /* Debounced resize */
+  var rt;window.addEventListener('resize',function(){
+    clearTimeout(rt);rt=setTimeout(function(){fields.forEach(function(f){f.resize();});},150);
+  });
+
+  /* Theme change repaint */
+  var tt=document.getElementById('themeToggle');
+  if(tt)tt.addEventListener('click',function(){setTimeout(function(){fields.forEach(function(f){f.repaint();});},50);});
+
+  /* Pause on hidden tab */
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden)fields.forEach(function(f){f.stop();});
+    else fields.forEach(function(f){f.start();});
+  });
 })();
 
 /* ─── Hero image subtle parallax on scroll ────────────────────── */

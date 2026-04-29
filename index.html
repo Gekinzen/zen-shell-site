@@ -179,7 +179,9 @@
     .codename-card{background:var(--paper);border:1px solid var(--hairline);border-radius:4px;padding:1.5rem;position:relative;transition:border-color 200ms var(--easing),transform 300ms var(--easing);overflow:hidden;}
     .codename-card:hover{border-color:color-mix(in srgb,var(--gold) 40%,var(--hairline));transform:translateY(-2px);}
     .codename-card--current{border-color:color-mix(in srgb,var(--gold) 60%,var(--hairline));background:color-mix(in srgb,var(--gold) 4%,var(--paper));}
+    .codename-card--alpha-current{border-color:color-mix(in srgb,var(--alpha-tone) 55%,var(--hairline));background:color-mix(in srgb,var(--alpha-tone) 4%,var(--paper));}
     .codename-card__kanji{font-family:var(--serif-jp);font-weight:500;font-size:2.5rem;color:var(--gold);line-height:1;margin-bottom:0.5rem;transition:transform 400ms var(--easing);}
+    .codename-card--alpha-current .codename-card__kanji{color:var(--alpha-tone);}
     .codename-card:hover .codename-card__kanji{transform:translateY(-2px) rotate(-3deg);}
     .codename-card__name{font-family:var(--serif);font-size:1.1rem;font-weight:500;font-style:italic;margin-bottom:0.25rem;}
     .codename-card__meaning{font-family:var(--serif);font-size:0.85rem;font-style:italic;color:var(--mute);margin-bottom:1rem;line-height:1.45;}
@@ -187,6 +189,7 @@
     .codename-card__status{position:absolute;top:0.85rem;right:0.85rem;font-family:var(--mono);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mute);padding:0.2rem 0.5rem;border-radius:999px;border:1px solid var(--hairline);}
     .codename-card__status--current{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 60%,var(--hairline));background:color-mix(in srgb,var(--gold) 10%,transparent);}
     .codename-card__status--next{color:var(--alpha-tone);border-color:color-mix(in srgb,var(--alpha-tone) 50%,var(--hairline));}
+    .codename-card__status--alpha-current{color:var(--alpha-tone);border-color:color-mix(in srgb,var(--alpha-tone) 70%,var(--hairline));background:color-mix(in srgb,var(--alpha-tone) 14%,transparent);}
     .install{padding:6rem 0;border-bottom:1px solid var(--hairline);}
     .install__head{max-width:720px;margin-bottom:3rem;}.install__intro{color:var(--mute);margin:1rem 0 0;font-size:1.05rem;}
     .install__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;}
@@ -200,6 +203,9 @@
     .install__copy:hover{border-color:var(--sage);color:var(--sage-deep);}:root.dark .install__copy:hover{color:var(--sage);}
     .install__copy.copied{color:var(--sage-deep);border-color:var(--sage-deep);}
     .install__card-foot{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;color:var(--mute);text-transform:uppercase;flex-wrap:wrap;}
+    .install__hiraki-note{margin-top:1rem;padding:0.85rem 1rem;border-left:2px solid var(--alpha-tone);background:color-mix(in srgb,var(--alpha-tone) 6%,transparent);font-family:var(--serif);font-size:0.85rem;font-style:italic;color:var(--ink-soft);line-height:1.5;border-radius:0 3px 3px 0;}
+    .install__hiraki-note strong{font-style:normal;font-weight:500;color:var(--alpha-tone);}
+    .install__hiraki-note code{font-family:var(--mono);font-size:0.92em;color:var(--ink);background:color-mix(in srgb,var(--alpha-tone) 8%,transparent);padding:0.05em 0.4em;border-radius:2px;}
     .archive{padding:6rem 0;background:var(--bone-deep);border-bottom:1px solid var(--hairline);}
     .archive__head{max-width:720px;margin-bottom:3.5rem;}.archive__intro{color:var(--mute);margin:1rem 0 0;font-size:1.05rem;}
     .era{position:relative;padding-left:2.5rem;margin-bottom:4rem;}
@@ -421,7 +427,7 @@
 <h1 class="hero__headline">A QML-native desktop <em>environment</em> for Hyprland.</h1>
 <p class="hero__lede">Zen Shell replaces GTK4, Python, and Waybar with a unified Quickshell architecture. Panel, control center, wallpaper engine, themes, widgets all one process, one language, one design system. Built for Arch and CachyOS. Extensively tested on AMD Ryzen + Radeon. Runs on Hyprland 0.54+.</p>
 <p class="hero__codename-meaning"><strong>Kintsugi (金継ぎ)</strong> the Japanese art of repairing broken pottery with gold. The seams aren't hidden; they're illuminated. This release took eleven iterations to land the color picker alone needed four attempts. What you get is the bowl, lacquered in gold.</p>
-<div class="hero__pills"><span class="pill pill--stable"><span class="pill__dot"></span>Stable · v6.16.4.11.2</span><span class="pill pill--alpha"><span class="pill__dot"></span>Alpha · Hikari (v4.12)</span><span class="pill">Hyprland ≥ 0.54</span><span class="pill">Arch / CachyOS</span></div>
+<div class="hero__pills"><span class="pill pill--stable"><span class="pill__dot"></span>Stable · v6.16.4.11.2</span><span class="pill pill--alpha"><span class="pill__dot"></span>Alpha · Hiraki (v4.12.6.53)</span><span class="pill">Hyprland ≥ 0.54</span><span class="pill">Arch / CachyOS</span></div>
 <div class="hero__cta">
 <a href="https://github.com/Gekinzen/zen_barebone_alpha_development/releases/latest" class="cta cta--primary" rel="noopener"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span>Download Latest</span></a>
 <a href="#timeline" class="cta cta--ghost"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="19" cy="12" r="2" fill="currentColor"/><path d="M7 12h3M14 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Release History</span></a>
@@ -517,7 +523,8 @@
 <div class="codename-card"><span class="codename-card__status">Historical</span><div class="codename-card__kanji" lang="ja">渋い</div><div class="codename-card__name">Shibui</div><div class="codename-card__meaning">Understated refinement click-through fixes, OpacityMask avatar.</div><div class="codename-card__versions">v6.16.2.3.x</div></div>
 <div class="codename-card"><span class="codename-card__status">Historical</span><div class="codename-card__kanji" lang="ja">寂</div><div class="codename-card__name">Sabi</div><div class="codename-card__meaning">Beauty of age &amp; patina Lock screen, PowerBadge, weather mood.</div><div class="codename-card__versions">v6.16.3.x</div></div>
 <div class="codename-card codename-card--current"><span class="codename-card__status codename-card__status--current">Current</span><div class="codename-card__kanji" lang="ja">金継ぎ</div><div class="codename-card__name">Kintsugi</div><div class="codename-card__meaning">Golden-repair panic keybind, laptop reliability, color picker that took 4 tries.</div><div class="codename-card__versions">v6.16.4.x · v6.16.4.11.2</div></div>
-<div class="codename-card"><span class="codename-card__status codename-card__status--next">Next Alpha</span><div class="codename-card__kanji" lang="ja">光</div><div class="codename-card__name">Hikari</div><div class="codename-card__meaning">Light · clarity Profile Export/Import.</div><div class="codename-card__versions">v6.16.4.12 (planned)</div></div>
+<div class="codename-card"><span class="codename-card__status">Recent Alpha</span><div class="codename-card__kanji" lang="ja">光</div><div class="codename-card__name">Hikari</div><div class="codename-card__meaning">Light · illumination across every surface bar/clock UX cleanup, frosted glass, plugin manager.</div><div class="codename-card__versions">v6.16.4.12.5 – v6.16.4.12.6.51</div></div>
+<div class="codename-card codename-card--alpha-current"><span class="codename-card__status codename-card__status--alpha-current">Current Alpha</span><div class="codename-card__kanji" lang="ja">開き</div><div class="codename-card__name">Hiraki</div><div class="codename-card__meaning">Opening click-to-open bar triggers, popup-above-clock, installer hotfix.</div><div class="codename-card__versions">v6.16.4.12.6.52 – v6.16.4.12.6.53</div></div>
 <div class="codename-card"><span class="codename-card__status codename-card__status--next">Future</span><div class="codename-card__kanji" lang="ja">道</div><div class="codename-card__name">Michi</div><div class="codename-card__meaning">The way · the path in-app Updates Manager.</div><div class="codename-card__versions">v6.16.5 (planned)</div></div>
 </div></div></section>
 
@@ -525,19 +532,19 @@
 <canvas class="section-particles" data-density="20" data-tone="gold" aria-hidden="true"></canvas>
 <div class="zen-leaves zen-leaves--left" data-count="7" data-tone="auto" aria-hidden="true"></div>
 <div class="shell">
-<div class="install__head"><span class="section-label">Installation</span><h2 class="section-title">Pick your channel.</h2><p class="install__intro">The alpha branch has caught up with stable both currently point to v6.16.4.11.2 Kintsugi.</p></div>
+<div class="install__head"><span class="section-label">Installation</span><h2 class="section-title">Pick your channel.</h2><p class="install__intro">Stable stays on Kintsugi (v6.16.4.11.2). Alpha pulls ahead with the Hikari → Hiraki series — current alpha is <strong>v6.16.4.12.6.53 Hiraki</strong>, the click-to-open bar drop with installer + popup-positioning hotfixes.</p></div>
 <div class="install__grid reveal-stagger">
 <div class="install__card"><h3 class="install__card-title"><span style="color:var(--gold);" lang="ja">金継ぎ</span> Stable · Kintsugi</h3><p class="install__card-meta">main · v6.16.4.11.2 · promoted 2026-04-24</p><div class="install__code" id="stableCode">git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git
 cd zen_barebone_alpha_development
 git checkout v6.16.4.11.2
 ./install.sh --bootstrap
 <button class="install__copy" data-copy-target="stableCode">Copy</button></div><div class="install__card-foot"><span>Tagged · Verified · Ready</span><a href="https://github.com/Gekinzen/zen_barebone_alpha_development/releases/tag/v6.16.4.11.2" class="cta cta--ghost" rel="noopener" style="padding:0.55rem 1rem;font-size:0.82rem;"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span>Release</span></a></div></div>
-<div class="install__card install__card--alpha"><h3 class="install__card-title"><span style="color:var(--alpha-tone);" lang="ja">光</span> Alpha · Hikari (upcoming)</h3><p class="install__card-meta">v6.16.4.12 · Profile Export / Import</p><div class="install__code" id="alphaCode">git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git
+<div class="install__card install__card--alpha"><h3 class="install__card-title"><span style="color:var(--alpha-tone);" lang="ja">開き</span> Alpha · Hiraki (current)</h3><p class="install__card-meta">v6.16.4.12.6.53 · click-to-open bar + popup-above-clock + installer hotfix</p><div class="install__code" id="alphaCode">git clone https://github.com/Gekinzen/zen_barebone_alpha_development.git
 cd zen_barebone_alpha_development
-# Track alpha once branch opens
-git checkout alpha-v6.16.4.12
+# Track current Hiraki hotfix (latest in the v6.16.4.12.6.x line)
+git checkout alpha-v6.16.4.12.6.53
 ./install.sh --bootstrap
-<button class="install__copy" data-copy-target="alphaCode">Copy</button></div><div class="install__card-foot"><span>Bleeding edge · Active development</span><a href="https://github.com/Gekinzen/zen_barebone_alpha_development/branches" class="cta cta--ghost" rel="noopener" style="padding:0.55rem 1rem;font-size:0.82rem;"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span>Branches</span></a></div></div>
+<button class="install__copy" data-copy-target="alphaCode">Copy</button></div><div class="install__hiraki-note"><strong>What's new:</strong> Click the clock to open the calendar (no more hover-open), popup now anchors directly above the clock module, and the installer no longer clobbers the new <code>Clock.qml</code> with the legacy <code>ZenClock.qml</code>. Codename <strong>Hiraki</strong> (開き · "opening") follows <strong>Hikari</strong> (光 · "light") in the v6.16.4.12.6.x cycle.</div><div class="install__card-foot"><span>Bleeding edge · Active development</span><a href="https://github.com/Gekinzen/zen_barebone_alpha_development/tree/alpha-v6.16.4.12.6.53" class="cta cta--ghost" rel="noopener" style="padding:0.55rem 1rem;font-size:0.82rem;"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span>Branch</span></a></div></div>
 </div></div></section>
 
 <section class="archive reveal" id="archive">
